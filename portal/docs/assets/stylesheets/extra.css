@@ -1,28 +1,300 @@
 :root {
   --md-text-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --md-code-font: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --portal-accent: #5267d9;
+  --portal-accent-strong: #3549bd;
 }
 
 .md-grid {
-  max-width: min(72rem, 1440px);
+  max-width: 1120px;
 }
 
-.hero-subtitle {
+.portal-home {
+  padding: 1.8rem 0 3.5rem;
+}
+
+.portal-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(15rem, 0.75fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  min-height: 25rem;
+  padding: clamp(2.2rem, 6vw, 4.6rem);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--portal-accent) 18%, transparent);
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at 90% 5%, color-mix(in srgb, var(--portal-accent) 22%, transparent), transparent 34%),
+    linear-gradient(135deg, color-mix(in srgb, var(--md-default-bg-color) 94%, var(--portal-accent)) 0%, var(--md-default-bg-color) 65%);
+  box-shadow: 0 1.25rem 3.5rem rgba(29, 43, 102, 0.09);
+}
+
+.portal-hero h1 {
+  margin: 0.65rem 0 1rem;
+  color: var(--md-default-fg-color);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.portal-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  color: var(--portal-accent-strong);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+}
+
+.portal-eyebrow::before {
+  width: 1.8rem;
+  height: 2px;
+  margin-right: 0.65rem;
+  background: var(--portal-accent);
+  content: "";
+}
+
+.portal-lead {
+  max-width: 31rem;
+  margin: 0;
   color: var(--md-default-fg-color--light);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  line-height: 1.8;
+}
+
+.portal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.8rem;
+}
+
+.portal-actions .md-button {
+  margin: 0;
+  border-radius: 0.55rem;
+}
+
+.portal-button--quiet {
+  border-color: var(--md-default-fg-color--lighter) !important;
+}
+
+.learning-map {
+  position: relative;
+  padding: 1.45rem;
+  border: 1px solid color-mix(in srgb, var(--portal-accent) 24%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--md-default-bg-color) 78%, transparent);
+  box-shadow: 0 1rem 2.4rem rgba(29, 43, 102, 0.1);
+  backdrop-filter: blur(12px);
+}
+
+.learning-map__label {
+  display: block;
+  margin-bottom: 1.15rem;
+  color: var(--md-default-fg-color--lighter);
+  font-size: 0.56rem;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+}
+
+.learning-map__item {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.learning-map__item b {
+  display: grid;
+  width: 2.4rem;
+  height: 2.4rem;
+  place-items: center;
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--portal-accent) 13%, transparent);
+  color: var(--portal-accent-strong);
+  font-size: 0.72rem;
+}
+
+.learning-map__item span {
+  font-weight: 700;
+}
+
+.learning-map__line {
+  width: 1px;
+  height: 1.15rem;
+  margin: 0.2rem 0 0.2rem 1.2rem;
+  background: color-mix(in srgb, var(--portal-accent) 35%, transparent);
+}
+
+.course-section {
+  padding: clamp(3rem, 7vw, 5.5rem) clamp(0.2rem, 2vw, 1rem) 0;
+}
+
+.section-heading {
+  display: flex;
+  gap: 1rem 2rem;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 1.35rem;
+}
+
+.section-heading h2,
+.section-heading p {
+  margin: 0;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.section-kicker {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--portal-accent-strong);
+  font-size: 0.58rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+}
+
+.section-heading p {
+  max-width: 28rem;
+  color: var(--md-default-fg-color--light);
+  text-align: right;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+  gap: 1rem;
+}
+
+.course-card {
+  position: relative;
+  display: block;
+  min-height: 15.5rem;
+  padding: 1.65rem;
+  overflow: hidden;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 1rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color) !important;
+  box-shadow: 0 0.75rem 2.5rem rgba(29, 43, 102, 0.07);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.course-card:hover {
+  border-color: color-mix(in srgb, var(--portal-accent) 45%, transparent);
+  box-shadow: 0 1rem 3rem rgba(29, 43, 102, 0.13);
+  transform: translateY(-3px);
+}
+
+.course-card__badge {
+  display: inline-flex;
+  padding: 0.32rem 0.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--portal-accent) 11%, transparent);
+  color: var(--portal-accent-strong);
+  font-size: 0.66rem;
+  font-weight: 750;
+}
+
+.course-card__arrow {
+  position: absolute;
+  top: 1.45rem;
+  right: 1.55rem;
+  color: var(--md-default-fg-color--lighter);
   font-size: 1.15rem;
 }
 
-.course-grid > ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: 1rem;
-  padding: 0;
+.course-card h3 {
+  margin: 1.25rem 0 0.55rem;
+  font-size: 1.45rem;
+  font-weight: 780;
 }
 
-.course-grid li {
-  list-style: none;
-  padding: 1.25rem 1.4rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 0.6rem;
+.course-card p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.7;
+}
+
+.course-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1.1rem;
+}
+
+.course-card__meta span {
+  padding: 0.18rem 0.5rem;
+  border-radius: 0.35rem;
   background: var(--md-code-bg-color);
+  color: var(--md-default-fg-color--light);
+  font-size: 0.64rem;
+}
+
+.course-card__action {
+  position: absolute;
+  right: 1.65rem;
+  bottom: 1.5rem;
+  color: var(--portal-accent-strong);
+  font-size: 0.75rem;
+}
+
+[data-md-color-scheme="slate"] {
+  --portal-accent: #91a2ff;
+  --portal-accent-strong: #b6c0ff;
+}
+
+@media screen and (max-width: 59.984375em) {
+  .portal-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .learning-map {
+    max-width: 28rem;
+  }
+}
+
+@media screen and (max-width: 44.984375em) {
+  .portal-home {
+    padding-top: 0.6rem;
+  }
+
+  .portal-hero {
+    gap: 2rem;
+    padding: 2rem 1.3rem;
+    border-radius: 1rem;
+  }
+
+  .portal-hero h1 {
+    font-size: 2.65rem;
+  }
+
+  .portal-actions {
+    display: grid;
+  }
+
+  .portal-actions .md-button {
+    text-align: center;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .section-heading p {
+    margin-top: 0.55rem;
+    text-align: left;
+  }
+
+  .course-card {
+    min-height: 17rem;
+  }
 }

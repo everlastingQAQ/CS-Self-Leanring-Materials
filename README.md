@@ -1,6 +1,6 @@
 # docs.everlasting.xin
 
-Everlasting 中文教程站源码，使用 Material for MkDocs 构建并发布到 <https://docs.everlasting.xin/>。
+CS自学材料网站源码，使用 Material for MkDocs 构建并发布到 <https://docs.everlasting.xin/>。
 
 ## 站点结构
 

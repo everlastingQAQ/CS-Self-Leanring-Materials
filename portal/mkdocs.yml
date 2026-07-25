@@ -1,5 +1,5 @@
-site_name: Everlasting 中文教程
-site_description: 计算机课程中文教程与学习笔记
+site_name: CS自学材料
+site_description: 面向自学者的计算机科学中文课程与学习资料
 site_author: everlasting
 site_url: https://docs.everlasting.xin/
 
@@ -31,7 +31,7 @@ theme:
     - navigation.top
 
 nav:
-  - 教程总目录: index.md
+  - 课程: index.md
 
 plugins: []
 

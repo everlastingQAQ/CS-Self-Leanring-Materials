@@ -136,6 +136,12 @@ def main() -> None:
     portal_html = (SITE_ROOT / "index.html").read_text(encoding="utf-8") if (SITE_ROOT / "index.html").is_file() else ""
     if "CS61B/2021Spring/" not in portal_html:
         errors.append("portal does not link to CS61B Spring 2021")
+    if "CS自学材料" not in portal_html:
+        errors.append("portal does not use the CS自学材料 site name")
+    if "Everlasting 中文教程" in portal_html:
+        errors.append("portal still contains the previous site name")
+    if 'id="课程"' not in portal_html:
+        errors.append("portal does not contain the 课程 section")
 
     chapter_four = COURSE_SITE / "chapters" / "04-inheritance-and-interfaces" / "index.html"
     if chapter_four.is_file():
