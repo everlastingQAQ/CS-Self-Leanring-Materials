@@ -18,9 +18,11 @@ SITE_ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else PROJECT_ROOT /
 COURSE_SITE = SITE_ROOT / "CS61B" / "2021Spring"
 REMOTE_IMAGE_RE = re.compile(r"!\[[^\]]*\]\(https?://", re.IGNORECASE)
 EXPECTED_CHAPTERS = 22
-EXPECTED_HTML_PAGES = 64
+EXPECTED_LEGACY_REDIRECTS = EXPECTED_CHAPTERS + 2
+EXPECTED_HTML_PAGES = 64 + EXPECTED_LEGACY_REDIRECTS
 EXPECTED_COURSEWORK = {"labs": 17, "homeworks": 3, "projects": 8, "exams": 4}
 SEARCH_TERMS = ("并查集", "最短路径", "泛型", "JUnit", "Gitlet", "BYOW", "期中考试")
+PAGES_RECOMMENDED_MAX_BYTES = 1_000_000_000
 
 
 class PageParser(HTMLParser):
@@ -122,6 +124,14 @@ def main() -> None:
         if not path.is_file():
             errors.append(f"missing generated file {path.relative_to(SITE_ROOT)}")
 
+    symlinks = list(SITE_ROOT.rglob("*")) if SITE_ROOT.exists() else []
+    symlinks = [path for path in symlinks if path.is_symlink()]
+    if symlinks:
+        errors.append("GitHub Pages artifact contains symbolic links: " + ", ".join(str(path) for path in symlinks))
+    artifact_bytes = sum(path.stat().st_size for path in SITE_ROOT.rglob("*") if path.is_file())
+    if artifact_bytes >= PAGES_RECOMMENDED_MAX_BYTES:
+        errors.append(f"GitHub Pages artifact is too large: {artifact_bytes} bytes")
+
     pages: dict[Path, PageParser] = {}
     for html_file in SITE_ROOT.rglob("*.html"):
         parser = PageParser()
@@ -130,6 +140,26 @@ def main() -> None:
 
     if len(pages) != EXPECTED_HTML_PAGES:
         errors.append(f"expected {EXPECTED_HTML_PAGES} generated HTML pages, got {len(pages)}")
+
+    legacy_redirects = {
+        SITE_ROOT / "about" / "index.html": "/CS61B/2021Spring/about/",
+        SITE_ROOT / "chapters" / "index.html": "/CS61B/2021Spring/",
+    }
+    for chapter_file in chapter_files:
+        slug = chapter_file.stem
+        legacy_redirects[SITE_ROOT / "chapters" / slug / "index.html"] = (
+            f"/CS61B/2021Spring/chapters/{slug}/"
+        )
+    if len(legacy_redirects) != EXPECTED_LEGACY_REDIRECTS:
+        errors.append(f"expected {EXPECTED_LEGACY_REDIRECTS} legacy redirects, got {len(legacy_redirects)}")
+    for redirect_path, target in legacy_redirects.items():
+        if not redirect_path.is_file():
+            errors.append(f"missing legacy redirect {redirect_path.relative_to(SITE_ROOT)}")
+            continue
+        redirect_html = redirect_path.read_text(encoding="utf-8")
+        for marker in ('name="robots" content="noindex"', 'http-equiv="refresh"', "window.location.replace", target):
+            if marker not in redirect_html:
+                errors.append(f"invalid legacy redirect {redirect_path.relative_to(SITE_ROOT)}: missing {marker}")
 
     for group in ("labs", "homeworks", "projects"):
         for html_file in (COURSE_SITE / group).glob("*/index.html"):
@@ -244,6 +274,7 @@ def main() -> None:
 
     print(
         f"Validated {len(pages)} HTML pages, {len(chapter_files)} chapters, "
+        f"{len(legacy_redirects)} legacy redirects, a {artifact_bytes}-byte Pages artifact, "
         "two site roots, and local-only runtime assets."
     )
 
