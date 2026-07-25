@@ -6,6 +6,8 @@ CS自学材料网站源码，使用 Material for MkDocs 构建并发布到 <http
 
 - `/`：教程总目录
 - `/CS61B/2021Spring/`：CS61B Spring 2021 中文教程
+- `/CS61B/2021Spring/course/`：原课程主页的中文版
+- `/CS61B/2021Spring/labs/`、`homeworks/`、`projects/`、`exams/`：中文实践资料
 
 每门教程拥有独立配置、导航、搜索和资源，统一聚合到 `dist/` 后部署。
 
@@ -16,6 +18,14 @@ python3 scripts/import_content.py
 ```
 
 默认从 `/home/everlasting/下载/Hug61B_分章Markdown` 读取原始 Markdown，也可以通过 `HUG61B_SOURCE` 指定其他目录。导入只改写仓库中的生成内容，不修改原始目录。
+
+Lab、作业、项目、考试及原课程主页使用独立导入脚本：
+
+```bash
+python3 scripts/import_sp21_coursework.py
+```
+
+脚本校验源 manifest 和文件数量，以原站 HTML 为页面基准，只翻译页面文字、替换本站已有中文资料链接，并将两份 2021 年公开日历静态化。默认只读源目录为 `/home/everlasting/下载/CS61B_SP21_Labs_Assignments_Exams_CN`。
 
 ## 构建、预览与部署
 

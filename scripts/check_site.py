@@ -18,13 +18,16 @@ SITE_ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else PROJECT_ROOT /
 COURSE_SITE = SITE_ROOT / "CS61B" / "2021Spring"
 REMOTE_IMAGE_RE = re.compile(r"!\[[^\]]*\]\(https?://", re.IGNORECASE)
 EXPECTED_CHAPTERS = 22
-SEARCH_TERMS = ("并查集", "最短路径", "泛型")
+EXPECTED_HTML_PAGES = 64
+EXPECTED_COURSEWORK = {"labs": 17, "homeworks": 3, "projects": 8, "exams": 4}
+SEARCH_TERMS = ("并查集", "最短路径", "泛型", "JUnit", "Gitlet", "BYOW", "期中考试")
 
 
 class PageParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.links: list[tuple[str, str]] = []
+        self.anchors: list[dict[str, str | None]] = []
         self.ids: set[str] = set()
         self.text: list[str] = []
         self.ignored_depth = 0
@@ -36,6 +39,8 @@ class PageParser(HTMLParser):
             self.ids.add(element_id)
         if tag in {"a", "link"} and values.get("href"):
             self.links.append(("href", values["href"] or ""))
+        if tag == "a" and values.get("href"):
+            self.anchors.append(values)
         if tag in {"img", "script", "source"} and values.get("src"):
             self.links.append(("src", values["src"] or ""))
         if tag in {"script", "style"}:
@@ -72,6 +77,11 @@ def main() -> None:
     if len(chapter_files) != EXPECTED_CHAPTERS:
         errors.append(f"expected {EXPECTED_CHAPTERS} chapter sources, got {len(chapter_files)}")
 
+    for group, expected_count in EXPECTED_COURSEWORK.items():
+        content_files = [path for path in (DOCS_ROOT / group).glob("*.md") if path.name != "index.md"]
+        if len(content_files) != expected_count:
+            errors.append(f"expected {expected_count} {group} sources, got {len(content_files)}")
+
     for markdown in DOCS_ROOT.rglob("*.md"):
         text = markdown.read_text(encoding="utf-8")
         if REMOTE_IMAGE_RE.search(text):
@@ -83,6 +93,11 @@ def main() -> None:
         SITE_ROOT / "robots.txt",
         SITE_ROOT / "sitemap.xml",
         COURSE_SITE / "index.html",
+        COURSE_SITE / "course" / "index.html",
+        COURSE_SITE / "labs" / "index.html",
+        COURSE_SITE / "homeworks" / "index.html",
+        COURSE_SITE / "projects" / "index.html",
+        COURSE_SITE / "exams" / "index.html",
         COURSE_SITE / "about" / "index.html",
         COURSE_SITE / "search" / "search_index.json",
         COURSE_SITE / "sitemap.xml",
@@ -96,6 +111,9 @@ def main() -> None:
         parser = PageParser()
         parser.feed(html_file.read_text(encoding="utf-8"))
         pages[html_file.resolve()] = parser
+
+    if len(pages) != EXPECTED_HTML_PAGES:
+        errors.append(f"expected {EXPECTED_HTML_PAGES} generated HTML pages, got {len(pages)}")
 
     for html_file, parser in list(pages.items()):
         visible_text = " ".join(parser.text)
@@ -149,6 +167,46 @@ def main() -> None:
         for section in ("4.1", "4.2", "4.3", "4.4"):
             if section not in chapter_four_html:
                 errors.append(f"chapter 4 navigation does not contain {section}")
+
+    course_home_path = COURSE_SITE / "index.html"
+    if course_home_path.is_file():
+        course_home_html = course_home_path.read_text(encoding="utf-8")
+        for label in ("临时首页", "开始阅读", "中文课程主页", "返回教程总目录", "课程教材"):
+            if label not in course_home_html:
+                errors.append(f"course Material homepage is missing {label}")
+        if "课程章节" in course_home_html:
+            errors.append("course Material homepage still contains 课程章节")
+
+    original_style_path = COURSE_SITE / "course" / "index.html"
+    if original_style_path.is_file():
+        original_style_html = original_style_path.read_text(encoding="utf-8")
+        for marker in (
+            'class="sp21-course-home"', "CS 61B", "数据结构，2021 春季", "第 17 周公告",
+            "周次", "日期", "阅读", "讲座", "讨论", "实验", "作业 / 考试",
+            "实验与讨论安排", "答疑时间", "期末考试周", "最后构建：2021-05-15 03:55 UTC",
+        ):
+            if marker not in original_style_html:
+                errors.append(f"original-style course homepage is missing {marker}")
+        if 'class="md-header' in original_style_html or 'class="md-sidebar' in original_style_html:
+            errors.append("original-style course homepage unexpectedly contains Material chrome")
+        for extra_copy in ("中文归档说明", "下列内容由两份公开 ICS", "会议链接按原记录保留"):
+            if extra_copy in original_style_html:
+                errors.append(f"course homepage contains non-original explanatory copy: {extra_copy}")
+        if re.search(r"sp21\.datastructur\.es/materials/(?:lab|hw|proj)/", original_style_html):
+            errors.append("coursework link on original-style homepage was not mapped to the Chinese site")
+        course_parser = pages.get(original_style_path.resolve())
+        if course_parser:
+            for anchor in course_parser.anchors:
+                href = anchor.get("href") or ""
+                if urlsplit(href).scheme in {"http", "https"}:
+                    rel = anchor.get("rel") or ""
+                    if anchor.get("target") != "_blank" or "noopener" not in rel:
+                        errors.append(f"external link lacks safe new-window attributes on course homepage: {href}")
+
+    calendar_data = COURSE_ROOT / "data" / "calendars"
+    for filename in ("lab-discussions.ics", "office-hours.ics", "sources.json"):
+        if not (calendar_data / filename).is_file():
+            errors.append(f"missing archived calendar source {filename}")
 
     if errors:
         print("Site validation failed:", file=sys.stderr)

@@ -1,0 +1,22 @@
+{
+  "source": "/home/everlasting/下载/CS61B_SP21_Labs_Assignments_Exams_CN",
+  "manifest_sha256": "a4b07bb98ebf5668b7c53ea8e1dbe59bfc1917d8412a37906b53bae798f124d8",
+  "document_count": 35,
+  "imported_content_count": 32,
+  "calendar_sources": {
+    "homepage": {
+      "url": "https://sp21.datastructur.es/",
+      "sha256": "d7abecdbf7f9ca7b2a2b52b29f77bd628bd996dbe61dd245a6a0e805be1daac7"
+    },
+    "lab-discussions": {
+      "url": "https://calendar.google.com/calendar/ical/c_c5oaq8so2c92ket6ok26710fk0%40group.calendar.google.com/public/basic.ics",
+      "sha256": "98879fd24fb5f0c8dad3ff154876a407a01e0d03d5282b71dab838fb0e52a893",
+      "bytes": 77602
+    },
+    "office-hours": {
+      "url": "https://calendar.google.com/calendar/ical/c_e8roo1rcdghmffghilhvcrko0o%40group.calendar.google.com/public/basic.ics",
+      "sha256": "ab06f78198aa8dacc8e1cf4d4df2c89474c0b9425b1c9358b7a987d985e38379",
+      "bytes": 3116
+    }
+  }
+}

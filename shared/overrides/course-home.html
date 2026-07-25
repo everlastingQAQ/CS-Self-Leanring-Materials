@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.meta.title }} | {{ config.site_name }}</title>
+    <meta name="description" content="{{ page.meta.description }}">
+    <link rel="canonical" href="{{ page.canonical_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ config.site_name }}">
+    <meta property="og:title" content="{{ page.meta.title }}">
+    <meta property="og:description" content="{{ page.meta.description }}">
+    <meta property="og:url" content="{{ page.canonical_url }}">
+    <link rel="icon" href="{{ 'assets/images/favicon.png' | url }}">
+    <link rel="stylesheet" href="{{ 'assets/stylesheets/course-home-v1.css' | url }}">
+  </head>
+  <body class="sp21-course-home">
+    <header class="topbar">
+      <nav aria-label="课程导航">
+        <a class="active" href="/CS61B/2021Spring/">教程首页</a>
+        <a href="https://sp21.datastructur.es/about.html" target="_blank" rel="noopener">课程信息</a>
+        <a href="https://sp21.datastructur.es/staff.html" target="_blank" rel="noopener">教学团队</a>
+        <a href="https://sp21.datastructur.es/resources.html" target="_blank" rel="noopener">资源</a>
+        <a href="/CS61B/2021Spring/exams/">考试</a>
+        <a href="http://beacon.datastructur.es/" target="_blank" rel="noopener">Beacon ↗</a>
+        <a href="https://edstem.org/us/courses/3735/discussion/" target="_blank" rel="noopener">Ed ↗</a>
+        <a href="https://oh.datastructur.es" target="_blank" rel="noopener">OH Queue ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="course-heading">
+        <h1><a href="/CS61B/2021Spring/course/"><span>CS 61B</span> 数据结构，2021 春季</a></h1>
+        <div class="course-meta">
+          主讲：Josh Hug<br>
+          2021 年在线答疑：<br>
+          周一、周三 13:00–14:00：<a href="https://berkeley.zoom.us/j/94173634013?pwd=b0EvRFRDRlluci92ZkJiMVJQZU1Bdz09" target="_blank" rel="noopener">Zoom 链接</a><br>
+          周五 14:00–15:00：<a href="https://berkeley.zoom.us/j/97663439168?pwd=NlhkZTY0Mk1SNWU0TTJIdGpjekMvdz09" target="_blank" rel="noopener">Zoom 链接</a>
+        </div>
+      </section>
+
+      <div class="quick-links" aria-label="页面内导航">
+        <a href="#cal">课程日历</a><span>//</span>
+        <a href="#disccal">实验与讨论</a><span>//</span>
+        <a href="#ohcal">答疑时间</a>
+      </div>
+
+      {{ page.content }}
+    </main>
+
+  </body>
+</html>

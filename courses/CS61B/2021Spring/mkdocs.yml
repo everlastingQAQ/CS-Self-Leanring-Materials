@@ -47,7 +47,8 @@ theme:
 
 nav:
   - 首页: index.md
-  - 课程章节:
+  - 中文课程主页: course/index.md
+  - 课程教材:
       - 导论: chapters/00-introduction.md
       - 第 1 章 Java 入门: chapters/01-java-basics.md
       - 第 2 章 列表: chapters/02-lists.md
@@ -70,6 +71,46 @@ nav:
       - 第 19 章 最短路径: chapters/19-shortest-paths.md
       - 第 20 章 最小生成树: chapters/20-minimum-spanning-trees.md
       - 第 21 章 归约与分解: chapters/21-reductions-and-decomposition.md
+  - 实验:
+      - 实验目录: labs/index.md
+      - Lab 1 Setup：配置计算机: labs/lab-1-setup.md
+      - Lab 1：IntelliJ、Java 与 Git: labs/lab-1-intellij-java-git.md
+      - Lab 2：JUnit 与调试: labs/lab-2-junit-debugging.md
+      - Lab 3：计时与随机测试: labs/lab-3-timing-randomized-tests.md
+      - Lab 4：Git 与调试: labs/lab-4-git-debugging.md
+      - Lab 5：同伴代码审查: labs/lab-5-peer-code-review.md
+      - Lab 6：Project 2 入门: labs/lab-6-project-2.md
+      - Lab 7：BSTMap: labs/lab-7-bstmap.md
+      - Lab 8：HashMap: labs/lab-8-hashmap.md
+      - Project 2 实作日（期中二前）: labs/project-2-workday-midterm.md
+      - 春假：无实验: labs/spring-break.md
+      - Project 2 实作日: labs/project-2-workday.md
+      - Lab 12：Project 3 图块渲染: labs/lab-12-project-3-rendering.md
+      - Lab 13：Project 3 交互: labs/lab-13-project-3-interactivity.md
+      - Project 3 实作日: labs/project-3-workday.md
+      - 告别与 BYOW 展示: labs/byow-demos.md
+      - RRR Week：无实验: labs/rrr-week.md
+  - 作业:
+      - 作业目录: homeworks/index.md
+      - HW 0：Java 速成: homeworks/hw-0-java.md
+      - HW 2：概念复习: homeworks/hw-2-conceptual-review.md
+      - HW 3：概念复习: homeworks/hw-3-conceptual-review.md
+  - 项目:
+      - 项目目录: projects/index.md
+      - Project 0：2048: projects/project-0-2048.md
+      - Project 1：数据结构: projects/project-1-data-structures.md
+      - Project 2：Gitlet: projects/project-2-gitlet.md
+      - Project 2 检查点: projects/project-2-checkpoint.md
+      - Project 3：CS61BYoW: projects/project-3-byow.md
+      - Project 3 第一阶段: projects/project-3-phase-1.md
+      - Project 3 第二阶段: projects/project-3-phase-2.md
+      - Project 3：BYOW 展示: projects/project-3-demos.md
+  - 考试:
+      - 考试目录: exams/index.md
+      - 期中考试 1 模拟评测: exams/midterm-1-practice.md
+      - 期中考试 1: exams/midterm-1.md
+      - 期中考试 2: exams/midterm-2.md
+      - 期末考试: exams/final.md
   - 关于与许可: about.md
 
 plugins:
@@ -102,7 +143,7 @@ markdown_extensions:
       alternate_style: true
 
 extra_css:
-  - assets/stylesheets/extra.css?v=20260726-2
+  - assets/stylesheets/extra.css?v=20260726-3
 
 extra_javascript:
   - assets/javascripts/mathjax-config.js
