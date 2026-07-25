@@ -102,7 +102,7 @@ markdown_extensions:
       alternate_style: true
 
 extra_css:
-  - assets/stylesheets/extra.css
+  - assets/stylesheets/extra.css?v=20260726-2
 
 extra_javascript:
   - assets/javascripts/mathjax-config.js
