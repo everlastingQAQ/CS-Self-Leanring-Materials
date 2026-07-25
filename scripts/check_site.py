@@ -176,6 +176,8 @@ def main() -> None:
                 errors.append(f"course Material homepage is missing {label}")
         if "课程章节" in course_home_html:
             errors.append("course Material homepage still contains 课程章节")
+        if "navigation.instant" in course_home_html:
+            errors.append("instant navigation must stay disabled because /course/ uses a standalone template")
 
     original_style_path = COURSE_SITE / "course" / "index.html"
     if original_style_path.is_file():

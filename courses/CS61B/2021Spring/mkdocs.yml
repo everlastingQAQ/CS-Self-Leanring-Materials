@@ -32,7 +32,6 @@ theme:
         icon: material/brightness-4
         name: 切换到浅色模式
   features:
-    - navigation.instant
     - navigation.tracking
     - navigation.sections
     - navigation.indexes
@@ -129,7 +128,7 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
-      toc_depth: 3
+      toc_depth: 2
   - pymdownx.arithmatex:
       generic: true
   - pymdownx.highlight:
