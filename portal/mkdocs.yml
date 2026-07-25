@@ -41,6 +41,6 @@ markdown_extensions:
   - md_in_html
 
 extra_css:
-  - assets/stylesheets/extra.css?v=20260726-2
+  - assets/stylesheets/extra.css?v=20260726-4
 
 copyright: 中文整理：everlasting
