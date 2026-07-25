@@ -10,13 +10,13 @@
     },
     "lab-discussions": {
       "url": "https://calendar.google.com/calendar/ical/c_c5oaq8so2c92ket6ok26710fk0%40group.calendar.google.com/public/basic.ics",
-      "sha256": "98879fd24fb5f0c8dad3ff154876a407a01e0d03d5282b71dab838fb0e52a893",
-      "bytes": 77602
+      "sha256": "a4f704b019344c58f316af81b6a197c905ac8d7f9c28ce0052ff47893816fa26",
+      "bytes": 70607
     },
     "office-hours": {
       "url": "https://calendar.google.com/calendar/ical/c_e8roo1rcdghmffghilhvcrko0o%40group.calendar.google.com/public/basic.ics",
-      "sha256": "ab06f78198aa8dacc8e1cf4d4df2c89474c0b9425b1c9358b7a987d985e38379",
-      "bytes": 3116
+      "sha256": "5b50923e0cce4d34d6eb85d47c038b8f25a847cd492a3798dab515798c22be06",
+      "bytes": 2856
     }
   }
 }

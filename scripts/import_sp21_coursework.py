@@ -379,6 +379,31 @@ def unfold_ics(text: str) -> list[str]:
     return lines
 
 
+def normalize_ics(data: bytes) -> bytes:
+    """Remove volatile stamps, normalize line endings, and sort VEVENT blocks."""
+    lines = [line.rstrip() for line in data.decode("utf-8").replace("\r\n", "\n").split("\n")]
+    lines = [line for line in lines if not line.startswith("DTSTAMP:")]
+    base: list[str] = []
+    events: list[list[str]] = []
+    current: list[str] | None = None
+    for line in lines:
+        if line == "BEGIN:VEVENT":
+            current = [line]
+        elif current is not None:
+            current.append(line)
+            if line == "END:VEVENT":
+                events.append(current)
+                current = None
+        else:
+            base.append(line)
+    end_index = base.index("END:VCALENDAR")
+    normalized = base[:end_index]
+    for event in sorted(events, key=lambda block: "\n".join(block)):
+        normalized.extend(event)
+    normalized.extend(base[end_index:])
+    return ("\n".join(normalized).rstrip() + "\n").encode("utf-8")
+
+
 def parse_dt(value: str) -> datetime:
     raw = value.rstrip("Z")
     fmt = "%Y%m%dT%H%M%S" if "T" in raw else "%Y%m%d"
@@ -451,26 +476,62 @@ def expand_events(data: bytes) -> list[tuple[datetime, datetime, str, str]]:
 
 def render_archive_calendar(slug: str, title: str, data: bytes, source_url_value: str, embed_url: str) -> str:
     events = expand_events(data)
-    rows = []
-    for start, end, summary, link in events:
-        translated_summary = summary.replace("Office Hours", "答疑时间")
-        translated_summary = re.sub(r"'s Lab$", " 的实验", translated_summary)
-        translated_summary = re.sub(r"s' Lab$", "s 的实验", translated_summary)
-        translated_summary = re.sub(r"'s Discussion$", " 的讨论课", translated_summary)
-        translated_summary = re.sub(r"s' Discussion$", "s 的讨论课", translated_summary)
-        translated_summary = translated_summary.replace(" and ", " 与 ")
-        name = html.escape(translated_summary)
-        if link:
-            name = f'<a href="{html.escape(link, quote=True)}" target="_blank" rel="noopener">{name}</a>'
-        rows.append(
-            "<tr>"
-            f"<td>{start.strftime('%m/%d %a')}</td>"
-            f"<td>{start.strftime('%H:%M')}–{end.strftime('%H:%M')}</td>"
-            f"<td>{name}</td>"
-            "</tr>"
-        )
+    week_start = datetime(2021, 1, 17, tzinfo=TERM_START.tzinfo)
+    week_end = week_start + timedelta(days=7)
+    visible_events = [event for event in events if week_start <= event[0] < week_end]
+    by_day: dict[int, list[tuple[datetime, datetime, str, str]]] = defaultdict(list)
+    for event in visible_events:
+        by_day[(event[0].date() - week_start.date()).days].append(event)
+
+    day_columns: list[str] = []
+    for day in range(7):
+        day_events = sorted(by_day[day], key=lambda event: (event[0], event[1], event[2]))
+        clusters: list[list[tuple[datetime, datetime, str, str]]] = []
+        for event in day_events:
+            if not clusters or event[0] >= max(item[1] for item in clusters[-1]):
+                clusters.append([event])
+            else:
+                clusters[-1].append(event)
+        rendered_events: list[str] = []
+        for cluster in clusters:
+            lanes: list[datetime] = []
+            placements: list[tuple[tuple[datetime, datetime, str, str], int]] = []
+            for event in cluster:
+                lane = next((index for index, lane_end in enumerate(lanes) if event[0] >= lane_end), len(lanes))
+                if lane == len(lanes):
+                    lanes.append(event[1])
+                else:
+                    lanes[lane] = event[1]
+                placements.append((event, lane))
+            lane_count = len(lanes)
+            for (start, end, summary, link), lane in placements:
+                translated_summary = summary.replace("Office Hours", "答疑时间")
+                translated_summary = re.sub(r"'s Lab$", " 的实验", translated_summary)
+                translated_summary = re.sub(r"s' Lab$", "s 的实验", translated_summary)
+                translated_summary = re.sub(r"'s Discussion$", " 的讨论课", translated_summary)
+                translated_summary = re.sub(r"s' Discussion$", "s 的讨论课", translated_summary)
+                translated_summary = translated_summary.replace(" and ", " 与 ")
+                label = html.escape(translated_summary)
+                if link:
+                    label = f'<a href="{html.escape(link, quote=True)}" target="_blank" rel="noopener">{label}</a>'
+                start_minutes = max(0, int((start.hour * 60 + start.minute) - 9 * 60))
+                duration_minutes = max(30, int((end - start).total_seconds() / 60))
+                left = lane * 100 / lane_count
+                width = 100 / lane_count
+                rendered_events.append(
+                    f'<div class="week-event" style="--start:{start_minutes};--duration:{duration_minutes};'
+                    f'--left:{left:.4f};--width:{width:.4f}"><span>{start.strftime("%-I:%M")}–{end.strftime("%-I:%M")}</span>{label}</div>'
+                )
+        day_columns.append(f'<div class="week-day-column">{"".join(rendered_events)}</div>')
+
+    headers = "".join(
+        f'<div class="week-day-heading">{label} {date}</div>'
+        for label, date in zip(("周日", "周一", "周二", "周三", "周四", "周五", "周六"), ("1/17", "1/18", "1/19", "1/20", "1/21", "1/22", "1/23"))
+    )
+    times = "".join(f'<span style="--hour:{hour - 9}">{hour if hour <= 12 else hour - 12}{"am" if hour < 12 else "pm"}</span>' for hour in range(9, 21))
+
     original_copy = (
-        '<p>每个讨论课分为<strong>常规讨论</strong>或<strong>考试准备讨论</strong>。</p>'
+        '<p>每个讨论课现在分为<strong>常规讨论</strong>或<strong>考试准备讨论</strong>。</p>'
         '<ol><li>常规讨论侧重回顾课程内容并完成基础问题。</li>'
         '<li>考试准备讨论减少概念回顾，侧重练习考试难度的问题。</li></ol>'
         if slug == "lab-discussions" else
@@ -478,13 +539,14 @@ def render_archive_calendar(slug: str, title: str, data: bytes, source_url_value
     )
     anchor = "disccal" if slug == "lab-discussions" else "ohcal"
     return (
-        f'<section class="archive-calendar" id="{anchor}"><h2>{title}</h2>{original_copy}'
-        '<div class="calendar-scroll compact"><table><thead><tr><th>日期</th><th>时间（PT）</th><th>安排</th></tr></thead>'
-        f'<tbody>{"".join(rows)}</tbody></table></div>'
+        f'<div class="segment calendar-segment" id="{anchor}"><div class="segmenttitle">{title}</div>{original_copy}'
+        '<div class="week-toolbar"><h3>2021 年 1 月 17–23 日</h3><span>今天　‹　›</span></div>'
+        f'<div class="week-calendar"><div class="week-corner"></div>{headers}'
+        f'<div class="week-time-axis">{times}</div>{"".join(day_columns)}</div>'
         '<div class="calendar-source-links">'
         f'<a href="{embed_url}" target="_blank" rel="noopener">Google 日历</a> · '
-        f'<a href="{source_url_value}" target="_blank" rel="noopener">ICS</a>'
-        '</div></section>'
+        f'<a href="{source_url_value}" target="_blank" rel="noopener">iCal</a>'
+        '</div></div>'
     )
 
 
@@ -495,7 +557,7 @@ def generate_course_home() -> dict:
     manifest = {"homepage": {"url": ORIGINAL_HOME, "sha256": sha256(home)}}
     archived_sections = []
     for slug, details in CALENDARS.items():
-        data = fetch(details["url"])
+        data = normalize_ics(fetch(details["url"]))
         (data_dir / f"{slug}.ics").write_bytes(data)
         manifest[slug] = {"url": details["url"], "sha256": sha256(data), "bytes": len(data)}
         archived_sections.append(
@@ -509,9 +571,11 @@ def generate_course_home() -> dict:
         "description: CS61B Spring 2021 原课程主页的中文归档版。\n"
         "template: course-home.html\n"
         "hide:\n  - navigation\n  - toc\n---\n\n"
-        '<section class="course-announcement" id="announcements">\n'
-        '<h2>公告 <small>[<a href="https://sp21.datastructur.es/announcements.html" target="_blank" rel="noopener">查看全部</a>]</small></h2>\n'
-        '<article class="announcement-card"><div class="announcement-title">«　<strong>第 17 周公告</strong>　»</div>'
+        '<div class="segment" id="announcements">\n'
+        '<div class="segmenttitle">公告 [<a href="https://sp21.datastructur.es/announcements.html" target="_blank" rel="noopener">查看全部</a>]</div>\n'
+        '<div class="announcement-wrapper"><ul class="announcements"><li class="announcement-item">'
+        '<div class="announcement-title-wrapper"><div class="tr"><div class="prev unreleased">«</div>'
+        '<div class="td title">第 17 周公告</div><div class="td next">»</div></div></div>'
         '<p class="post-metadata">发布于 2021 年 5 月 9 日</p>'
         '<h3>期末考试</h3><p>大家好！期末考试安排在 5 月 11 日（周二）太平洋时间 8:10–11:00。请仔细阅读课程公告和相关文档中的全部信息。</p>'
         '<p>如果你以 P/NP 方式修读本课，并且不参加期末考试也已经取得及格所需分数，则无需参加期末考试。本科生的及格线为 C-，在 CS 61B 中对应 6,000 分。</p>'
@@ -522,12 +586,12 @@ def generate_course_home() -> dict:
         '已经发布，完成后可获得 32 分额外加分。问卷于本周五截止，而且没有参与率要求。</p>'
         '<h3>Project 3 复核</h3><p>提交复核申请的同学，其 Beacon 分数已经更新。当前显示的就是 Project 3 检查环节最终分数，课程不再接受新的复核申请；仍有异议可在期末问卷中说明。</p>'
         '<h3>重要日期汇总</h3><ul><li>课程评价：当晚截止</li><li>期末考试：5 月 11 日 8:10–11:00（PT）</li>'
-        '<li>期末问卷：5 月 14 日 23:59（PT）</li></ul></article>\n'
-        '</section>\n\n'
-        '<section class="schedule" id="cal"><h2>课程日历</h2>\n'
-        f'{build_main_calendar(home)}\n</section>\n\n'
+        '<li>期末问卷：5 月 14 日 23:59（PT）</li></ul></li></ul></div>\n'
+        '</div>\n\n'
+        '<div class="segment schedule" id="cal"><div class="segmenttitle">课程日历</div>\n'
+        f'{build_main_calendar(home)}\n</div>\n\n'
         f'{"".join(archived_sections)}\n'
-        '<div id="build-time"><em>最后构建：2021-05-15 03:55 UTC</em></div>\n'
+        '<div id="build_time"><em>最后构建：2021-05-15 03:55 UTC</em></div>\n'
     )
     course_dir = DOCS / "course"
     course_dir.mkdir(parents=True, exist_ok=True)

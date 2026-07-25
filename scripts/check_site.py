@@ -189,6 +189,10 @@ def main() -> None:
                 errors.append(f"original-style course homepage is missing {marker}")
         if 'class="md-header' in original_style_html or 'class="md-sidebar' in original_style_html:
             errors.append("original-style course homepage unexpectedly contains Material chrome")
+        if original_style_html.count('class="week-calendar"') != 2:
+            errors.append("course homepage does not contain the two original-style weekly calendars")
+        if "calendar-scroll compact" in original_style_html:
+            errors.append("course homepage still contains the incorrect long-list calendar")
         for extra_copy in ("中文归档说明", "下列内容由两份公开 ICS", "会议链接按原记录保留"):
             if extra_copy in original_style_html:
                 errors.append(f"course homepage contains non-original explanatory copy: {extra_copy}")
