@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://docs.everlasting.xin/CS61B/2021Spring/sitemap.xml

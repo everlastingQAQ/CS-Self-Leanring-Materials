@@ -1,0 +1,115 @@
+site_name: CS61B Spring 2021 中文教程
+site_description: Java 与数据结构课程中文学习笔记
+site_author: Josh Hug；中文整理：everlasting
+site_url: https://docs.everlasting.xin/CS61B/2021Spring/
+copyright: >-
+  原作 Josh Hug · 中文整理 everlasting ·
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="license noopener">CC BY-NC-SA 4.0</a>
+
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+strict: true
+
+theme:
+  name: material
+  language: zh
+  font: false
+  custom_dir: ../../../shared/overrides
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - toc.integrate
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+
+nav:
+  - 首页: index.md
+  - 课程章节:
+      - 导论: chapters/00-introduction.md
+      - 第 1 章 Java 入门: chapters/01-java-basics.md
+      - 第 2 章 列表: chapters/02-lists.md
+      - 第 3 章 测试: chapters/03-testing.md
+      - 第 4 章 继承与接口: chapters/04-inheritance-and-interfaces.md
+      - 第 5 章 泛型与自动装箱: chapters/05-generics-and-autoboxing.md
+      - 第 6 章 异常、迭代器与 Object 方法: chapters/06-exceptions-iterators-object-methods.md
+      - 第 7 章 包与访问控制: chapters/07-packages-and-access-control.md
+      - 第 8 章 高效编程与渐近分析: chapters/08-efficient-programming-and-asymptotic-analysis.md
+      - 第 9 章 并查集: chapters/09-disjoint-sets.md
+      - 第 10 章 抽象数据类型与树: chapters/10-adts-and-trees.md
+      - 第 11 章 平衡树: chapters/11-balanced-trees.md
+      - 第 12 章 哈希: chapters/12-hashing.md
+      - 第 13 章 堆与优先队列: chapters/13-heaps-and-priority-queues.md
+      - 第 14 章 数据结构总结: chapters/14-data-structures-summary.md
+      - 第 15 章 Trie 字典树: chapters/15-tries.md
+      - 第 16 章 四叉树与 K-D 树: chapters/16-quadtrees-and-kd-trees.md
+      - 第 17 章 树遍历与图: chapters/17-tree-traversals-and-graphs.md
+      - 第 18 章 图遍历与表示: chapters/18-graph-traversal-and-representation.md
+      - 第 19 章 最短路径: chapters/19-shortest-paths.md
+      - 第 20 章 最小生成树: chapters/20-minimum-spanning-trees.md
+      - 第 21 章 归约与分解: chapters/21-reductions-and-decomposition.md
+  - 关于与许可: about.md
+
+plugins:
+  - search:
+      lang: zh
+      separator: '[\s\u200b\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+      jieba_dict_user: courses/CS61B/2021Spring/search-dict.txt
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+extra_javascript:
+  - assets/javascripts/mathjax-config.js
+  - assets/vendor/mathjax/es5/tex-mml-chtml.js
+
+extra:
+  social:
+    - icon: material/book-open-page-variant
+      link: https://joshhug.gitbooks.io/hug61b/content/
+      name: Hug61B 原始网站

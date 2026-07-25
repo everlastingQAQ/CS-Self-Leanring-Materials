@@ -1,0 +1,6 @@
+.git
+.cache
+dist
+site
+__pycache__
+*.pyc

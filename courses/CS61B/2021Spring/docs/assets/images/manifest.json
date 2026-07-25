@@ -1,0 +1,1314 @@
+[
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.1.jpg",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.1.jpg",
+    "local_path": "assets/images/87e175929b6c-21.1.1.jpg",
+    "content_type": "image/jpeg",
+    "bytes": 19475,
+    "sha256": "575b6d88f4be714bcd47c2121dba63ab75e074331effd09be6f8b0d925406a5c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.2.png",
+    "local_path": "assets/images/e714bc7c090d-21.1.2.png",
+    "content_type": "image/png",
+    "bytes": 659084,
+    "sha256": "7c15157d0422d138c22d2d5abe083e799b80740a9ecf3f42c208893a2931ca4a"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.3.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.3.png",
+    "local_path": "assets/images/5d40c6910142-21.1.3.png",
+    "content_type": "image/png",
+    "bytes": 20260,
+    "sha256": "d6603d0915d09617102c1e57fcafa05f2a72065b131e3ffe36a831346e20a13a"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.4.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.1.4.png",
+    "local_path": "assets/images/50c4dee6e3e2-21.1.4.png",
+    "content_type": "image/png",
+    "bytes": 33704,
+    "sha256": "5d20f2364acbf5093d7d7b9516dcc36d3e9dc77d7fdf79732feb6629d25f24c4"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.2.1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.2.1.png",
+    "local_path": "assets/images/39addbcc3cea-21.2.1.png",
+    "content_type": "image/png",
+    "bytes": 42471,
+    "sha256": "25ef3dbcbc10a5296b9e5a71ac6d188dc2263776aff72198415ca9134b5cd07c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.2.2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.2.2.png",
+    "local_path": "assets/images/fdc8937dafd7-21.2.2.png",
+    "content_type": "image/png",
+    "bytes": 42722,
+    "sha256": "839bfc03d26b0e6e3f70e04d85781c422c1f9760a7b00b7aa6625a62c85d38af"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.1.png",
+    "local_path": "assets/images/4346882d3320-21.4.1.png",
+    "content_type": "image/png",
+    "bytes": 96394,
+    "sha256": "9b402944bb0422764b672d170f6a0f1dbebbdee42654a9e7f00ee4ba88c36fe2"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.2.png",
+    "local_path": "assets/images/1b174adee1a0-21.4.2.png",
+    "content_type": "image/png",
+    "bytes": 95191,
+    "sha256": "c6f0934bcaed1a0897902694eda0e55406ff5a2b361fbe045c3b5f64fd9d15f6"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.3.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.3.png",
+    "local_path": "assets/images/05b2aaebed7b-21.4.3.png",
+    "content_type": "image/png",
+    "bytes": 86569,
+    "sha256": "334f67feb1297a6c7e4a6e91b8f01cf148f0c9c60c924889c0860730cbb1f3d2"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.4.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.4.png",
+    "local_path": "assets/images/245d3ada8d51-21.4.4.png",
+    "content_type": "image/png",
+    "bytes": 78238,
+    "sha256": "41d5ab65f404a1f1575b152c58ae64e39b7b445fcbd6f05abba36d4c334cc5a9"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.5.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/21.4.5.png",
+    "local_path": "assets/images/44a23044e35c-21.4.5.png",
+    "content_type": "image/png",
+    "bytes": 138507,
+    "sha256": "4c66db26ff06373bbadd45f1b2f1ab9c90ec1de6e839d11e314c526cd4de1848"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/8.1-==-chart.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/8.1-==-chart.png",
+    "local_path": "assets/images/c940ab90f707-8.1---chart.png",
+    "content_type": "image/png",
+    "bytes": 29849,
+    "sha256": "ffac776d0459d6329ef66aca2c7dc7e84d696ba2cca4005e2d241b268f7989b9"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.2.1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.2.1.png",
+    "local_path": "assets/images/eefc63f5a4fe-9.2.1.png",
+    "content_type": "image/png",
+    "bytes": 29357,
+    "sha256": "a8e0b50cdbe46ee86003d96b30195fb20446421874202736678906cab692dba9"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.2.2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.2.2.png",
+    "local_path": "assets/images/e34b7812a6b9-9.2.2.png",
+    "content_type": "image/png",
+    "bytes": 39190,
+    "sha256": "2cc82d0d3a109f34414e93b33e0dde30a470f60c9ea3c5f51ad6d8bd036ec60b"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.3.1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.3.1.png",
+    "local_path": "assets/images/b4e099cb6e6f-9.3.1.png",
+    "content_type": "image/png",
+    "bytes": 103221,
+    "sha256": "3a08adcbcb12bb42df0ec7750bfe1ec8cd3641fd0e3a82505e411ef9375d435a"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.3.2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.3.2.png",
+    "local_path": "assets/images/8a088212d965-9.3.2.png",
+    "content_type": "image/png",
+    "bytes": 78938,
+    "sha256": "fbabc94fc36caa1c3f0bd9c5d1f2a6c54fde4d161ec8d829db43023466b3bf11"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.3.3.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.3.3.png",
+    "local_path": "assets/images/c7d6f1b37fb3-9.3.3.png",
+    "content_type": "image/png",
+    "bytes": 39898,
+    "sha256": "2b673bebe1b1883bed3d44928e0107aa40985f294fbd35da46cb2b465a70c079"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.4.1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.4.1.png",
+    "local_path": "assets/images/c17198313f16-9.4.1.png",
+    "content_type": "image/png",
+    "bytes": 52486,
+    "sha256": "290e1c52c4af16483ab9de7bb275ef1b9d69ecc96eb99b3368818bcd8422d1f9"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.4.2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/9.4.2.png",
+    "local_path": "assets/images/b2e33f764cdf-9.4.2.png",
+    "content_type": "image/png",
+    "bytes": 78999,
+    "sha256": "e3ede9ab179dac86c2eac12252596a0b921e1e1b9179f50379bdb524da81da8c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Doge.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Doge.png",
+    "local_path": "assets/images/bf408e0e79f2-Doge.png",
+    "content_type": "image/png",
+    "bytes": 62581,
+    "sha256": "9eb4b3bde6e3f63b4a4b177b496a0af14da7d977f8eac3f17b224152d0785e91"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/IntList_vs_SLList.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/IntList_vs_SLList.png",
+    "local_path": "assets/images/87049caa1804-IntList_vs_SLList.png",
+    "content_type": "image/png",
+    "bytes": 23707,
+    "sha256": "488914556909f85dfc476a38cc37de0987464e0f2b4691983862322356236374"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-27%20at%201.54.27%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-27%20at%201.54.27%20PM.png",
+    "local_path": "assets/images/bba029cd2c51-Screen-Shot-2019-02-27-at-1.54.27-PM.png",
+    "content_type": "image/png",
+    "bytes": 79881,
+    "sha256": "eb5eb82010f9c0749e0a05743094850212f16f383e60b4e9ce2d4d9126bff88b"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.34.53%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.34.53%20AM.png",
+    "local_path": "assets/images/6f6a95ee91f2-Screen-Shot-2019-02-28-at-10.34.53-AM.png",
+    "content_type": "image/png",
+    "bytes": 37816,
+    "sha256": "c2ccf2a8c576072f0a5feb627cdbafc4af0ef7591cda42d6a76dae6e6af9048c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.35.56%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.35.56%20AM.png",
+    "local_path": "assets/images/0f6aa602e985-Screen-Shot-2019-02-28-at-10.35.56-AM.png",
+    "content_type": "image/png",
+    "bytes": 36991,
+    "sha256": "309de026a446366beb7af3e398e0d4580b705445be6a5fbfc109e0d3453e53bd"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.36.39%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.36.39%20AM.png",
+    "local_path": "assets/images/34fb259f2a9f-Screen-Shot-2019-02-28-at-10.36.39-AM.png",
+    "content_type": "image/png",
+    "bytes": 20897,
+    "sha256": "4bc1537bec391758b86074e90579eb35d4c32c7300182f687f936a3910dc20c1"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.43.45%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2010.43.45%20AM.png",
+    "local_path": "assets/images/798d666f7ce9-Screen-Shot-2019-02-28-at-10.43.45-AM.png",
+    "content_type": "image/png",
+    "bytes": 31926,
+    "sha256": "072e4bb85d921ffe59fe3b3cba867d7118816146b53193e0a73c9875d1fc5501"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.51.06%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.51.06%20AM.png",
+    "local_path": "assets/images/faf76c3d2542-Screen-Shot-2019-02-28-at-12.51.06-AM.png",
+    "content_type": "image/png",
+    "bytes": 38634,
+    "sha256": "3170db7f6a2aa31775cc2b0fe860e3f457ab6de2f36d347f65230dcb8d9ea7f3"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.55.40%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.55.40%20AM.png",
+    "local_path": "assets/images/c57028055018-Screen-Shot-2019-02-28-at-12.55.40-AM.png",
+    "content_type": "image/png",
+    "bytes": 39305,
+    "sha256": "0fc38b8dd0c41ba001767cdf88ffe541349613ad0121fa46a3f0ff95b39871e4"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.58.07%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.58.07%20AM.png",
+    "local_path": "assets/images/a54ddfca379e-Screen-Shot-2019-02-28-at-12.58.07-AM.png",
+    "content_type": "image/png",
+    "bytes": 42069,
+    "sha256": "aeee586eb362e8a5876972c52d8ae05714f7a67fb33f0e3c8ce1e3d82140725e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.59.39%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%2012.59.39%20AM.png",
+    "local_path": "assets/images/bdfdee68b4c7-Screen-Shot-2019-02-28-at-12.59.39-AM.png",
+    "content_type": "image/png",
+    "bytes": 45925,
+    "sha256": "3830b3735b9b2953930ddb7936c72dcbf53d9df6cf431e807fcb49db2a63dc08"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%209.25.43%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%209.25.43%20AM.png",
+    "local_path": "assets/images/e1f744ca554d-Screen-Shot-2019-02-28-at-9.25.43-AM.png",
+    "content_type": "image/png",
+    "bytes": 44571,
+    "sha256": "a310ee69bd060f7eb3ee537898e1a5590a7f3cd1a1c3e98d2000e8f5ab8baac7"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%209.36.01%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-02-28%20at%209.36.01%20AM.png",
+    "local_path": "assets/images/833ce1e6b2f6-Screen-Shot-2019-02-28-at-9.36.01-AM.png",
+    "content_type": "image/png",
+    "bytes": 68710,
+    "sha256": "67e871e3371cea12fac8b6e725212f33eb3240d1002ed1110e1ac51851b13875"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%2012.56.54%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%2012.56.54%20PM.png",
+    "local_path": "assets/images/c1173b000e78-Screen-Shot-2019-03-05-at-12.56.54-PM.png",
+    "content_type": "image/png",
+    "bytes": 55422,
+    "sha256": "92f2f44b140dd94b9f9879181ac1b71009c573feee387eab26474099380ea83c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%203.53.32%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%203.53.32%20PM.png",
+    "local_path": "assets/images/85f72b4c21a2-Screen-Shot-2019-03-05-at-3.53.32-PM.png",
+    "content_type": "image/png",
+    "bytes": 20922,
+    "sha256": "20bdd80a83a05070c53c1de22b1e45293d8aca908ff01adc6980bea6fb93dc2c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.02.58%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.02.58%20PM.png",
+    "local_path": "assets/images/36a9a2ca16d8-Screen-Shot-2019-03-05-at-4.02.58-PM.png",
+    "content_type": "image/png",
+    "bytes": 9552,
+    "sha256": "a201581a6a19e29f714845c217f3fbc5ca97d8f14b7843ed12c04a30ccfc0eee"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.05.03%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.05.03%20PM.png",
+    "local_path": "assets/images/5d89fd7ebe83-Screen-Shot-2019-03-05-at-4.05.03-PM.png",
+    "content_type": "image/png",
+    "bytes": 15543,
+    "sha256": "a9bb4c334463c50fd9eae6cfb83af4e4cf78d50ede86da00d9876f4541921cba"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.12.17%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.12.17%20PM.png",
+    "local_path": "assets/images/ecc97f013a15-Screen-Shot-2019-03-05-at-4.12.17-PM.png",
+    "content_type": "image/png",
+    "bytes": 33817,
+    "sha256": "dd52de12a75848c9e3b5e22765b051cf3e53ec9764d863418d0c0e6b2c40c073"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.35.18%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-05%20at%204.35.18%20PM.png",
+    "local_path": "assets/images/2dc740182972-Screen-Shot-2019-03-05-at-4.35.18-PM.png",
+    "content_type": "image/png",
+    "bytes": 13771,
+    "sha256": "5d067cc30ee3b1468d3649f5e31ada7c699757c9de406d8d58ed1fb96fe79d45"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.25.18%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.25.18%20PM.png",
+    "local_path": "assets/images/765ac3f3006b-Screen-Shot-2019-03-06-at-10.25.18-PM.png",
+    "content_type": "image/png",
+    "bytes": 82988,
+    "sha256": "705010b86ac83f43de40802dd13334a26a43ef3bba355807e10d4d419b624753"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.30.30%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.30.30%20PM.png",
+    "local_path": "assets/images/175bba3ac789-Screen-Shot-2019-03-06-at-10.30.30-PM.png",
+    "content_type": "image/png",
+    "bytes": 21886,
+    "sha256": "0b5549fc9b5d7c9a21ef4065a2660d5b1c01386ff0c095d6ced91e4d5f489daf"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.37.17%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.37.17%20PM.png",
+    "local_path": "assets/images/a401cefc317c-Screen-Shot-2019-03-06-at-10.37.17-PM.png",
+    "content_type": "image/png",
+    "bytes": 47926,
+    "sha256": "f2451a2bc55b5811aa21d79e07d0637a68ad132549f33be88c68e587ad4fe21a"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.51.15%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.51.15%20PM.png",
+    "local_path": "assets/images/0b92a28b29b9-Screen-Shot-2019-03-06-at-10.51.15-PM.png",
+    "content_type": "image/png",
+    "bytes": 59681,
+    "sha256": "9f8e4a9e74d0ab19a22bc8bca2d5ffe69fc55b0c6d1fc894e58490dc2bf60adf"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.56.51%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2010.56.51%20PM.png",
+    "local_path": "assets/images/304318233b30-Screen-Shot-2019-03-06-at-10.56.51-PM.png",
+    "content_type": "image/png",
+    "bytes": 55463,
+    "sha256": "b4d29653add06d5b44de45fa1b50afec45403b23fe0ed3e5649d8f4a2dfe8409"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.14.41%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.14.41%20PM.png",
+    "local_path": "assets/images/a5fc2cf57bba-Screen-Shot-2019-03-06-at-11.14.41-PM.png",
+    "content_type": "image/png",
+    "bytes": 44723,
+    "sha256": "9e816fac26a3952036eb405448e6da0d7a0cf87cbfdf4e6e65ca6288a6bbe7ff"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.33.14%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.33.14%20PM.png",
+    "local_path": "assets/images/91d30f7a05e3-Screen-Shot-2019-03-06-at-11.33.14-PM.png",
+    "content_type": "image/png",
+    "bytes": 53744,
+    "sha256": "10663e9628ddd458be8bff7b3ace84107c666e5adf7c09b5bf8ea1e76c12fa79"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.36.00%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.36.00%20PM.png",
+    "local_path": "assets/images/b2ba0dd82bc7-Screen-Shot-2019-03-06-at-11.36.00-PM.png",
+    "content_type": "image/png",
+    "bytes": 46992,
+    "sha256": "5ef1f77fa90ca315dc7075188dd29b6ab882426cb3d78556e5311a7cb9869161"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.37.57%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%2011.37.57%20PM.png",
+    "local_path": "assets/images/97fc799f5d3d-Screen-Shot-2019-03-06-at-11.37.57-PM.png",
+    "content_type": "image/png",
+    "bytes": 17772,
+    "sha256": "45957c3934eee7b85cae1e3df98a1bcc06313dc451e241dcf26b4ed2af992f0e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%206.53.22%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-06%20at%206.53.22%20PM.png",
+    "local_path": "assets/images/f518c76661b7-Screen-Shot-2019-03-06-at-6.53.22-PM.png",
+    "content_type": "image/png",
+    "bytes": 39882,
+    "sha256": "734740848bdfb2094e50660dae1c4b8901131a6a424908df8047f678a0ba2492"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.19.34%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.19.34%20PM.png",
+    "local_path": "assets/images/4b1439a6fbe7-Screen-Shot-2019-03-08-at-1.19.34-PM.png",
+    "content_type": "image/png",
+    "bytes": 46002,
+    "sha256": "9bb14173f38fb51b1e50ebcfc76643638d73a31a31a09b1b9f579bbcc4b8593d"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.37.16%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.37.16%20PM.png",
+    "local_path": "assets/images/76ccdee61f5a-Screen-Shot-2019-03-08-at-1.37.16-PM.png",
+    "content_type": "image/png",
+    "bytes": 126114,
+    "sha256": "db648f2b66628f974b1746eb25f435956fbea91df7c2ab6e8650d93e61ebe859"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.44.43%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.44.43%20PM.png",
+    "local_path": "assets/images/4892d1f77f59-Screen-Shot-2019-03-08-at-1.44.43-PM.png",
+    "content_type": "image/png",
+    "bytes": 117888,
+    "sha256": "1f4c26d97811c053cd78bbe15c343ab9563e30a35eac09b2c6cef60269114603"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.49.51%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.49.51%20PM.png",
+    "local_path": "assets/images/bac739f68c3a-Screen-Shot-2019-03-08-at-1.49.51-PM.png",
+    "content_type": "image/png",
+    "bytes": 82677,
+    "sha256": "915f7ebf6458fb0d0fee1a9ed5f36bc0f53a98d4a9dd8c3be7244e5d4788b3ba"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.49.56%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%201.49.56%20PM.png",
+    "local_path": "assets/images/1786960e3f77-Screen-Shot-2019-03-08-at-1.49.56-PM.png",
+    "content_type": "image/png",
+    "bytes": 70273,
+    "sha256": "dc8574413b25d677e4a33bb79ba488567931b08cb9c5581c702d3f08328be261"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%2012.49.36%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%2012.49.36%20PM.png",
+    "local_path": "assets/images/ad26b13fe6d9-Screen-Shot-2019-03-08-at-12.49.36-PM.png",
+    "content_type": "image/png",
+    "bytes": 40858,
+    "sha256": "bd52cffc1ebee1641e2e1c773bdece1184de4573a7c1babd9d4fb13fcb7748e8"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%2012.53.44%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-08%20at%2012.53.44%20PM.png",
+    "local_path": "assets/images/ff74b24f6eea-Screen-Shot-2019-03-08-at-12.53.44-PM.png",
+    "content_type": "image/png",
+    "bytes": 60568,
+    "sha256": "bf3ae890ecc9a6276dd163561cb222f73f669524d31b753f08c49bef5975130e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.03.15%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.03.15%20PM.png",
+    "local_path": "assets/images/54db55609872-Screen-Shot-2019-03-09-at-10.03.15-PM.png",
+    "content_type": "image/png",
+    "bytes": 25925,
+    "sha256": "289c9d29232e4d9da8aa3b3d36d1f479988a4991eafb45478d85219e3f8ca860"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.08.44%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.08.44%20PM.png",
+    "local_path": "assets/images/f1619b5c6b28-Screen-Shot-2019-03-09-at-10.08.44-PM.png",
+    "content_type": "image/png",
+    "bytes": 21968,
+    "sha256": "46f875c9bd804da269997fbce10592b1eeb5b4969f56fe4ae74dce7fa48b0de8"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.15.11%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.15.11%20PM.png",
+    "local_path": "assets/images/9730197a8bcb-Screen-Shot-2019-03-09-at-10.15.11-PM.png",
+    "content_type": "image/png",
+    "bytes": 77000,
+    "sha256": "6eb5aff0159841e2653b0e27233772f8508f2fc0f35dbe2e2b7f1d358ce7e915"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.26.05%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%2010.26.05%20PM.png",
+    "local_path": "assets/images/2de368c2344b-Screen-Shot-2019-03-09-at-10.26.05-PM.png",
+    "content_type": "image/png",
+    "bytes": 61047,
+    "sha256": "9194a38de473c79bcda7f02030a9ff408fb6f00f4b2e57472a9dff42cb0ffa85"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%209.54.04%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-09%20at%209.54.04%20PM.png",
+    "local_path": "assets/images/be971c06f261-Screen-Shot-2019-03-09-at-9.54.04-PM.png",
+    "content_type": "image/png",
+    "bytes": 28093,
+    "sha256": "f965a109b34fd7fa75b0bb0367ef34ff5ce76512ec4df71822f6fede184ab021"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-13%20at%2011.37.10%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-13%20at%2011.37.10%20PM.png",
+    "local_path": "assets/images/f514b1dead93-Screen-Shot-2019-03-13-at-11.37.10-PM.png",
+    "content_type": "image/png",
+    "bytes": 83040,
+    "sha256": "877b167eb6f99b6d97803754ee1ac737906820e59b7a846627432c7c42168a74"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-14%20at%2012.38.42%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-14%20at%2012.38.42%20AM.png",
+    "local_path": "assets/images/b5a1ed27a954-Screen-Shot-2019-03-14-at-12.38.42-AM.png",
+    "content_type": "image/png",
+    "bytes": 33769,
+    "sha256": "f7a03f87b142676e8b6db47c4c068631444e8976239b25d759d35541afb2da34"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-14%20at%2012.47.38%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-14%20at%2012.47.38%20AM.png",
+    "local_path": "assets/images/6d195c983bda-Screen-Shot-2019-03-14-at-12.47.38-AM.png",
+    "content_type": "image/png",
+    "bytes": 34539,
+    "sha256": "b072395dc7718ceb16f5dd507478469c20b074d96177a0d8bf4f30716402b534"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2010.46.02%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2010.46.02%20AM.png",
+    "local_path": "assets/images/f89c889f647d-Screen-Shot-2019-03-15-at-10.46.02-AM.png",
+    "content_type": "image/png",
+    "bytes": 188911,
+    "sha256": "a08ed6c7d8723381b3f4324bb7e33d0e2b143014078b971c5e6230901a042fab"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.11.28%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.11.28%20AM.png",
+    "local_path": "assets/images/f25a5f2e3d80-Screen-Shot-2019-03-15-at-11.11.28-AM.png",
+    "content_type": "image/png",
+    "bytes": 194606,
+    "sha256": "c1b45622aaed76666b9c6e68085ab70d60d59282ebc826c355db6b6ffae8777f"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.32.09%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.32.09%20AM.png",
+    "local_path": "assets/images/3053d66cd8ff-Screen-Shot-2019-03-15-at-11.32.09-AM.png",
+    "content_type": "image/png",
+    "bytes": 36681,
+    "sha256": "28e381db05a25e2bf3454f880a94a461d3c312e9a20e96a642559263bca82695"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.40.56%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.40.56%20AM.png",
+    "local_path": "assets/images/5be2d553b81b-Screen-Shot-2019-03-15-at-11.40.56-AM.png",
+    "content_type": "image/png",
+    "bytes": 31804,
+    "sha256": "11a94b50d3706f4a8bd4c2912ad23dcc68b906f0262008997e4340740ae30d7d"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.41.02%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-15%20at%2011.41.02%20AM.png",
+    "local_path": "assets/images/203964fe8bc0-Screen-Shot-2019-03-15-at-11.41.02-AM.png",
+    "content_type": "image/png",
+    "bytes": 24323,
+    "sha256": "eeba92ae1147b6409d975906da7d619945e4618ae85311f0616d8da632239231"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.33.04%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.33.04%20AM.png",
+    "local_path": "assets/images/7568188b6621-Screen-Shot-2019-03-16-at-1.33.04-AM.png",
+    "content_type": "image/png",
+    "bytes": 23178,
+    "sha256": "8251acf93cfa318c69390035f8057310b50246ea560c97cc3c7fb323bd86b109"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.33.08%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.33.08%20AM.png",
+    "local_path": "assets/images/4077347586a8-Screen-Shot-2019-03-16-at-1.33.08-AM.png",
+    "content_type": "image/png",
+    "bytes": 16074,
+    "sha256": "9eb4ce212af9a46779ae0dcfff7fabdef4d7ebb699ed3d56661da2fe95efb5b0"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.45.55%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.45.55%20AM.png",
+    "local_path": "assets/images/d273ea71fd43-Screen-Shot-2019-03-16-at-1.45.55-AM.png",
+    "content_type": "image/png",
+    "bytes": 38233,
+    "sha256": "4dc201922a78e4b672d92b33e724f9c8a4f9ca4bea42fc1db007ac99b086e6d2"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.46.01%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.46.01%20AM.png",
+    "local_path": "assets/images/1b60f972b5fb-Screen-Shot-2019-03-16-at-1.46.01-AM.png",
+    "content_type": "image/png",
+    "bytes": 29911,
+    "sha256": "c441d93e7a40ac9895739069e06253a2c2dead093133d4b32bc92d3280daf6d7"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.57.42%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%201.57.42%20AM.png",
+    "local_path": "assets/images/88b638c488d8-Screen-Shot-2019-03-16-at-1.57.42-AM.png",
+    "content_type": "image/png",
+    "bytes": 28633,
+    "sha256": "fdfdd724cda8a50e83bebd187fd94ec41c90726a996c125b291dfcffcb2ec300"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%205.33.01%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%205.33.01%20PM.png",
+    "local_path": "assets/images/9fb7cffb0af0-Screen-Shot-2019-03-16-at-5.33.01-PM.png",
+    "content_type": "image/png",
+    "bytes": 37659,
+    "sha256": "1cd102873408922d447464c10f9b099bf48dda7835cd920b2f039dff40f2747d"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%205.42.50%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%205.42.50%20PM.png",
+    "local_path": "assets/images/a089537fe5f9-Screen-Shot-2019-03-16-at-5.42.50-PM.png",
+    "content_type": "image/png",
+    "bytes": 29131,
+    "sha256": "a608e36033642a4311983603e4e6b2d4d33bd4272b128d1e2292633b73078675"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%205.44.54%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-16%20at%205.44.54%20PM.png",
+    "local_path": "assets/images/2f90d96269e1-Screen-Shot-2019-03-16-at-5.44.54-PM.png",
+    "content_type": "image/png",
+    "bytes": 31868,
+    "sha256": "45147de01cf060d65e76258d4c10070576184912993cfb63807acc92171e22fd"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%203.53.23%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%203.53.23%20PM.png",
+    "local_path": "assets/images/bc20f35ce1d6-Screen-Shot-2019-03-17-at-3.53.23-PM.png",
+    "content_type": "image/png",
+    "bytes": 73687,
+    "sha256": "d80968f68ad3294379e91ffa4094509a0efe9ae41a8ddbb5ecc55ed05a2cb4c6"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.19.24%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.19.24%20PM.png",
+    "local_path": "assets/images/eb0107c28514-Screen-Shot-2019-03-17-at-4.19.24-PM.png",
+    "content_type": "image/png",
+    "bytes": 125281,
+    "sha256": "9ddde7152a166aa8be13ba4ff6f7b239f6eabd5ced10c4e44a112a158f12632a"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.24.36%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.24.36%20PM.png",
+    "local_path": "assets/images/ed28b82cc75f-Screen-Shot-2019-03-17-at-4.24.36-PM.png",
+    "content_type": "image/png",
+    "bytes": 178354,
+    "sha256": "2f1ba7d3ca3b23b1b4adbc44e008d5c3a2191d23670ed348e541891a5898633d"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.26.41%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.26.41%20PM.png",
+    "local_path": "assets/images/fd010ab51038-Screen-Shot-2019-03-17-at-4.26.41-PM.png",
+    "content_type": "image/png",
+    "bytes": 687216,
+    "sha256": "23abe27c3b0082a97bfb614cee400706749883cd51456797504c2e88a1ffec91"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.37.32%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-17%20at%204.37.32%20PM.png",
+    "local_path": "assets/images/49daff26367d-Screen-Shot-2019-03-17-at-4.37.32-PM.png",
+    "content_type": "image/png",
+    "bytes": 46755,
+    "sha256": "0f547e836b823a4724f28cc13688065bfdc9c93d14f2293f5e89666aa072cb03"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.25.41%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.25.41%20PM.png",
+    "local_path": "assets/images/e75a693ac9b0-Screen-Shot-2019-03-23-at-7.25.41-PM.png",
+    "content_type": "image/png",
+    "bytes": 128247,
+    "sha256": "6cf327639e566535ab23313fecd905f8450dbbd3c6ee276a3780e8b5c0d8d95f"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.27.24%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.27.24%20PM.png",
+    "local_path": "assets/images/80c9ecf733a4-Screen-Shot-2019-03-23-at-7.27.24-PM.png",
+    "content_type": "image/png",
+    "bytes": 53534,
+    "sha256": "9b07836998005c553784205df5c911cdbfcd7e11c63549647c896cb51dcb1237"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.29.30%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.29.30%20PM.png",
+    "local_path": "assets/images/70eff54b76df-Screen-Shot-2019-03-23-at-7.29.30-PM.png",
+    "content_type": "image/png",
+    "bytes": 51193,
+    "sha256": "fdb0ef0b91c341cca7e0c303884c10fffb8ce3d47e15dae576ba106557210d94"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.30.04%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%207.30.04%20PM.png",
+    "local_path": "assets/images/2dc4e3b68ab3-Screen-Shot-2019-03-23-at-7.30.04-PM.png",
+    "content_type": "image/png",
+    "bytes": 51947,
+    "sha256": "ed201612047570b15230ff6669c612dc2e5fdbdccce522e7fcb0903c8f36ec87"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%208.10.37%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%208.10.37%20PM.png",
+    "local_path": "assets/images/e95323938d1d-Screen-Shot-2019-03-23-at-8.10.37-PM.png",
+    "content_type": "image/png",
+    "bytes": 21207,
+    "sha256": "93aed45adf6d4d244c31bf7a2b3396901a6922442d22f881d682948e8a280ff4"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%208.29.56%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-23%20at%208.29.56%20PM.png",
+    "local_path": "assets/images/647a13eb5350-Screen-Shot-2019-03-23-at-8.29.56-PM.png",
+    "content_type": "image/png",
+    "bytes": 644816,
+    "sha256": "89053117ba95424ea8c67e96242bb24f7f7f694b331a7e2a3921336f0f3d602a"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%201.58.11%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%201.58.11%20AM.png",
+    "local_path": "assets/images/b5f6e4230eb1-Screen-Shot-2019-03-27-at-1.58.11-AM.png",
+    "content_type": "image/png",
+    "bytes": 15959,
+    "sha256": "b160802bcfb647e76648e8d410bf70980d2bb904704f722a085a76af61d09d05"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.36%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.36%20AM.png",
+    "local_path": "assets/images/15a3a3d73374-Screen-Shot-2019-03-27-at-2.03.36-AM.png",
+    "content_type": "image/png",
+    "bytes": 9299,
+    "sha256": "9cd8742fee753587e7b8c31594e4a3f69707b7b7b53063aa724485dacd1f7b4e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.44%20AM%20%281%29.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.44%20AM%20%281%29.png",
+    "local_path": "assets/images/a91c68e56540-Screen-Shot-2019-03-27-at-2.03.44-AM-1.png",
+    "content_type": "image/png",
+    "bytes": 17871,
+    "sha256": "1bf707d78651040094d854ea0b05312cf2df4235894778ada3c8a3113ceb2165"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.44%20AM%20%282%29.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.44%20AM%20%282%29.png",
+    "local_path": "assets/images/8cb11147d723-Screen-Shot-2019-03-27-at-2.03.44-AM-2.png",
+    "content_type": "image/png",
+    "bytes": 17871,
+    "sha256": "1bf707d78651040094d854ea0b05312cf2df4235894778ada3c8a3113ceb2165"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.44%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.03.44%20AM.png",
+    "local_path": "assets/images/ec912e8b1b76-Screen-Shot-2019-03-27-at-2.03.44-AM.png",
+    "content_type": "image/png",
+    "bytes": 17871,
+    "sha256": "1bf707d78651040094d854ea0b05312cf2df4235894778ada3c8a3113ceb2165"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.05.55%20AM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-03-27%20at%202.05.55%20AM.png",
+    "local_path": "assets/images/ae33c78d893d-Screen-Shot-2019-03-27-at-2.05.55-AM.png",
+    "content_type": "image/png",
+    "bytes": 10928,
+    "sha256": "6d80cb8e867207f4810bf1870f8d3d11c9be8ebe7479e2f77bb443d777b7c2fa"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-01%20at%201.18.57%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-01%20at%201.18.57%20PM.png",
+    "local_path": "assets/images/c467b64c1798-Screen-Shot-2019-04-01-at-1.18.57-PM.png",
+    "content_type": "image/png",
+    "bytes": 77243,
+    "sha256": "faeae78665865a100276a10e7aa0bf9f4468974d4c1b69510172c910b07855e7"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-01%20at%2012.51.49%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-01%20at%2012.51.49%20PM.png",
+    "local_path": "assets/images/198a09a8dd8d-Screen-Shot-2019-04-01-at-12.51.49-PM.png",
+    "content_type": "image/png",
+    "bytes": 86835,
+    "sha256": "24e553584a9c415dda8b724eb81f6bf1fb7dd1ff4c8d9243aef2281a3b33bb1c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-01%20at%2012.55.39%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-01%20at%2012.55.39%20PM.png",
+    "local_path": "assets/images/07c4e0e5621a-Screen-Shot-2019-04-01-at-12.55.39-PM.png",
+    "content_type": "image/png",
+    "bytes": 92210,
+    "sha256": "bcdd39abca8448dc38a8f06995109f8e5ce8d0407626a1a6fc11613bb0aea781"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-14%20at%208.57.22%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-14%20at%208.57.22%20PM.png",
+    "local_path": "assets/images/04b021699e48-Screen-Shot-2019-04-14-at-8.57.22-PM.png",
+    "content_type": "image/png",
+    "bytes": 93693,
+    "sha256": "6041663d5aea255c2938b93e3b9aab94a68cb15ad6fa42e7d208285c51fc0321"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-14%20at%209.03.06%20PM.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/Screen%20Shot%202019-04-14%20at%209.03.06%20PM.png",
+    "local_path": "assets/images/f0f75b1613fa-Screen-Shot-2019-04-14-at-9.03.06-PM.png",
+    "content_type": "image/png",
+    "bytes": 84786,
+    "sha256": "bfdf1bbaca7266e960c87e6f544a36bbe35552aa36b6d94df55c8c01513d5863"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/access_modifiers.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/access_modifiers.png",
+    "local_path": "assets/images/a572888e74c6-access_modifiers.png",
+    "content_type": "image/png",
+    "bytes": 41487,
+    "sha256": "c068b988f4d61ea43cda284a7a77a5034e55c217816715246b0380b9dee292cd"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/amortized_adds.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/amortized_adds.png",
+    "local_path": "assets/images/8e8a479ed229-amortized_adds.png",
+    "content_type": "image/png",
+    "bytes": 48955,
+    "sha256": "a3ef775764dfb163e54429ffc229fa3c3e26441ac2c5bc462358097e0e151afd"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/anonymous_walrus.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/anonymous_walrus.png",
+    "local_path": "assets/images/f2e9007e6c7b-anonymous_walrus.png",
+    "content_type": "image/png",
+    "bytes": 16008,
+    "sha256": "168e468ab33d642b97c64bb144deec338d018f8406b8e752d4056b32b252ef82"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/ascii.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/ascii.png",
+    "local_path": "assets/images/87c3e25e2698-ascii.png",
+    "content_type": "image/png",
+    "bytes": 85696,
+    "sha256": "3f41ef443c8d1088814bcdbc8c8a87402972b4edfb14534e79cc2f14fb650e3e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/asymptotics2_tree.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/asymptotics2_tree.png",
+    "local_path": "assets/images/ca056c28099f-asymptotics2_tree.png",
+    "content_type": "image/png",
+    "bytes": 11291,
+    "sha256": "7eac6238279f83d9791bb44069a6e4ac540a95b61f1bed92342ec109a6fcf526"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/asymptotics2_tree2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/asymptotics2_tree2.png",
+    "local_path": "assets/images/4a231c032302-asymptotics2_tree2.png",
+    "content_type": "image/png",
+    "bytes": 18984,
+    "sha256": "07c8003e4a5a7c4dd3536854962e791f60f920732a2d0e494f8c71a4cd5a5ff1"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/average_a_b.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/average_a_b.png",
+    "local_path": "assets/images/59e4439609b7-average_a_b.png",
+    "content_type": "image/png",
+    "bytes": 6229,
+    "sha256": "5ea88eb9140bcdd1c29f91fa360a1e3b74ba353454bba978c4bca9b4d92c87b2"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/bad_SLList.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/bad_SLList.png",
+    "local_path": "assets/images/bfd2fe6d846d-bad_SLList.png",
+    "content_type": "image/png",
+    "bytes": 10856,
+    "sha256": "ae6064afc2ebf46c83243b5c5488f607bf57f4ca1fc10b08abf1cf7a1a62ee0f"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/callstack.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/callstack.png",
+    "local_path": "assets/images/613d9f5fcd67-callstack.png",
+    "content_type": "image/png",
+    "bytes": 29005,
+    "sha256": "75894dc3cff0c0d207e3254ad129d51da5a7486247fcf5679a7871fa372d9ca8"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/cell_encapsulated.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/cell_encapsulated.png",
+    "local_path": "assets/images/3c6990b0c70f-cell_encapsulated.png",
+    "content_type": "image/png",
+    "bytes": 224725,
+    "sha256": "6aa7dfe6cd7471c520c597e4842a48b94127366ff2627092d0bc74644be1dac8"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/checked_exceptions.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/checked_exceptions.png",
+    "local_path": "assets/images/0c42e9987984-checked_exceptions.png",
+    "content_type": "image/png",
+    "bytes": 41978,
+    "sha256": "0a7fb3e2356ab6265fca75de698cef5b4beb2df671b548d4462d455b7481d009"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/collection_hierarchy.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/collection_hierarchy.png",
+    "local_path": "assets/images/da441549d85b-collection_hierarchy.png",
+    "content_type": "image/png",
+    "bytes": 79411,
+    "sha256": "0a1d125e1723adeae4b78f39617f5f60bdb03c13696b91b298ba31d22d8c2465"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/comparable.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/comparable.png",
+    "local_path": "assets/images/d4dea57e5fde-comparable.png",
+    "content_type": "image/png",
+    "bytes": 73968,
+    "sha256": "8d1325984ce9301abe06883a68184d64bb076df267e87f6ef77841c0f15e6af0"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/comparable_interface.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/comparable_interface.png",
+    "local_path": "assets/images/de5b376a5e16-comparable_interface.png",
+    "content_type": "image/png",
+    "bytes": 61094,
+    "sha256": "8c4be981f927a9a382619dc0c5558f3fb02cff069fb1cc06adb97cdf4580f418"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/comparator.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/comparator.png",
+    "local_path": "assets/images/b788e2535eea-comparator.png",
+    "content_type": "image/png",
+    "bytes": 73148,
+    "sha256": "33f6666be9fee3fc45fa2b402a85a94745a6d3ed2eb36cd0b608600265e00e11"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/compilation_figure.svg",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/compilation_figure.svg",
+    "local_path": "assets/images/85af6d04564b-compilation_figure.svg",
+    "content_type": "image/svg+xml",
+    "bytes": 29015,
+    "sha256": "058e6a3a824ee097e3ddb4f6535dc0d8509b3251be02a0d81ee9d52d458650b7"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/deque.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/deque.png",
+    "local_path": "assets/images/0098828f55d9-deque.png",
+    "content_type": "image/png",
+    "bytes": 38754,
+    "sha256": "42798cd557182481626d3d6eb0f428537e5e090b24c8b5de151fa2c0dd42cef7"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_basic_size_0.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_basic_size_0.png",
+    "local_path": "assets/images/52bbc4704e9a-dllist_basic_size_0.png",
+    "content_type": "image/png",
+    "bytes": 10694,
+    "sha256": "bd34a1104709aaa4b03421267817b411840a71fcae85a31a09579db49c9b6e6b"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_basic_size_2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_basic_size_2.png",
+    "local_path": "assets/images/570dc348872f-dllist_basic_size_2.png",
+    "content_type": "image/png",
+    "bytes": 14697,
+    "sha256": "0f0c5d86319d3adfc4e98db3a1ff9ea846c4df270a7fb6a04a73cc012ba882e6"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_circular_sentinel_size_0.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_circular_sentinel_size_0.png",
+    "local_path": "assets/images/2e81170887ad-dllist_circular_sentinel_size_0.png",
+    "content_type": "image/png",
+    "bytes": 10879,
+    "sha256": "9f07cd89fb22e2e27ea601ca1d980f00904eaee7e6c48a828914f1e0f75d0083"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_circular_sentinel_size_2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_circular_sentinel_size_2.png",
+    "local_path": "assets/images/1d3b67618b1e-dllist_circular_sentinel_size_2.png",
+    "content_type": "image/png",
+    "bytes": 16824,
+    "sha256": "c1f9ba8eaded96704b23d95e5cfb7cacd0fde591ea68762cb45b5f47f017a40b"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_double_sentinel_size_0.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_double_sentinel_size_0.png",
+    "local_path": "assets/images/39e64727b87c-dllist_double_sentinel_size_0.png",
+    "content_type": "image/png",
+    "bytes": 11734,
+    "sha256": "e929351178619a491294052e9c53e7f72d6b24c65ac27ed2f8b926871bb8dba0"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_double_sentinel_size_2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dllist_double_sentinel_size_2.png",
+    "local_path": "assets/images/ce19fa0015fe-dllist_double_sentinel_size_2.png",
+    "content_type": "image/png",
+    "bytes": 15902,
+    "sha256": "98f27f30b30550ec4cc613f605407c13e3275ed1f10330914171bfe88e6ef4c4"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dog_comparable.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dog_comparable.png",
+    "local_path": "assets/images/9920f3104cef-dog_comparable.png",
+    "content_type": "image/png",
+    "bytes": 41277,
+    "sha256": "9fdbabab8ada0a5b43018832c6348f98e96a2f905cb1884fc290a36b3e1d583d"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dup1_square.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dup1_square.png",
+    "local_path": "assets/images/fe8cdd7c490d-dup1_square.png",
+    "content_type": "image/png",
+    "bytes": 10906,
+    "sha256": "70f0dc2659652c5cc55806d9a67eec834de2dc77882d65e6c5fed3216faaa4d0"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dynamic_selection.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/dynamic_selection.png",
+    "local_path": "assets/images/60936d73f594-dynamic_selection.png",
+    "content_type": "image/png",
+    "bytes": 143914,
+    "sha256": "0da7e7d10087af350200df94e0febe5d5e11f4242995c1be743eaf197dea3f42"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/empty_sentinelized_SLList.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/empty_sentinelized_SLList.png",
+    "local_path": "assets/images/60ab09473272-empty_sentinelized_SLList.png",
+    "content_type": "image/png",
+    "bytes": 11685,
+    "sha256": "86345e11b53d947d6c5b7c84d9f19f9ba0ef7d0f3ff12cff0553b11ddb47f70e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/exceptions.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/exceptions.png",
+    "local_path": "assets/images/3ed88deccda0-exceptions.png",
+    "content_type": "image/png",
+    "bytes": 110709,
+    "sha256": "3adfdbd294a0d2d1fdfb8c15c583307c0d4797321df255b55cd43297a8cdad9e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/full_naive_alist.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/full_naive_alist.png",
+    "local_path": "assets/images/23e5e7f72dda-full_naive_alist.png",
+    "content_type": "image/png",
+    "bytes": 10133,
+    "sha256": "b89209269ddf5df455bdb9486e675055f1449ebab89bcc4cd5acb15aaf82a763"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/heap-13.2.1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/heap-13.2.1.png",
+    "local_path": "assets/images/d87fa9ebceb0-heap-13.2.1.png",
+    "content_type": "image/png",
+    "bytes": 121626,
+    "sha256": "be0a6795a48bc7a9c78864fa4079f2f61ab5d078e855c88f6e5aa95098d371e2"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/hierarchy.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/hierarchy.png",
+    "local_path": "assets/images/0c7d438947c2-hierarchy.png",
+    "content_type": "image/png",
+    "bytes": 30456,
+    "sha256": "ad3481f50635e84acc0e849ad4852f5402112058719e0e9355297729ca81de59"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/insert_experiment.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/insert_experiment.png",
+    "local_path": "assets/images/59248367dc9e-insert_experiment.png",
+    "content_type": "image/png",
+    "bytes": 80359,
+    "sha256": "a0fcd303c7772d98a249dc2d6cd1cd845f37f3c8ede2bde8a73487e775b07f07"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/intro1_resized.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/intro1_resized.png",
+    "local_path": "assets/images/5d822bef1102-intro1_resized.png",
+    "content_type": "image/png",
+    "bytes": 28516,
+    "sha256": "3e0dc11f28e204f299487b462f9e5de9d53a861e67e77171b5a7456903e3056b"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/intro2_resized.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/intro2_resized.png",
+    "local_path": "assets/images/221e2cd285c7-intro2_resized.png",
+    "content_type": "image/png",
+    "bytes": 28091,
+    "sha256": "5bbefdcef56116b626360c1869305dd3f5dda3f1e14d4f2ecaf75c77a1b88d88"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/intro3_resized.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/intro3_resized.png",
+    "local_path": "assets/images/bee2d7417a68-intro3_resized.png",
+    "content_type": "image/png",
+    "bytes": 27363,
+    "sha256": "d8512d47298e7666bff52df26ed26aabcdb5e3e860396dcdeff1f0ff4a2d1468"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/java.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/java.png",
+    "local_path": "assets/images/24b285073b81-java.png",
+    "content_type": "image/png",
+    "bytes": 184975,
+    "sha256": "5a2404bd03c69079c13b679e82d851de3759695302c6b2176591867e0149d9a4"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/list_subclasses.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/list_subclasses.png",
+    "local_path": "assets/images/f87ca942f9aa-list_subclasses.png",
+    "content_type": "image/png",
+    "bytes": 31694,
+    "sha256": "b656fefbcf2534124291edcfd89e64a92114c0f5e6b0005afa74072a7bf60d31"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_1.png",
+    "local_path": "assets/images/63d0b76aec58-loops2_1.png",
+    "content_type": "image/png",
+    "bytes": 11783,
+    "sha256": "91957db60612c98b768f8698e1aed9fd42d1233c9ec95810d7dc373f19c0b9a9"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_2.png",
+    "local_path": "assets/images/541c9a4c6f4d-loops2_2.png",
+    "content_type": "image/png",
+    "bytes": 12219,
+    "sha256": "86a8b7c20cfd5a6c948be70a87f3ab1bb5cb7d4060000653882c3c9cc3bc7a99"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_3.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_3.png",
+    "local_path": "assets/images/07ddadf65cbe-loops2_3.png",
+    "content_type": "image/png",
+    "bytes": 12726,
+    "sha256": "fc5cae74e539e8e436edce3c80c73cdcbad0116ced8f3873710906ac8e6595b5"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_4.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_4.png",
+    "local_path": "assets/images/2e6b1dd8cd43-loops2_4.png",
+    "content_type": "image/png",
+    "bytes": 16155,
+    "sha256": "9b61ab900013e5f4922da0cba457feeb61da376d82bda109a0b77e013dd537d5"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_graph.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_graph.png",
+    "local_path": "assets/images/cea1a396ae8b-loops2_graph.png",
+    "content_type": "image/png",
+    "bytes": 26686,
+    "sha256": "17037a823ef68757d18646f37f8c269f5c6bb8f168c5549041df0db88af0af9a"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_graph2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/loops2_graph2.png",
+    "local_path": "assets/images/d59cfed2c7f9-loops2_graph2.png",
+    "content_type": "image/png",
+    "bytes": 28338,
+    "sha256": "f9c6f739c50e2e14230929c94d0e403784daf5594144372b016f2837c81ff9ac"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/main_x_y.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/main_x_y.png",
+    "local_path": "assets/images/c1796b08bcfa-main_x_y.png",
+    "content_type": "image/png",
+    "bytes": 5719,
+    "sha256": "85a6062169b1dafc46f3281e43a0a02e9c6e6975fde780e226fa89f7d53d1216"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/mystery_of_the_walrus_resolved_step1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/mystery_of_the_walrus_resolved_step1.png",
+    "local_path": "assets/images/c128067ea022-mystery_of_the_walrus_resolved_step1.png",
+    "content_type": "image/png",
+    "bytes": 8167,
+    "sha256": "c040538bd58880b34c5374ee2eb208adc910f62c4cbdb3cfab3598d705447a9b"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/mystery_of_the_walrus_resolved_step2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/mystery_of_the_walrus_resolved_step2.png",
+    "local_path": "assets/images/a465a9b1e62d-mystery_of_the_walrus_resolved_step2.png",
+    "content_type": "image/png",
+    "bytes": 10585,
+    "sha256": "b164459516b024ab6af57640db0f0c8eb092459dae53441a8ac3fa514c756117"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/mystery_of_the_walrus_resolved_step3.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/mystery_of_the_walrus_resolved_step3.png",
+    "local_path": "assets/images/914600e8de67-mystery_of_the_walrus_resolved_step3.png",
+    "content_type": "image/png",
+    "bytes": 11490,
+    "sha256": "ccdbb1391ddcf35852b77ae9df65e8000d5f6750a3cdb75a4d2fb2602b023b6e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/python.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/python.png",
+    "local_path": "assets/images/cb52ed7d41dd-python.png",
+    "content_type": "image/png",
+    "bytes": 99927,
+    "sha256": "645ba39092111e780cd2b744263ac9fb607f3e9496857b7c70b0e69042cf0995"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/pz1muo.jpg",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/pz1muo.jpg",
+    "local_path": "assets/images/c6fd5e6fefe7-pz1muo.jpg",
+    "content_type": "image/jpeg",
+    "bytes": 23693,
+    "sha256": "8a4977064388027caa4a381c81f197057f46568b2c36bd2b55ff90b740d2d340"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/reverse_list1.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/reverse_list1.png",
+    "local_path": "assets/images/f51a7d8955ad-reverse_list1.png",
+    "content_type": "image/png",
+    "bytes": 40207,
+    "sha256": "36561437d7709186ee57ffc6dcb9c261764d3e150c5ac5ab28d9bd96fa86902f"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/reverse_list2.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/reverse_list2.png",
+    "local_path": "assets/images/8bb63f0dc7b5-reverse_list2.png",
+    "content_type": "image/png",
+    "bytes": 44112,
+    "sha256": "409b3cc06cea5eaffe2930b7fe636ffe2a6add7e0948dd38d692d00382a269b4"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/sllist_last_pointer.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/sllist_last_pointer.png",
+    "local_path": "assets/images/238e705ddcab-sllist_last_pointer.png",
+    "content_type": "image/png",
+    "bytes": 18583,
+    "sha256": "d79498efe9b401346e336a6ef29a56c2a2da2097bbb3d8cb34e0bda73c3f771c"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_bit_notation.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_bit_notation.png",
+    "local_path": "assets/images/3117296e282c-someWalrus_bit_notation.png",
+    "content_type": "image/png",
+    "bytes": 48493,
+    "sha256": "9a2749e9a3308cd2c149eb1506e868b9d0a8ce818e4a15d60a7981cac18bfa88"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_bit_notation_null.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_bit_notation_null.png",
+    "local_path": "assets/images/f1be3b3d3e39-someWalrus_bit_notation_null.png",
+    "content_type": "image/png",
+    "bytes": 26049,
+    "sha256": "1e12c73d5f7bfbafc5a97a2296697bcdb6ac6d050f5fef0eac3656e5b2dc5bc7"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_simplified_bit_notation.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_simplified_bit_notation.png",
+    "local_path": "assets/images/450180c89876-someWalrus_simplified_bit_notation.png",
+    "content_type": "image/png",
+    "bytes": 22588,
+    "sha256": "b24c467cebf42496fdc520f8c048fc91204c9c7cec68db6085d14eba9ac2c8a1"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_simplified_bit_notation_null.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/someWalrus_simplified_bit_notation_null.png",
+    "local_path": "assets/images/b2f137542945-someWalrus_simplified_bit_notation_null.png",
+    "content_type": "image/png",
+    "bytes": 6590,
+    "sha256": "272c59f4e6112a9f12c30d6191ad56083ccf5211873c352b831ee293eb6c6fb8"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/subclass.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/subclass.png",
+    "local_path": "assets/images/d8be735c125e-subclass.png",
+    "content_type": "image/png",
+    "bytes": 25599,
+    "sha256": "a797a07455876862c8727332cf524a026f778d8ac00f28426883ee672d6b099b"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/three_item_sentenlized_SLList.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/three_item_sentenlized_SLList.png",
+    "local_path": "assets/images/fbd461ae473b-three_item_sentenlized_SLList.png",
+    "content_type": "image/png",
+    "bytes": 15653,
+    "sha256": "eed3715806c46f46fc9ca2436c3da597041051e91d23651377670faced70b00f"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/timetable.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/timetable.png",
+    "local_path": "assets/images/1fc651dd512e-timetable.png",
+    "content_type": "image/png",
+    "bytes": 109458,
+    "sha256": "c9b2762084825c2ef7c57ed107c54133a934f3bb7a7f4cdd86e188e32de38ecc"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/usage_ratio.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/usage_ratio.png",
+    "local_path": "assets/images/1b6a8bbf02af-usage_ratio.png",
+    "content_type": "image/png",
+    "bytes": 86816,
+    "sha256": "fc7d722162fbaa4baf05ecc83e7b83a635ee070fe9a37020ce9f94c32384f684"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/wrapper_classes.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/wrapper_classes.png",
+    "local_path": "assets/images/4ddcb9a41da2-wrapper_classes.png",
+    "content_type": "image/png",
+    "bytes": 58639,
+    "sha256": "7b888a3951018bb9c6fd1ea8be51c635a34b86175651e12e616d7db16d928f57"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/x_and_y_empty_bitwise.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/x_and_y_empty_bitwise.png",
+    "local_path": "assets/images/b78fd85fa3cb-x_and_y_empty_bitwise.png",
+    "content_type": "image/png",
+    "bytes": 2409,
+    "sha256": "acfe614336574991c72d7be1370f99e4c3dfc3b66986763f3a636cbab356f52e"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/x_and_y_empty_filled.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/x_and_y_empty_filled.png",
+    "local_path": "assets/images/0273c74a8734-x_and_y_empty_filled.png",
+    "content_type": "image/png",
+    "bytes": 35470,
+    "sha256": "98c07a0a3e2c07cbf758d1bb030b6f8b583f06356b3f053abd06a240f030044d"
+  },
+  {
+    "source_url": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/x_and_y_simplified_box_notation.png",
+    "retrieved_from": "https://raw.githubusercontent.com/joshHug/OIJ2019/main/.gitbook/assets/x_and_y_simplified_box_notation.png",
+    "local_path": "assets/images/70665a3df1b0-x_and_y_simplified_box_notation.png",
+    "content_type": "image/png",
+    "bytes": 15477,
+    "sha256": "e9edb7023c971f07571460beb55f37a0ad179900b069bd9cab7d0535bc96d694"
+  },
+  {
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Cube-maximal-independence.svg/1920px-Cube-maximal-independence.svg.png",
+    "retrieved_from": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Cube-maximal-independence.svg/1920px-Cube-maximal-independence.svg.png",
+    "local_path": "assets/images/1e460fbf33eb-1920px-Cube-maximal-independence.svg.png",
+    "content_type": "image/png",
+    "bytes": 106898,
+    "sha256": "07c88fa406e9b82f01487180d8c8a4990531ebd012a219305da0ab9e0af4bca5"
+  },
+  {
+    "source_url": "https://wcs.smartdraw.com/organizational-chart/img/org-chart-software-maker.png?bn=1510011143",
+    "retrieved_from": "https://web.archive.org/web/20220120174958id_/https://wcs.smartdraw.com/organizational-chart/img/org-chart-software-maker.png",
+    "local_path": "assets/images/cb2e94956e66-org-chart-software-maker.png",
+    "content_type": "image/png",
+    "bytes": 17912,
+    "sha256": "468f5bbd9b545f40377a3a936414f71f3dc57b1fff64298f06d89f666c3dfb90"
+  }
+]

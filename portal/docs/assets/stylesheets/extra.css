@@ -1,0 +1,28 @@
+:root {
+  --md-text-font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --md-code-font: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.md-grid {
+  max-width: min(72rem, 1440px);
+}
+
+.hero-subtitle {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.15rem;
+}
+
+.course-grid > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+}
+
+.course-grid li {
+  list-style: none;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.6rem;
+  background: var(--md-code-bg-color);
+}

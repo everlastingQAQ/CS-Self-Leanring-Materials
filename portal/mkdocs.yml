@@ -1,0 +1,46 @@
+site_name: Everlasting 中文教程
+site_description: 计算机课程中文教程与学习笔记
+site_author: everlasting
+site_url: https://docs.everlasting.xin/
+
+docs_dir: docs
+use_directory_urls: true
+strict: true
+
+theme:
+  name: material
+  language: zh
+  font: false
+  custom_dir: ../shared/overrides
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.top
+
+nav:
+  - 教程总目录: index.md
+
+plugins: []
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+copyright: 中文整理：everlasting
