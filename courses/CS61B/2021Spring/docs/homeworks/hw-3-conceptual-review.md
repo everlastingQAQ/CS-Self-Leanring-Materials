@@ -1,6 +1,8 @@
 ---
 title: "HW 3：概念复习"
 description: "CS61B Spring 2021 HW 3：概念复习中文学习资料。"
+hide:
+  - toc
 ---
 
 # HW 3：Conceptual Review

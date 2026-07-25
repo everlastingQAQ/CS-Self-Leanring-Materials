@@ -1,6 +1,8 @@
 ---
 title: "Lab 5：同伴代码审查"
 description: "CS61B Spring 2021 Lab 5：同伴代码审查中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 5：Project 1 同伴代码审查

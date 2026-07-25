@@ -1,6 +1,8 @@
 ---
 title: "Project 3 实作日"
 description: "CS61B Spring 2021 Project 3 实作日中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 栏目节点：Project 3 Work Day

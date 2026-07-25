@@ -1,6 +1,8 @@
 ---
 title: "Project 0：2048"
 description: "CS61B Spring 2021 Project 0：2048中文学习资料。"
+hide:
+  - toc
 ---
 
 # Project 0：2048

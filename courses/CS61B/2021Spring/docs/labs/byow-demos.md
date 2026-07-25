@@ -1,6 +1,8 @@
 ---
 title: "告别与 BYOW 展示"
 description: "CS61B Spring 2021 告别与 BYOW 展示中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 栏目节点：Goodbye, Fun / BYOW Demos

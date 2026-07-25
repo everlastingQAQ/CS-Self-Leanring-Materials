@@ -214,10 +214,12 @@ def import_markdown(source: Path) -> None:
         source_path = source / folder / filename
         body = source_path.read_text(encoding="utf-8").strip()
         description = f"CS61B Spring 2021 {title}中文学习资料。"
+        hide_toc = "hide:\n  - toc\n" if group in {"labs", "homeworks", "projects"} else ""
         output = (
             "---\n"
             f"title: {json.dumps(title, ensure_ascii=False)}\n"
             f"description: {json.dumps(description, ensure_ascii=False)}\n"
+            f"{hide_toc}"
             "---\n\n"
             f"{body}\n\n---\n\n"
             f"原始来源：[CS61B Spring 2021]({source_url(body)}){{ target=\"_blank\" rel=\"noopener\" }} · "

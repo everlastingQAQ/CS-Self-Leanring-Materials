@@ -1,6 +1,8 @@
 ---
 title: "Lab 6：Project 2 入门"
 description: "CS61B Spring 2021 Lab 6：Project 2 入门中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 6：Project 2 入门

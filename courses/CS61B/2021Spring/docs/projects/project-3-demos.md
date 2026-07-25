@@ -1,6 +1,8 @@
 ---
 title: "Project 3：BYOW 展示"
 description: "CS61B Spring 2021 Project 3：BYOW 展示中文学习资料。"
+hide:
+  - toc
 ---
 
 # BYOW Demos

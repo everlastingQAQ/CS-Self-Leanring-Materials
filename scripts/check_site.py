@@ -28,9 +28,11 @@ class PageParser(HTMLParser):
         super().__init__()
         self.links: list[tuple[str, str]] = []
         self.anchors: list[dict[str, str | None]] = []
+        self.toc_links: list[str] = []
         self.ids: set[str] = set()
         self.text: list[str] = []
         self.ignored_depth = 0
+        self.toc_list_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
@@ -41,6 +43,13 @@ class PageParser(HTMLParser):
             self.links.append(("href", values["href"] or ""))
         if tag == "a" and values.get("href"):
             self.anchors.append(values)
+            if self.toc_list_depth:
+                self.toc_links.append(values["href"] or "")
+        if tag == "ul":
+            if self.toc_list_depth:
+                self.toc_list_depth += 1
+            elif values.get("data-md-component") == "toc":
+                self.toc_list_depth = 1
         if tag in {"img", "script", "source"} and values.get("src"):
             self.links.append(("src", values["src"] or ""))
         if tag in {"script", "style"}:
@@ -49,6 +58,8 @@ class PageParser(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if tag in {"script", "style"} and self.ignored_depth:
             self.ignored_depth -= 1
+        if tag == "ul" and self.toc_list_depth:
+            self.toc_list_depth -= 1
 
     def handle_data(self, data: str) -> None:
         if not self.ignored_depth:
@@ -81,6 +92,11 @@ def main() -> None:
         content_files = [path for path in (DOCS_ROOT / group).glob("*.md") if path.name != "index.md"]
         if len(content_files) != expected_count:
             errors.append(f"expected {expected_count} {group} sources, got {len(content_files)}")
+        if group in {"labs", "homeworks", "projects"}:
+            for content_file in content_files:
+                source = content_file.read_text(encoding="utf-8")
+                if not re.search(r"(?m)^hide:\n  - toc$", source):
+                    errors.append(f"{group} page must not expand its page outline: {content_file.name}")
 
     for markdown in DOCS_ROOT.rglob("*.md"):
         text = markdown.read_text(encoding="utf-8")
@@ -114,6 +130,12 @@ def main() -> None:
 
     if len(pages) != EXPECTED_HTML_PAGES:
         errors.append(f"expected {EXPECTED_HTML_PAGES} generated HTML pages, got {len(pages)}")
+
+    for group in ("labs", "homeworks", "projects"):
+        for html_file in (COURSE_SITE / group).glob("*/index.html"):
+            parser = pages.get(html_file.resolve())
+            if parser and parser.toc_links:
+                errors.append(f"{group} page expands its outline in the sidebar: {html_file.parent.name}")
 
     for html_file, parser in list(pages.items()):
         visible_text = " ".join(parser.text)

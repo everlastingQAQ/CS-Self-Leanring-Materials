@@ -1,6 +1,8 @@
 ---
 title: "Lab 7：BSTMap"
 description: "CS61B Spring 2021 Lab 7：BSTMap中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 7：BSTMap

@@ -1,6 +1,8 @@
 ---
 title: "HW 0：Java 速成"
 description: "CS61B Spring 2021 HW 0：Java 速成中文学习资料。"
+hide:
+  - toc
 ---
 
 # HW 0：Java 速成

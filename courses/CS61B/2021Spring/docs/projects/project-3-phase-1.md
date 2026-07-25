@@ -1,6 +1,8 @@
 ---
 title: "Project 3 第一阶段"
 description: "CS61B Spring 2021 Project 3 第一阶段中文学习资料。"
+hide:
+  - toc
 ---
 
 # Project 3 Phase 1：World Generation

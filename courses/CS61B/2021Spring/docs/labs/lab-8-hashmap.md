@@ -1,6 +1,8 @@
 ---
 title: "Lab 8：HashMap"
 description: "CS61B Spring 2021 Lab 8：HashMap中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 8：HashMap

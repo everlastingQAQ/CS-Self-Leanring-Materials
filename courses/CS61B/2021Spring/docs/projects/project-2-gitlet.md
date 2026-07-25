@@ -1,6 +1,8 @@
 ---
 title: "Project 2：Gitlet"
 description: "CS61B Spring 2021 Project 2：Gitlet中文学习资料。"
+hide:
+  - toc
 ---
 
 # Project 2：Gitlet

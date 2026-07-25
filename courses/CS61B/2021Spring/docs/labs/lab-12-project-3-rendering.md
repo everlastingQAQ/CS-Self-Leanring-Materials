@@ -1,6 +1,8 @@
 ---
 title: "Lab 12：Project 3 图块渲染"
 description: "CS61B Spring 2021 Lab 12：Project 3 图块渲染中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 12：Project 3 入门——Tile Rendering Engine

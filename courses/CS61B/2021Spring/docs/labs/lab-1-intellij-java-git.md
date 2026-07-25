@@ -1,6 +1,8 @@
 ---
 title: "Lab 1：IntelliJ、Java 与 Git"
 description: "CS61B Spring 2021 Lab 1：IntelliJ、Java 与 Git中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 1：IntelliJ、Java 与 Git

@@ -1,6 +1,8 @@
 ---
 title: "Lab 4：Git 与调试"
 description: "CS61B Spring 2021 Lab 4：Git 与调试中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 4：Git 与调试

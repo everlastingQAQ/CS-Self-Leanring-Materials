@@ -1,6 +1,8 @@
 ---
 title: "Lab 2：JUnit 与调试"
 description: "CS61B Spring 2021 Lab 2：JUnit 与调试中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 2：JUnit 测试与调试

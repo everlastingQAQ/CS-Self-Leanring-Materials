@@ -1,6 +1,8 @@
 ---
 title: "RRR Week：无实验"
 description: "CS61B Spring 2021 RRR Week：无实验中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 栏目节点：RRR Week / No Lab

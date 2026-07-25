@@ -1,6 +1,8 @@
 ---
 title: "Lab 3：计时与随机测试"
 description: "CS61B Spring 2021 Lab 3：计时与随机测试中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 3：计时测试与随机对比测试

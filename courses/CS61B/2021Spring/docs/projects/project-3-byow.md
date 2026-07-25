@@ -1,6 +1,8 @@
 ---
 title: "Project 3：CS61BYoW"
 description: "CS61B Spring 2021 Project 3：CS61BYoW中文学习资料。"
+hide:
+  - toc
 ---
 
 # Project 3：CS61BYoW

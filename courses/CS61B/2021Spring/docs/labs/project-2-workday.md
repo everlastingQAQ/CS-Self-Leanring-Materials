@@ -1,6 +1,8 @@
 ---
 title: "Project 2 实作日"
 description: "CS61B Spring 2021 Project 2 实作日中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 栏目节点：Project 2 Workday（截止周）

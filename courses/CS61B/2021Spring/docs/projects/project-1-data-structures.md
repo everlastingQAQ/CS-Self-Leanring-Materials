@@ -1,6 +1,8 @@
 ---
 title: "Project 1：数据结构"
 description: "CS61B Spring 2021 Project 1：数据结构中文学习资料。"
+hide:
+  - toc
 ---
 
 # Project 1：Data Structures

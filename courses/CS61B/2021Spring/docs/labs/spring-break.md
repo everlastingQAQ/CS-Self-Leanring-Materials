@@ -1,6 +1,8 @@
 ---
 title: "春假：无实验"
 description: "CS61B Spring 2021 春假：无实验中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 栏目节点：Spring Break / No Lab

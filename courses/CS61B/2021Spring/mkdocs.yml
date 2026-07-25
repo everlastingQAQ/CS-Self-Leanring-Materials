@@ -11,6 +11,9 @@ site_dir: site
 use_directory_urls: true
 strict: true
 
+hooks:
+  - hooks.py
+
 theme:
   name: material
   language: zh

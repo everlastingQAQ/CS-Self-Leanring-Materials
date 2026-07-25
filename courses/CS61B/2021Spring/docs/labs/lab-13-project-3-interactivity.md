@@ -1,6 +1,8 @@
 ---
 title: "Lab 13：Project 3 交互"
 description: "CS61B Spring 2021 Lab 13：Project 3 交互中文学习资料。"
+hide:
+  - toc
 ---
 
 # Lab 13：Project 3 Phase 2 入门——交互
