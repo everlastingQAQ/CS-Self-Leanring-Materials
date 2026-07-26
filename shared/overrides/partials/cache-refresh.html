@@ -1,0 +1,39 @@
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="site-release" content="__SITE_RELEASE__">
+<script>
+  (() => {
+    const marker = document.querySelector('meta[name="site-release"]');
+    const loadedRelease = marker && marker.content;
+    if (!loadedRelease || !/^[0-9a-f]{16}$/.test(loadedRelease)) return;
+
+    const versionUrl = new URL("/site-version.json", window.location.origin);
+    versionUrl.searchParams.set("cache", Date.now().toString(36));
+
+    fetch(versionUrl, { cache: "no-store", credentials: "same-origin" })
+      .then((response) => {
+        if (!response.ok) throw new Error("site version request failed");
+        return response.json();
+      })
+      .then(({ version: currentRelease }) => {
+        if (!currentRelease || currentRelease === loadedRelease) {
+          const currentUrl = new URL(window.location.href);
+          if (currentUrl.searchParams.has("_docs_release")) {
+            currentUrl.searchParams.delete("_docs_release");
+            window.history.replaceState(null, "", currentUrl.href);
+          }
+          return;
+        }
+
+        const reloadKey = `docs-release:${loadedRelease}:${currentRelease}`;
+        if (window.sessionStorage.getItem(reloadKey)) return;
+        window.sessionStorage.setItem(reloadKey, "1");
+
+        const freshUrl = new URL(window.location.href);
+        freshUrl.searchParams.set("_docs_release", currentRelease);
+        window.location.replace(freshUrl.href);
+      })
+      .catch(() => {});
+  })();
+</script>

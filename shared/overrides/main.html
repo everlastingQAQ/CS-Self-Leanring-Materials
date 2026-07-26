@@ -2,6 +2,7 @@
 
 {% block extrahead %}
   {{ super() }}
+  {% include "partials/cache-refresh.html" %}
   {% set social_title = (page.meta.title or page.title) if page else config.site_name %}
   {% set social_description = (page.meta.description or config.site_description) if page else config.site_description %}
   {% set social_url = page.canonical_url if page else config.site_url %}

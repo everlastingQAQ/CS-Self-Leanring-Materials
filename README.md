@@ -35,6 +35,7 @@ python3 scripts/import_sp21_coursework.py
 ```
 
 构建使用固定依赖版本，并严格检查章节、链接、锚点、中文搜索、年份文案和本地运行时资源。
+构建产物会生成内容指纹并为 CSS、JavaScript 和搜索索引添加版本参数；已缓存的旧页面检测到新指纹后会自动刷新一次。
 `main` 分支的构建通过后由 GitHub Actions 自动发布至 GitHub Pages；Pull Request 只执行验证，不发布。
 `scripts/deploy.sh` 已禁用，避免再次把产物上传到旧服务器。
 

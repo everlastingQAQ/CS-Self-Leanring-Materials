@@ -8,7 +8,7 @@ import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -115,6 +115,7 @@ def main() -> None:
         SITE_ROOT / "404.html",
         SITE_ROOT / "robots.txt",
         SITE_ROOT / "sitemap.xml",
+        SITE_ROOT / "site-version.json",
         COURSE_SITE / "index.html",
         COURSE_SITE / "course" / "index.html",
         COURSE_SITE / "labs" / "index.html",
@@ -128,6 +129,16 @@ def main() -> None:
     for path in required:
         if not path.is_file():
             errors.append(f"missing generated file {path.relative_to(SITE_ROOT)}")
+
+    release = ""
+    version_path = SITE_ROOT / "site-version.json"
+    if version_path.is_file():
+        try:
+            release = str(json.loads(version_path.read_text(encoding="utf-8"))["version"])
+        except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+            errors.append("site-version.json is invalid")
+        if release and not re.fullmatch(r"[0-9a-f]{16}", release):
+            errors.append(f"invalid site release fingerprint: {release}")
 
     symlinks = list(SITE_ROOT.rglob("*")) if SITE_ROOT.exists() else []
     symlinks = [path for path in symlinks if path.is_symlink()]
@@ -165,6 +176,33 @@ def main() -> None:
         for marker in ('name="robots" content="noindex"', 'http-equiv="refresh"', "window.location.replace", target):
             if marker not in redirect_html:
                 errors.append(f"invalid legacy redirect {redirect_path.relative_to(SITE_ROOT)}: missing {marker}")
+
+    normal_pages = set(pages) - {path.resolve() for path in legacy_redirects}
+    for html_file in normal_pages:
+        html_text = html_file.read_text(encoding="utf-8")
+        if "__SITE_RELEASE__" in html_text:
+            errors.append(f"unstamped release placeholder in {html_file.relative_to(SITE_ROOT)}")
+        for marker in (
+            f'name="site-release" content="{release}"',
+            'http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"',
+            'site-version.json',
+            '_docs_release',
+        ):
+            if release and marker not in html_text:
+                errors.append(f"cache refresh marker missing in {html_file.relative_to(SITE_ROOT)}: {marker}")
+        parser = pages[html_file]
+        for attribute, url in parser.links:
+            parsed = urlsplit(url)
+            if parsed.scheme or parsed.netloc or not parsed.path.endswith((".css", ".js")):
+                continue
+            if release and parse_qs(parsed.query).get("sitev") != [release]:
+                errors.append(f"unversioned runtime asset in {html_file.relative_to(SITE_ROOT)}: {url}")
+
+    search_bundles = list((COURSE_SITE / "assets" / "javascripts").glob("bundle.*.min.js"))
+    if len(search_bundles) != 1:
+        errors.append(f"expected one Material runtime bundle, got {len(search_bundles)}")
+    elif release and f"search/search_index.json?sitev={release}" not in search_bundles[0].read_text(encoding="utf-8"):
+        errors.append("Material runtime does not use the versioned search index")
 
     for group in ("labs", "homeworks", "projects"):
         for html_file in (COURSE_SITE / group).glob("*/index.html"):
@@ -235,6 +273,8 @@ def main() -> None:
             errors.append("course Material homepage still contains 课程章节")
         if "navigation.instant" in course_home_html:
             errors.append("instant navigation must stay disabled because /course/ uses a standalone template")
+        if "navigation.tabs.sticky" in course_home_html:
+            errors.append("top navigation tabs must scroll away with the page")
 
     original_style_path = COURSE_SITE / "course" / "index.html"
     if original_style_path.is_file():
