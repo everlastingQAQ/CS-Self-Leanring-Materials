@@ -7,10 +7,6 @@ hide:
 
 # CS61B Spring 2021 中文教程
 
-!!! info "临时首页"
-
-    课程介绍与学习路线将在后续更新。
-
 <div class="course-home-actions" markdown>
 
 [开始阅读](chapters/00-introduction.md){ .md-button .md-button--primary }
