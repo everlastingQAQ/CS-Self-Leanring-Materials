@@ -6,8 +6,7 @@ repo_url: https://github.com/everlastingQAQ/docs.everlasting.xin
 repo_name: everlastingQAQ/docs.everlasting.xin
 copyright: >-
   原作 Josh Hug · 中文整理 everlasting ·
-  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="license noopener">CC BY-NC-SA 4.0</a><br>
-  <a class="site-registration" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2026035887号</a>
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="license noopener">CC BY-NC-SA 4.0</a>
 
 docs_dir: docs
 site_dir: site
@@ -143,6 +142,9 @@ extra_javascript:
   - assets/vendor/mathjax/es5/tex-mml-chtml.js
 
 extra:
+  registration:
+    number: 鄂ICP备2026035887号
+    url: https://beian.miit.gov.cn/
   social:
     - icon: material/book-open-page-variant
       link: https://joshhug.gitbooks.io/hug61b/content/

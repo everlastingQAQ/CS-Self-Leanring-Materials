@@ -313,7 +313,7 @@ shared/overrides/partials/cache-refresh.html
 
 ## 备案与搜索收录
 
-备案号在根门户和课程配置的 `copyright` 中维护，独立课程主页在 `shared/overrides/course-home.html` 中维护。当前统一使用：
+备案号在根门户和课程配置的 `extra.registration` 中维护，由 `shared/overrides/partials/copyright.html` 放在 Material 生成器信息下方；独立课程主页在 `shared/overrides/course-home.html` 中维护。当前统一使用：
 
 ```text
 鄂ICP备2026035887号

@@ -71,8 +71,10 @@
 }
 
 .site-registration {
-  display: inline-block;
-  margin-top: 0.25rem;
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.55rem;
+  line-height: 1.4;
 }
 
 @media screen and (max-width: 44.984375em) {

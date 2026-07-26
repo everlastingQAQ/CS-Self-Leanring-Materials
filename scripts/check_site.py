@@ -339,6 +339,15 @@ def main() -> None:
         parser = pages[html_file]
         if ICP_NUMBER not in html_text or ICP_URL not in html_text:
             errors.append(f"ICP registration is missing in {html_file.relative_to(SITE_ROOT)}")
+        if html_file != (COURSE_SITE / "course" / "index.html").resolve() and not re.search(
+            r"Made with\s*<a[^>]*>\s*Material for MkDocs\s*</a>.*?"
+            r'<div class="site-registration">.*?' + re.escape(ICP_NUMBER),
+            html_text,
+            re.DOTALL,
+        ):
+            errors.append(
+                f"ICP registration is not below the Material credit in {html_file.relative_to(SITE_ROOT)}"
+            )
         if any(
             (meta.get("name") or "").lower() == "robots"
             and "noindex" in (meta.get("content") or "").lower()
