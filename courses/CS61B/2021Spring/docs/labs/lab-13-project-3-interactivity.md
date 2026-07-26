@@ -1,91 +1,115 @@
 ---
 title: "Lab 13：Project 3 交互"
 description: "CS61B Spring 2021 Lab 13：Project 3 交互中文学习资料。"
-hide:
-  - toc
 ---
 
-# Lab 13：Project 3 Phase 2 入门——交互
+# Lab 13：Project 3 Phase 2——交互入门
 
-- 原标题：Lab 13: Getting Started on Project 3, Phase 2
-- 原页面：`https://sp21.datastructur.es/materials/lab/lab13/lab13`
+> 原文：https://sp21.datastructur.es/materials/lab/lab13/lab13<br>
+> 说明：正文由 ChatGPT 直接翻译；API、类名、方法名和代码保持原样。
 
-> **文档性质**：本文件依据 CS 61B Spring 2021 官方页面，由 ChatGPT 独立阅读后制作中文学习版。  
-> 为保留技术准确性，类名、方法名、文件名、命令、报错文本和 API 名称保持英文。本文采用逐节翻译与重述，而不是网页的逐句镜像。
+## 简介
 
-## 实验目标
+本 Lab 为 Project 3 第二阶段“Interactivity”做准备。此时不要求 Phase 1 完全结束，但应已接近完成。Lab 代码不会直接进入 Project 3，而是训练 `StdDraw`、随机数、键盘输入和 UI 组织方式。
 
-使用 `StdDraw` 与 `java.util.Random` 制作一个类似 Simon 的记忆游戏，为 BYOW Phase 2 的键盘交互、逐帧绘制和游戏循环做准备。
+## Memory Game
 
-## 游戏规则
+使用 `StdDraw` 与 `java.util.Random` 构建类似 Simon 的键盘记忆游戏：
 
-程序逐个闪现一串随机字符。玩家在字符消失后输入相同序列：
+1. 创建游戏窗口。
+2. 随机生成目标字符串。
+3. 每次显示一个字符。
+4. 等待玩家输入同样数量的字符。
+5. 正确则进入更长的一轮；错误则显示 Game Over 并结束。
 
-- 第一轮长度为 1。
-- 每成功一轮，序列长度增加。
-- 输入错误时游戏结束或显示失败状态。
+目标字符串第一轮长度为 1，每成功一轮长度加 1。
 
-## 需要实现的方法
+关键工程原则：先实现职责明确的小过程，再组合成复杂方法。这样 `main` 最终只需少量高层代码，也便于单元测试。
 
-### `generateRandomString`
+## `generateRandomString`
 
-生成指定长度的随机小写字符串。必须使用对象中统一维护的随机数生成器，以保证 seed 可复现。
+1. 修改 `MemoryGame` 构造方法，使用第一个程序参数作为 seed 创建 `Random`。
+2. 实现 `generateRandomString(int n)`，使用该 `Random` 生成长度为 `n` 的小写字符串。
+3. 使用 starter 中的 private `CHARACTERS` 字段。
+4. 可直接使用 `java.util.Random`，也可用 `byow.Core.RandomUtils`；后者底层仍调用传入的 `Random`。
 
-### `drawFrame`
+Java 字符提示：
 
-清空并重绘当前画面。应处理：
+```java
+char c = 'B';
+String s = "and can be longer";
+String favClass = "CS 61" + 'B';
+String B = Character.toString('B');
+```
 
-- 中央主文字。
-- 轮数。
-- 是否等待输入。
-- 提示信息。
-- 必要的双缓冲显示。
+## `drawFrame`
 
-### `flashSequence`
+本 Lab 直接使用 Princeton `StdDraw`，不是 Tile Engine。`StdDraw` 更新画面时需要清空画布并重画整个 frame。
 
-按顺序显示目标字符，每个字符显示一段时间，字符之间留空白间隔。不要阻塞到完全无法刷新界面。
+实现 `drawFrame(String s)`：
 
-### `solicitNCharsInput`
+1. 清空 canvas；
+2. 设置大号粗体字体（size 30 合适）；
+3. 把输入字符串居中绘制；
+4. 显示 canvas。
 
-监听键盘，收集恰好 `n` 个字符。每收到一个字符，可更新界面反馈。
+相关 API：
 
-### `startGame`
+- `StdDraw.setFont`
+- `StdDraw.clear`
+- `StdDraw.text`
+- `StdDraw.setPenColor`
+- `StdDraw.show`
 
-组织完整游戏循环：
+## `flashSequence`
 
-1. 初始化轮数。
-2. 生成目标字符串。
-3. 闪现序列。
-4. 获取玩家输入。
-5. 比较结果。
-6. 成功则进入下一轮。
-7. 失败则结束。
+输入目标字符串，逐字符居中显示：
 
-## Helpful UI
+- 每个字符显示 1 秒；
+- 字符之间空白 0.5 秒。
 
-原实验鼓励添加清晰的状态提示，例如：
+## `solicitNCharsInput`
 
-- “Watch!”
-- “Type!”
-- 当前 round
-- 成功或失败反馈
+使用：
 
-UI 不应只“能用”，还要让玩家知道程序当前处于哪种状态。
+- `StdDraw.hasNextKeyTyped()`：检查键盘队列中是否还有按键；
+- `StdDraw.nextKeyTyped()`：取出并返回最早按下的字符。
 
-## 对 BYOW 的意义
+实现方法读取 `n` 个按键，拼成字符串并返回。玩家每输入一个字符，都应把当前累计字符串居中显示，让玩家看到已输入内容。
 
-Phase 2 同样需要：
+`nextKeyTyped` 返回 `char`，因此只能处理对应字符的键。本 Lab 不实现 Backspace 删除功能。
 
-- 键盘事件循环。
-- 持续重绘。
-- 模式切换。
-- 可复现随机性。
-- 将控制逻辑与绘制逻辑分开。
+## `startGame`
 
-## 完成标准
+把所有子过程组合为完整游戏：
 
-所有指定方法实现，游戏可连续进行多轮，输入读取稳定，并按要求提交。
+1. 从 round 1 开始。
+2. 居中显示 `Round: <round>`。
+3. 生成长度等于 round 的随机字符串。
+4. 逐字符闪现目标。
+5. 读取相同长度输入。
+6. 比较：
+   - 正确：round 加 1，回到步骤 2；
+   - 错误：结束，并居中显示 `Game Over! You made it to round: <round>`。
+
+完成后 `MemoryGame.java` 应可直接运行和游玩。
+
+## 改进 UI
+
+功能完成后，修改 `drawFrame`：游戏未结束时在顶部绘制状态栏：
+
+- 左侧：`Round: <round>`；
+- 中间：当前任务 `Watch!` 或 `Type!`；
+- 右侧：随机鼓励语。
+
+Starter 提供 `ENCOURAGEMENT` 集合，可自行增加内容。
+
+## 提交与评分
+
+本 Lab 没有 Gradescope code grader。按当学期要求，在截止时间前提交 **Phase 1 Review Form** 即获得 64 分。
+
+即使不直接评分，也强烈建议完成可运行版本；Project 3 遇到渲染或交互问题时，这个小程序可作为清晰参考。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab13/lab13){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab13/lab13<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

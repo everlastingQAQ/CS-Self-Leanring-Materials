@@ -1,8 +1,36 @@
 {
-  "source": "/home/everlasting/下载/CS61B_SP21_Labs_Assignments_Exams_CN",
-  "manifest_sha256": "a4b07bb98ebf5668b7c53ea8e1dbe59bfc1917d8412a37906b53bae798f124d8",
-  "document_count": 35,
-  "imported_content_count": 32,
+  "source": "/home/everlasting/下载/CS61B_SP21_中文作业Markdown",
+  "source_inventory_sha256": "0894bb19d11ff24d0cf1967096fa53fc3dcf1fe44aa59cd34fd05f075992cb7b",
+  "source_document_count": 22,
+  "imported_content_count": 20,
+  "ignored_documents": [
+    "Homeworks/HW1_已取消.md",
+    "README_文件清单.md"
+  ],
+  "source_sha256": {
+    "Homeworks/HW0_Java速成.md": "be5ba3688579cfff90a3b3e7e9c1f202fc07ca1c71ee61e1dded579eafe10dd3",
+    "Homeworks/HW1_已取消.md": "5d4325037b7412dce68a35a91dc986bec791eb03ad79a2b7e6c652db715699e3",
+    "Homeworks/HW2_概念复习.md": "6041032d8ce28ebe9a47692af4028f81c3e6e34aa35519cc27af27e52b3b1a87",
+    "Homeworks/HW3_概念复习.md": "57c20dd2960bd90c7cbe07541eea6cb6b7373b36241b8ee2c7bd2b434054fad5",
+    "Labs/Lab01A_电脑环境配置.md": "7c59af3c60180906c83a6679830922df22a8eb9b8d3855668bb46ac82588a113",
+    "Labs/Lab01B_IntelliJ_Java_Git.md": "647aeb7233bfb8eaf004c22f0ab1b3ec458733e87cb857bad2c792a201402ce4",
+    "Labs/Lab02_JUnit与调试.md": "54fe9a21050e66eef403a0cb56a73796360deb360a26d6105fc963b4e069043f",
+    "Labs/Lab03_计时测试与随机对比测试.md": "aa2a261c698eafc072a0ba2fdef4fd0f5286c0e722bb812899ab873b563b4926",
+    "Labs/Lab04_Git与调试.md": "6b94909d83c7d6baded6af3036100450e5af228f174d66d11d0949230f5dfe1a",
+    "Labs/Lab05_Project1同伴代码审查.md": "1a580725b573f204f7363381fdd28eecd907cbec841e351500a5db1cb9e417a5",
+    "Labs/Lab06_Project2入门.md": "a938dd317c75a21ce0edc3da357e4226c14b413503120a64f5c4f6b1ca878b21",
+    "Labs/Lab07_BSTMap.md": "76c82ea3575d58dbccca6da28560d8078394cc5faf9fc4ad4d94a82f26f50508",
+    "Labs/Lab08_HashMap.md": "53ecf406a983bb862f73ea58042f57a54afdef1a9056fde390ec0c4ca757c1d9",
+    "Labs/Lab12_Project3入门.md": "d8af781c3d4be17cf53548c7d1f8e667c126390ebe65d909735d1cca50284172",
+    "Labs/Lab13_Project3第二阶段交互.md": "39eb08ac209249befc5b7159f1733aa722b4d69d2159a26836873b0f78e74768",
+    "Projects/Project0_2048.md": "7b8d826c71f687b8d043190ccc3ae97eb57a992feed7c4035cbde0b66da52495",
+    "Projects/Project1EC_自动评分器.md": "87321fff5e246cb84905326e618fa0eb2cf7b6f3d3cd7366b8327c84c92580d6",
+    "Projects/Project1_数据结构.md": "035891fe2bf6d035052937030ea0be1a26dfae0f7689c26268d83858d69841f0",
+    "Projects/Project2_Gitlet.md": "5fdabea5d5f6689ebc991cba772746708c55494d9278ae4bde7e253beca3055a",
+    "Projects/Project3_BYOW.md": "79776ad5f054a8d88ffc2b6c10779294304609c80c0dd4e741084fb5b9c282e5",
+    "Projects/Project3_游戏共享.md": "869bfc94a57fbdf8aaf71dc9e68930cf45f21b19d6d381adc1cc2efebad8bf22",
+    "README_文件清单.md": "0894bb19d11ff24d0cf1967096fa53fc3dcf1fe44aa59cd34fd05f075992cb7b"
+  },
   "calendar_sources": {
     "homepage": {
       "url": "https://sp21.datastructur.es/",

@@ -3,20 +3,8 @@
   --md-code-font: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
-.md-grid {
-  max-width: 1280px;
-}
-
 .md-content__inner {
-  max-width: 860px;
-  margin-right: auto;
-  margin-left: auto;
-  line-height: 1.8;
-}
-
-.md-content__inner > h1 {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  line-height: 1.6;
 }
 
 .hero-subtitle {
@@ -75,10 +63,7 @@
 
 @media screen and (max-width: 44.984375em) {
   .md-content__inner {
-    max-width: none;
-    margin-right: 0.8rem;
-    margin-left: 0.8rem;
-    line-height: 1.72;
+    line-height: 1.6;
   }
 
   .chapter-grid {

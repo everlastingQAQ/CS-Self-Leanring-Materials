@@ -2,6 +2,8 @@ site_name: CS61B Spring 2021 中文教程
 site_description: Java 与数据结构课程中文学习笔记
 site_author: Josh Hug；中文整理：everlasting
 site_url: https://docs.everlasting.xin/CS61B/2021Spring/
+repo_url: https://github.com/everlastingQAQ/docs.everlasting.xin
+repo_name: everlastingQAQ/docs.everlasting.xin
 copyright: >-
   原作 Josh Hug · 中文整理 everlasting ·
   <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="license noopener">CC BY-NC-SA 4.0</a>
@@ -22,24 +24,25 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: deep purple
+      primary: black
+      accent: indigo
       toggle:
         icon: material/brightness-7
         name: 切换到深色模式
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: deep purple
+      primary: black
+      accent: indigo
       toggle:
         icon: material/brightness-4
         name: 切换到浅色模式
   features:
     - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.indexes
     - navigation.top
-    - toc.integrate
     - toc.follow
     - search.suggest
     - search.highlight
@@ -84,14 +87,8 @@ nav:
       - Lab 6：Project 2 入门: labs/lab-6-project-2.md
       - Lab 7：BSTMap: labs/lab-7-bstmap.md
       - Lab 8：HashMap: labs/lab-8-hashmap.md
-      - Project 2 实作日（期中二前）: labs/project-2-workday-midterm.md
-      - 春假：无实验: labs/spring-break.md
-      - Project 2 实作日: labs/project-2-workday.md
-      - Lab 12：Project 3 图块渲染: labs/lab-12-project-3-rendering.md
+      - Lab 12：Project 3 入门: labs/lab-12-project-3-rendering.md
       - Lab 13：Project 3 交互: labs/lab-13-project-3-interactivity.md
-      - Project 3 实作日: labs/project-3-workday.md
-      - 告别与 BYOW 展示: labs/byow-demos.md
-      - RRR Week：无实验: labs/rrr-week.md
   - 作业:
       - 作业目录: homeworks/index.md
       - HW 0：Java 速成: homeworks/hw-0-java.md
@@ -101,12 +98,10 @@ nav:
       - 项目目录: projects/index.md
       - Project 0：2048: projects/project-0-2048.md
       - Project 1：数据结构: projects/project-1-data-structures.md
+      - Project 1 EC：自动评分器: projects/project-1ec-autograder.md
       - Project 2：Gitlet: projects/project-2-gitlet.md
-      - Project 2 检查点: projects/project-2-checkpoint.md
       - Project 3：CS61BYoW: projects/project-3-byow.md
-      - Project 3 第一阶段: projects/project-3-phase-1.md
-      - Project 3 第二阶段: projects/project-3-phase-2.md
-      - Project 3：BYOW 展示: projects/project-3-demos.md
+      - Project 3：游戏共享: projects/project-3-game-sharing.md
   - 考试:
       - 考试目录: exams/index.md
       - 期中考试 1 模拟评测: exams/midterm-1-practice.md
@@ -145,7 +140,7 @@ markdown_extensions:
       alternate_style: true
 
 extra_css:
-  - assets/stylesheets/extra.css?v=20260726-3
+  - assets/stylesheets/extra.css?v=20260726-4
 
 extra_javascript:
   - assets/javascripts/mathjax-config.js

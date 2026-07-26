@@ -1,77 +1,47 @@
 ---
 title: "Lab 5：同伴代码审查"
 description: "CS61B Spring 2021 Lab 5：同伴代码审查中文学习资料。"
-hide:
-  - toc
 ---
 
 # Lab 5：Project 1 同伴代码审查
 
-- 原标题：Lab 5: Project 1 Peer Code Review
-- 原页面：`https://sp21.datastructur.es/materials/lab/lab5/lab5`
+> 原文：https://sp21.datastructur.es/materials/lab/lab5/lab5<br>
+> 说明：正文由 ChatGPT 直接翻译。
 
-> **文档性质**：本文件依据 CS 61B Spring 2021 官方页面，由 ChatGPT 独立阅读后制作中文学习版。  
-> 为保留技术准确性，类名、方法名、文件名、命令、报错文本和 API 名称保持英文。本文采用逐节翻译与重述，而不是网页的逐句镜像。
+## 简介
 
-## 前置纪律
+本 Lab 与实验课中的 1–3 名同学比较 Project 1 解法。本周必须按时参加；无法参加常规时段可去其他 Lab，确实无法参加任何时段时才填写官方豁免表。
 
-原课程会在 Lab 中展示部分 Project 1 官方实现。因此必须先完成 Project 1 的最终提交，再参加本 Lab；看过官方方案后继续提交项目会构成学术诚信问题。
+TA 会讲解 Project 1 的部分参考解法。**只有在已经完成 Project 1 最终 Gradescope 提交后才能参加本 Lab**，否则可能因提前接触解法而被认定违反学术诚信。
 
-## 实验目标
+## LinkedListDeque 概览
 
-与 1～3 名同学比较 Project 1 实现，重点审查：
+TA 先简要介绍 staff 的 `LinkedListDeque` 解法。
 
-- `LinkedListDeque`
-- `ArrayDeque`
+## LinkedListDeque 同伴审查
 
-目的不是选出“谁写得最好”，而是理解同一个 API 可以有不同设计，并从别人代码中发现自己的可改进点。
+与 1–3 名同学组队比较实现。目标不是评判谁写得“高级”，而是互相学习。不要从头到尾逐行讲解整个实现，而应围绕具体问题讨论：
 
-## 1. LinkedListDeque 审查
+1. 最麻烦的 bug 是什么？如何修复？是否用了 Debugger、特殊情况，或“改一点然后祈祷 AG 通过”？
+2. 是否删除过某些设计，使代码更简单？
+3. 代码中有哪些 special cases？
+4. 是否使用 private helper methods？
+5. 是否存在重复代码？helper 是否能减少重复？
+6. 哪些地方复用了已有方法或代码？
 
-关注：
+讨论后，完成 `self_reflection.txt` 前半部分。
 
-- 是否使用 sentinel。
-- 空 deque 时指针关系是否统一。
-- `addFirst`、`addLast` 是否为常数时间。
-- `removeFirst`、`removeLast` 是否正确维护双向链接。
-- `get` 与递归版 `getRecursive` 是否边界正确。
-- 是否存在重复分支和特殊情况堆叠。
+## ArrayDeque 概览与审查
 
-## 2. ArrayDeque 审查
+TA 讲解 `ArrayDeque` 参考方案。然后按相同方式再次结组讨论自己的 `ArrayDeque`。建议换一组同学，但保留原组也可以。继续填写 `self_reflection.txt`。
 
-关注：
+## 自我反思与提交
 
-- 环形数组的索引设计。
-- `nextFirst` 与 `nextLast` 的含义是否一致。
-- 扩容时元素是否按逻辑顺序复制。
-- 缩容阈值是否符合规格。
-- 空结构和单元素结构是否正确。
-- 是否频繁移动所有元素，导致操作退化。
-
-## 3. 代码质量维度
-
-审查时不只看“能不能通过测试”，还要讨论：
-
-- 命名是否表达意图。
-- 辅助方法是否减少重复。
-- 不变量是否清晰。
-- 边界条件是否集中处理。
-- 注释是否解释原因，而不是复述代码。
-- 实现是否过度复杂。
-
-## 4. 自我反思与提交
-
-记录至少几个具体发现：
-
-- 自己做得好的设计。
-- 别人方案中值得吸收的思路。
-- 未来会怎样重构。
-- 哪些错误本可通过更好的测试提前发现。
-
-## 完成标准
-
-完成同伴比较、填写自我反思，并按原课程要求提交 checkoff/反思材料。
+1. 在 skeleton 提供的 `self_reflection.txt` 中至少回答 4 个问题。
+2. 请 TA 检查文件并领取 magic word。
+3. 把 magic word 写入 `magic_word.txt`。
+4. Push 到 GitHub 并提交 Gradescope。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab5/lab5){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab5/lab5<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

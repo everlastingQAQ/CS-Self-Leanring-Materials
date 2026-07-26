@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Import the archived Spring 2021 coursework and generate the Chinese course home.
+"""Import the archived Spring 2021 Chinese coursework.
 
 The source directory is treated as immutable. Generated files live under the course
 docs tree, so CI only needs the repository and never depends on the local download.
+The archived course homepage is refreshed only when explicitly requested.
 """
 
 from __future__ import annotations
@@ -20,14 +21,10 @@ from pathlib import Path
 from urllib.parse import urljoin, urlsplit
 from zoneinfo import ZoneInfo
 
-from bs4 import BeautifulSoup, Comment, NavigableString
-from markdown.extensions.toc import slugify
-
-
 ROOT = Path(__file__).resolve().parents[1]
 COURSE = ROOT / "courses" / "CS61B" / "2021Spring"
 DOCS = COURSE / "docs"
-DEFAULT_SOURCE = Path("/home/everlasting/下载/CS61B_SP21_Labs_Assignments_Exams_CN")
+DEFAULT_SOURCE = Path("/home/everlasting/下载/CS61B_SP21_中文作业Markdown")
 ORIGINAL_HOME = "https://sp21.datastructur.es/"
 TERM_START = datetime(2021, 1, 19, tzinfo=ZoneInfo("America/Los_Angeles"))
 TERM_END = datetime(2021, 5, 15, tzinfo=ZoneInfo("America/Los_Angeles"))
@@ -47,45 +44,32 @@ CALENDARS = {
 
 # source folder, source filename, output group, output slug, Chinese navigation title
 ITEMS = [
-    ("Labs", "01_Lab1_Setup_Setting_Up_Your_Computer.md", "labs", "lab-1-setup", "Lab 1 Setup：配置计算机"),
-    ("Labs", "02_Lab1_IntelliJ_Java_Git.md", "labs", "lab-1-intellij-java-git", "Lab 1：IntelliJ、Java 与 Git"),
-    ("Labs", "03_Lab2_JUnit_and_Debugging.md", "labs", "lab-2-junit-debugging", "Lab 2：JUnit 与调试"),
-    ("Labs", "04_Lab3_Timing_and_Randomized_Tests.md", "labs", "lab-3-timing-randomized-tests", "Lab 3：计时与随机测试"),
-    ("Labs", "05_Lab4_Git_and_Debugging.md", "labs", "lab-4-git-debugging", "Lab 4：Git 与调试"),
-    ("Labs", "06_Lab5_Peer_Code_Review.md", "labs", "lab-5-peer-code-review", "Lab 5：同伴代码审查"),
-    ("Labs", "07_Lab6_Getting_Started_on_Project2.md", "labs", "lab-6-project-2", "Lab 6：Project 2 入门"),
-    ("Labs", "08_Lab7_BSTMap.md", "labs", "lab-7-bstmap", "Lab 7：BSTMap"),
-    ("Labs", "09_Lab8_HashMap.md", "labs", "lab-8-hashmap", "Lab 8：HashMap"),
-    ("Labs", "10_Lab9_Project2_Workday.md", "labs", "project-2-workday-midterm", "Project 2 实作日（期中二前）"),
-    ("Labs", "11_Lab10_Spring_Break_No_Lab.md", "labs", "spring-break", "春假：无实验"),
-    ("Labs", "12_Lab11_Project2_Workday.md", "labs", "project-2-workday", "Project 2 实作日"),
-    ("Labs", "13_Lab12_Project3_Tile_Rendering.md", "labs", "lab-12-project-3-rendering", "Lab 12：Project 3 图块渲染"),
-    ("Labs", "14_Lab13_Project3_Interactivity.md", "labs", "lab-13-project-3-interactivity", "Lab 13：Project 3 交互"),
-    ("Labs", "15_Lab14_Project3_Workday.md", "labs", "project-3-workday", "Project 3 实作日"),
-    ("Labs", "16_Lab15_Goodbye_Fun_BYOW_Demos.md", "labs", "byow-demos", "告别与 BYOW 展示"),
-    ("Labs", "17_Lab16_RRR_Week_No_Lab.md", "labs", "rrr-week", "RRR Week：无实验"),
-    ("Assignments_Exams", "01_HW0_Java_Crash_Course.md", "homeworks", "hw-0-java", "HW 0：Java 速成"),
-    ("Assignments_Exams", "08_HW2_Conceptual_Review.md", "homeworks", "hw-2-conceptual-review", "HW 2：概念复习"),
-    ("Assignments_Exams", "14_HW3_Conceptual_Review.md", "homeworks", "hw-3-conceptual-review", "HW 3：概念复习"),
-    ("Assignments_Exams", "02_Project0_2048.md", "projects", "project-0-2048", "Project 0：2048"),
-    ("Assignments_Exams", "03_Project1_Data_Structures.md", "projects", "project-1-data-structures", "Project 1：数据结构"),
-    ("Assignments_Exams", "06_Project2_Gitlet.md", "projects", "project-2-gitlet", "Project 2：Gitlet"),
-    ("Assignments_Exams", "07_Project2_Checkpoint.md", "projects", "project-2-checkpoint", "Project 2 检查点"),
-    ("Assignments_Exams", "10_Project3_CS61BYoW.md", "projects", "project-3-byow", "Project 3：CS61BYoW"),
-    ("Assignments_Exams", "11_Project3_Phase1.md", "projects", "project-3-phase-1", "Project 3 第一阶段"),
-    ("Assignments_Exams", "12_Project3_Phase2.md", "projects", "project-3-phase-2", "Project 3 第二阶段"),
-    ("Assignments_Exams", "13_BYOW_Demos.md", "projects", "project-3-demos", "Project 3：BYOW 展示"),
-    ("Assignments_Exams", "04_Midterm1_Practice_Assessment.md", "exams", "midterm-1-practice", "期中考试 1 模拟评测"),
-    ("Assignments_Exams", "05_Midterm1.md", "exams", "midterm-1", "期中考试 1"),
-    ("Assignments_Exams", "09_Midterm2.md", "exams", "midterm-2", "期中考试 2"),
-    ("Assignments_Exams", "15_Final_Exam.md", "exams", "final", "期末考试"),
+    ("Labs", "Lab01A_电脑环境配置.md", "labs", "lab-1-setup", "Lab 1 Setup：配置计算机"),
+    ("Labs", "Lab01B_IntelliJ_Java_Git.md", "labs", "lab-1-intellij-java-git", "Lab 1：IntelliJ、Java 与 Git"),
+    ("Labs", "Lab02_JUnit与调试.md", "labs", "lab-2-junit-debugging", "Lab 2：JUnit 与调试"),
+    ("Labs", "Lab03_计时测试与随机对比测试.md", "labs", "lab-3-timing-randomized-tests", "Lab 3：计时与随机测试"),
+    ("Labs", "Lab04_Git与调试.md", "labs", "lab-4-git-debugging", "Lab 4：Git 与调试"),
+    ("Labs", "Lab05_Project1同伴代码审查.md", "labs", "lab-5-peer-code-review", "Lab 5：同伴代码审查"),
+    ("Labs", "Lab06_Project2入门.md", "labs", "lab-6-project-2", "Lab 6：Project 2 入门"),
+    ("Labs", "Lab07_BSTMap.md", "labs", "lab-7-bstmap", "Lab 7：BSTMap"),
+    ("Labs", "Lab08_HashMap.md", "labs", "lab-8-hashmap", "Lab 8：HashMap"),
+    ("Labs", "Lab12_Project3入门.md", "labs", "lab-12-project-3-rendering", "Lab 12：Project 3 入门"),
+    ("Labs", "Lab13_Project3第二阶段交互.md", "labs", "lab-13-project-3-interactivity", "Lab 13：Project 3 交互"),
+    ("Homeworks", "HW0_Java速成.md", "homeworks", "hw-0-java", "HW 0：Java 速成"),
+    ("Homeworks", "HW2_概念复习.md", "homeworks", "hw-2-conceptual-review", "HW 2：概念复习"),
+    ("Homeworks", "HW3_概念复习.md", "homeworks", "hw-3-conceptual-review", "HW 3：概念复习"),
+    ("Projects", "Project0_2048.md", "projects", "project-0-2048", "Project 0：2048"),
+    ("Projects", "Project1_数据结构.md", "projects", "project-1-data-structures", "Project 1：数据结构"),
+    ("Projects", "Project1EC_自动评分器.md", "projects", "project-1ec-autograder", "Project 1 EC：自动评分器"),
+    ("Projects", "Project2_Gitlet.md", "projects", "project-2-gitlet", "Project 2：Gitlet"),
+    ("Projects", "Project3_BYOW.md", "projects", "project-3-byow", "Project 3：CS61BYoW"),
+    ("Projects", "Project3_游戏共享.md", "projects", "project-3-game-sharing", "Project 3：游戏共享"),
 ]
 
 GROUPS = {
     "labs": ("实验", "课程实验、准备工作与实作周的中文资料。"),
     "homeworks": ("作业", "课程家庭作业的中文资料。"),
     "projects": ("项目", "课程编程项目、阶段说明与展示要求的中文资料。"),
-    "exams": ("考试", "课程考试、模拟评测和归档说明的中文资料。"),
 }
 
 LECTURE_TRANSLATIONS = {
@@ -176,30 +160,58 @@ def fetch(url: str) -> bytes:
 
 
 def validate_source(source: Path) -> dict:
-    manifest_path = source / "manifest.json"
-    if not manifest_path.is_file():
-        raise SystemExit(f"missing source manifest: {manifest_path}")
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    expected_labs = {"00_Labs_Index.md", *(filename for folder, filename, *_ in ITEMS if folder == "Labs")}
-    expected_assignments = {
-        "00_Assignments_Exams_Index.md",
-        *(filename for folder, filename, *_ in ITEMS if folder == "Assignments_Exams"),
+    expected = {
+        "Labs": {filename for folder, filename, *_ in ITEMS if folder == "Labs"},
+        "Homeworks": {
+            *(filename for folder, filename, *_ in ITEMS if folder == "Homeworks"),
+            "HW1_已取消.md",
+        },
+        "Projects": {filename for folder, filename, *_ in ITEMS if folder == "Projects"},
     }
-    actual_labs = {path.name for path in (source / "Labs").glob("*.md")}
-    actual_assignments = {path.name for path in (source / "Assignments_Exams").glob("*.md")}
-    if manifest.get("document_count") != 35 or actual_labs != expected_labs or actual_assignments != expected_assignments:
-        raise SystemExit("source manifest or expected Markdown file set changed; refusing to import")
+    for folder, expected_files in expected.items():
+        actual_files = {path.name for path in (source / folder).glob("*.md")}
+        if actual_files != expected_files:
+            missing = sorted(expected_files - actual_files)
+            extra = sorted(actual_files - expected_files)
+            raise SystemExit(f"unexpected {folder} file set; missing={missing}, extra={extra}")
+    readme = source / "README_文件清单.md"
+    if not readme.is_file():
+        raise SystemExit(f"missing source inventory: {readme}")
+    source_hashes = {
+        str(path.relative_to(source)): sha256(path.read_bytes())
+        for path in sorted(source.rglob("*.md"))
+    }
     return {
         "source": str(source),
-        "manifest_sha256": sha256(manifest_path.read_bytes()),
-        "document_count": manifest["document_count"],
+        "source_inventory_sha256": sha256(readme.read_bytes()),
+        "source_document_count": len(source_hashes),
         "imported_content_count": len(ITEMS),
+        "ignored_documents": ["Homeworks/HW1_已取消.md", "README_文件清单.md"],
+        "source_sha256": source_hashes,
     }
 
 
 def source_url(text: str) -> str:
-    match = re.search(r"(?:原页面|原文件)：`(https?://[^`]+)`", text)
+    match = re.search(
+        r"(?:原文|原始页面|原页面|原文件)[：:]\s*(?:<|`)?(https?://[^\s>`]+)",
+        text,
+    )
     return match.group(1) if match else ORIGINAL_HOME
+
+
+def normalize_markdown(text: str) -> str:
+    """Keep Markdown hard breaks without committing invisible trailing spaces."""
+    normalized: list[str] = []
+    in_fence = False
+    for line in text.strip().splitlines():
+        if re.match(r"^\s*(?:```|~~~)", line):
+            in_fence = not in_fence
+        if not in_fence and re.search(r" {2,}$", line):
+            line = line.rstrip() + "<br>"
+        elif not in_fence:
+            line = line.rstrip()
+        normalized.append(line)
+    return "\n".join(normalized)
 
 
 def import_markdown(source: Path) -> None:
@@ -212,14 +224,16 @@ def import_markdown(source: Path) -> None:
 
     for folder, filename, group, slug, title in ITEMS:
         source_path = source / folder / filename
-        body = source_path.read_text(encoding="utf-8").strip()
+        body = normalize_markdown(source_path.read_text(encoding="utf-8"))
+        if slug == "project-3-byow":
+            body = body.replace("## 四、Phase 1：世界生成", '<a id="phase-1"></a>\n\n## 四、Phase 1：世界生成')
+            body = body.replace("## 九、Phase 2：交互性", '<a id="phase-2"></a>\n\n## 九、Phase 2：交互性')
+            body = body.replace("## 十七、提交与评分", '<a id="submission"></a>\n\n## 十七、提交与评分')
         description = f"CS61B Spring 2021 {title}中文学习资料。"
-        hide_toc = "hide:\n  - toc\n" if group in {"labs", "homeworks", "projects"} else ""
         output = (
             "---\n"
             f"title: {json.dumps(title, ensure_ascii=False)}\n"
             f"description: {json.dumps(description, ensure_ascii=False)}\n"
-            f"{hide_toc}"
             "---\n\n"
             f"{body}\n\n---\n\n"
             f"原始来源：[CS61B Spring 2021]({source_url(body)}){{ target=\"_blank\" rel=\"noopener\" }} · "
@@ -245,12 +259,39 @@ def import_markdown(source: Path) -> None:
         (DOCS / group / "index.md").write_text(index, encoding="utf-8")
 
 
+def update_course_home_links() -> None:
+    """Point archived schedule entries at the new complete single-page specs."""
+    course_home = DOCS / "course" / "index.md"
+    text = course_home.read_text(encoding="utf-8")
+    replacements = {
+        '/CS61B/2021Spring/projects/project-2-checkpoint/':
+            '/CS61B/2021Spring/projects/project-2-gitlet/#checkpoint-grader',
+        '/CS61B/2021Spring/labs/project-2-workday/':
+            '/CS61B/2021Spring/projects/project-2-gitlet/',
+        '/CS61B/2021Spring/labs/project-3-workday/':
+            '/CS61B/2021Spring/projects/project-3-byow/',
+        '<a href="/CS61B/2021Spring/projects/project-3-phase-1/">Project 3 Phase 1</a>':
+            '<a href="/CS61B/2021Spring/projects/project-3-byow/#phase-1">Project 3 Phase 1</a>',
+        '<a href="/CS61B/2021Spring/projects/project-3-phase-2/">Project 3 Phase 2</a>':
+            '<a href="/CS61B/2021Spring/projects/project-3-byow/#phase-2">Project 3 Phase 2</a>',
+        '<a href="/CS61B/2021Spring/projects/project-3-demos/">Project 3 Game Sharing</a>':
+            '<a href="/CS61B/2021Spring/projects/project-3-game-sharing/">Project 3 Game Sharing</a>',
+        '<a href="/CS61B/2021Spring/projects/project-3-demos/">BYOW Demos</a>':
+            '<a href="/CS61B/2021Spring/projects/project-3-byow/#submission">BYOW Demos</a>',
+    }
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+    course_home.write_text(text, encoding="utf-8")
+
+
 def internal_url(group: str, slug: str, anchor: str = "") -> str:
     base = f"/CS61B/2021Spring/{group}/{slug}/"
     return base + (f"#{anchor}" if anchor else "")
 
 
 def reading_url(label: str) -> str:
+    from markdown.extensions.toc import slugify
+
     number = label.strip()
     chapter = int(number.split(".", 1)[0])
     chapter_files = {
@@ -292,9 +333,10 @@ LINK_RULES = [
     (re.compile(r"/materials/hw/hw2"), ("homeworks", "hw-2-conceptual-review")),
     (re.compile(r"/materials/hw/hw3"), ("homeworks", "hw-3-conceptual-review")),
     (re.compile(r"/materials/proj/proj0"), ("projects", "project-0-2048")),
+    (re.compile(r"/materials/proj/proj1ec"), ("projects", "project-1ec-autograder")),
     (re.compile(r"/materials/proj/proj1"), ("projects", "project-1-data-structures")),
     (re.compile(r"/materials/proj/proj2"), ("projects", "project-2-gitlet")),
-    (re.compile(r"/materials/proj/proj3/proj3GameSharing"), ("projects", "project-3-demos")),
+    (re.compile(r"/materials/proj/proj3/proj3GameSharing"), ("projects", "project-3-game-sharing")),
     (re.compile(r"/materials/proj/proj3"), ("projects", "project-3-byow")),
 ]
 
@@ -303,12 +345,12 @@ TEXT_LINKS = {
     "Midterm 1 (2/10)": ("exams", "midterm-1"),
     "Midterm 2 (03/17)": ("exams", "midterm-2"),
     "Final exam": ("exams", "final"),
-    "Project 2 Checkpoint": ("projects", "project-2-checkpoint"),
-    "Project 3 Phase 1": ("projects", "project-3-phase-1"),
-    "Project 3 Phase 2": ("projects", "project-3-phase-2"),
-    "BYOW Demos": ("projects", "project-3-demos"),
-    "Project 2 Workday": ("labs", "project-2-workday"),
-    "Project 3 Work Day": ("labs", "project-3-workday"),
+    "Project 2 Checkpoint": ("projects", "project-2-gitlet", "checkpoint-grader"),
+    "Project 3 Phase 1": ("projects", "project-3-byow", "phase-1"),
+    "Project 3 Phase 2": ("projects", "project-3-byow", "phase-2"),
+    "BYOW Demos": ("projects", "project-3-byow", "submission"),
+    "Project 2 Workday": ("projects", "project-2-gitlet"),
+    "Project 3 Work Day": ("projects", "project-3-byow"),
 }
 
 
@@ -322,6 +364,8 @@ def translate_text(text: str) -> str:
 
 
 def build_main_calendar(home_html: bytes) -> str:
+    from bs4 import BeautifulSoup, Comment, NavigableString
+
     soup = BeautifulSoup(home_html, "html.parser")
     table = soup.select_one("table#calendar")
     if table is None:
@@ -604,14 +648,27 @@ def generate_course_home() -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
+    parser.add_argument(
+        "--refresh-course-home",
+        action="store_true",
+        help="also download and regenerate the archived original-style homepage and calendars",
+    )
     args = parser.parse_args()
     import_record = validate_source(args.source)
     import_markdown(args.source)
-    import_record["calendar_sources"] = generate_course_home()
+    if args.refresh_course_home:
+        import_record["calendar_sources"] = generate_course_home()
+    else:
+        update_course_home_links()
+        previous_manifest = DOCS / "coursework-import-manifest.json"
+        if previous_manifest.is_file():
+            previous = json.loads(previous_manifest.read_text(encoding="utf-8"))
+            if "calendar_sources" in previous:
+                import_record["calendar_sources"] = previous["calendar_sources"]
     (DOCS / "coursework-import-manifest.json").write_text(
         json.dumps(import_record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
-    print(f"Imported {len(ITEMS)} content pages and generated 4 indexes plus the archived course homepage.")
+    print(f"Imported {len(ITEMS)} Lab, homework, and project pages plus 3 indexes.")
 
 
 if __name__ == "__main__":

@@ -213,7 +213,7 @@ hide:
 </td>
 <td rowspan="3"><a href="/CS61B/2021Spring/labs/lab-8-hashmap/">HashMap (截止 03/12)</a>
 </td><td class="" colspan="2" rowspan="3"><span class="unreleased"><span class="proj">[Project 2 Checkpoint 截止 03/12]</span><br/>
-</span> <a href="/CS61B/2021Spring/projects/project-2-checkpoint/">Project 2 Checkpoint</a></td>
+</span> <a href="/CS61B/2021Spring/projects/project-2-gitlet/#checkpoint-grader">Project 2 Checkpoint</a></td>
 </tr><tr><td style="white-space: nowrap;">周三 03/10</td>
 <td><p><a href="/CS61B/2021Spring/chapters/17-tree-traversals-and-graphs/#171">17.1</a>, <a href="/CS61B/2021Spring/chapters/17-tree-traversals-and-graphs/#172">17.2</a>, <a href="/CS61B/2021Spring/chapters/17-tree-traversals-and-graphs/#173">17.3</a>, <a href="/CS61B/2021Spring/chapters/17-tree-traversals-and-graphs/#174">17.4</a>, Algs 538-542, 566-583</p>
 </td>
@@ -237,7 +237,7 @@ hide:
 <br/>[<a href="https://docs.google.com/presentation/d/1Cj96IImjlmGSDo76LBkslrE7c68pi-30gblr0rqpIcM/edit?usp=sharing" rel="noopener" target="_blank">幻灯片</a>] ‌[<a href="https://youtube.com/playlist?list=PLHnsju1DjvZNKOkhV_tnpksG6rrHzkKyW" rel="noopener" target="_blank">视频</a>] ‌[<a href="https://sp21.datastructur.es/materials/discussion/examprep09sol.pdf" rel="noopener" target="_blank">答案</a>]
 </td>
 <td rowspan="3"><span class="unreleased">Project 2 实作日</span>
- <a href="/CS61B/2021Spring/labs/project-2-workday/">Project 2 实作日</a></td><td class="" colspan="2" rowspan="1"><span class="unreleased"><span class="proj">[HW2 截止 03/15]</span><br/>
+ <a href="/CS61B/2021Spring/projects/project-2-gitlet/">Project 2 实作日</a></td><td class="" colspan="2" rowspan="1"><span class="unreleased"><span class="proj">[HW2 截止 03/15]</span><br/>
 </span></td>
 </tr><tr class="odd"><td style="white-space: nowrap;">周三 03/17</td>
 <td><p><a href="/CS61B/2021Spring/chapters/20-minimum-spanning-trees/#201">20.1</a>, <a href="/CS61B/2021Spring/chapters/20-minimum-spanning-trees/#202-prim-kruskal">20.2</a>, Algs 604-630</p>
@@ -273,7 +273,7 @@ hide:
 <br/>[<a href="https://youtube.com/playlist?list=PLHnsju1DjvZO8I-qjN4_4XmlIVv9oSHwV" rel="noopener" target="_blank">视频</a>] ‌[<a href="https://sp21.datastructur.es/materials/discussion/examprep10sol.pdf" rel="noopener" target="_blank">答案</a>]
 </td>
 <td rowspan="3"><span class="unreleased">Project 2 实作日</span>
- <a href="/CS61B/2021Spring/labs/project-2-workday/">Project 2 实作日</a></td><td class="" colspan="2" rowspan="3"><span class="unreleased"><span class="proj">[Project 2 截止 04/02]</span><br/>
+ <a href="/CS61B/2021Spring/projects/project-2-gitlet/">Project 2 实作日</a></td><td class="" colspan="2" rowspan="3"><span class="unreleased"><span class="proj">[Project 2 截止 04/02]</span><br/>
 </span></td>
 </tr><tr class="odd"><td style="white-space: nowrap;">周三 03/31</td>
 <td><p>无</p>
@@ -306,7 +306,7 @@ hide:
 </td>
 <td class="">
                   30. 快速排序<br/>[<a href="https://youtu.be/wwsme2EOkVY" rel="noopener" target="_blank">视频</a>] ‌[<a href="https://docs.google.com/presentation/d/1UNyJDLwpfBBtkaFiZgqnsYambK99Lr7MjE1P63Nr_4A/edit#slide=id.g42d4f6d39_01303" rel="noopener" target="_blank">幻灯片</a>] ‌[<a href="https://sp21.datastructur.es/materials/lectures/lec30/lec30" rel="noopener" target="_blank">讲义</a>] ‌</td><td class="" colspan="2" rowspan="2">
-<a href="/CS61B/2021Spring/projects/project-3-demos/">Project 3 Game Sharing</a>
+<a href="/CS61B/2021Spring/projects/project-3-game-sharing/">Project 3 Game Sharing</a>
 <br/></td>
 </tr><tr><td style="white-space: nowrap;">周五 04/09</td>
 <td><p>无</p>
@@ -329,7 +329,7 @@ hide:
 </td><td class="" colspan="2" rowspan="3">
 <a href="https://sp21.datastructur.es/" rel="noopener" target="_blank"><span class="proj">[Project 3 Phase 1 截止 04/16]</span><br/>
 </a>
-<br/> <a href="/CS61B/2021Spring/projects/project-3-phase-1/">Project 3 Phase 1</a></td>
+<br/> <a href="/CS61B/2021Spring/projects/project-3-byow/#phase-1">Project 3 Phase 1</a></td>
 </tr><tr class="odd"><td style="white-space: nowrap;">周三 04/14</td>
 <td><p>无</p>
 </td>
@@ -353,7 +353,7 @@ hide:
 <br/>[<a href="https://youtube.com/playlist?list=PLHnsju1DjvZMal8Z_JaJbf6D-p_59xfIs" rel="noopener" target="_blank">视频</a>] ‌[<a href="https://sp21.datastructur.es/materials/discussion/examprep13sol.pdf" rel="noopener" target="_blank">答案</a>]
 </td>
 <td rowspan="3"><span class="unreleased">Project 3 实作日</span>
- <a href="/CS61B/2021Spring/labs/project-3-workday/">Project 3 实作日</a></td><td class="" colspan="2" rowspan="3">
+ <a href="/CS61B/2021Spring/projects/project-3-byow/">Project 3 实作日</a></td><td class="" colspan="2" rowspan="3">
 <a href="/CS61B/2021Spring/homeworks/hw-3-conceptual-review/">HW3: Conceptual Review (截止 05/03)</a>
 <br/></td>
 </tr><tr><td style="white-space: nowrap;">周三 04/21</td>
@@ -377,8 +377,8 @@ hide:
                   38. 压缩<br/>[<a href="https://www.youtube.com/playlist?list=PL8FaHk7qbOD6kGO6F1uWKggr-Ie9TCMUZ&amp;disable_polymer=true" rel="noopener" target="_blank">视频</a>] ‌[<a href="https://docs.google.com/presentation/d/1YPrOdJaAKAPHnbiUxjWiw-7R_cRlnxVVTC7diFvnWBw/edit?usp=sharing" rel="noopener" target="_blank">幻灯片</a>] ‌[<a href="https://sp21.datastructur.es/materials/lectures/lec38/lec38" rel="noopener" target="_blank">讲义</a>] ‌</td><td rowspan="3"><span class="unreleased">告别与趣味活动</span>
 </td>
 <td rowspan="3"><span class="unreleased">BYOW Demos (截止 04/30)</span>
- <a href="/CS61B/2021Spring/projects/project-3-demos/">BYOW Demos</a></td><td class="" colspan="2" rowspan="3"><span class="unreleased"><span class="proj">[Project 3 Phase 2 截止 04/27]</span><br/>
-</span> <a href="/CS61B/2021Spring/projects/project-3-phase-2/">Project 3 Phase 2</a></td>
+ <a href="/CS61B/2021Spring/projects/project-3-byow/#submission">BYOW Demos</a></td><td class="" colspan="2" rowspan="3"><span class="unreleased"><span class="proj">[Project 3 Phase 2 截止 04/27]</span><br/>
+</span> <a href="/CS61B/2021Spring/projects/project-3-byow/#phase-2">Project 3 Phase 2</a></td>
 </tr><tr class="odd"><td style="white-space: nowrap;">周三 04/28</td>
 <td><p>无</p>
 </td>

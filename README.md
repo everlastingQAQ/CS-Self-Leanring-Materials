@@ -25,7 +25,7 @@ Lab、作业、项目、考试及原课程主页使用独立导入脚本：
 python3 scripts/import_sp21_coursework.py
 ```
 
-脚本校验源 manifest 和文件数量，以原站 HTML 为页面基准，只翻译页面文字、替换本站已有中文资料链接，并将两份 2021 年公开日历静态化。默认只读源目录为 `/home/everlasting/下载/CS61B_SP21_Labs_Assignments_Exams_CN`。
+脚本校验源文件清单和哈希，默认从只读目录 `/home/everlasting/下载/CS61B_SP21_中文作业Markdown` 导入完整的 Lab、Homework 与 Project；HW1 按站点约定不发布，考试和已归档课程日历保持不变。只有显式传入 `--refresh-course-home` 时才会联网刷新原站首页与两份 2021 年公开日历。
 
 ## 构建、预览与发布
 

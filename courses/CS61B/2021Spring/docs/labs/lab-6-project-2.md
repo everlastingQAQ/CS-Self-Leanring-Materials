@@ -1,123 +1,634 @@
 ---
 title: "Lab 6：Project 2 入门"
 description: "CS61B Spring 2021 Lab 6：Project 2 入门中文学习资料。"
-hide:
-  - toc
 ---
 
-# Lab 6：Project 2 入门
+# Lab 6：Project 2 入门——持久化、文件与序列化
 
-- 原标题：Lab 6: Getting Started on Project 2
-- 原页面：`https://sp21.datastructur.es/materials/lab/lab6/lab6`
+> 原始页面：<https://sp21.datastructur.es/materials/lab/lab6/lab6>
+>
+> 本文件为中文翻译。代码、命令、类名、方法名和程序要求保持原样。
 
-> **文档性质**：本文件依据 CS 61B Spring 2021 官方页面，由 ChatGPT 独立阅读后制作中文学习版。  
-> 为保留技术准确性，类名、方法名、文件名、命令、报错文本和 API 名称保持英文。本文采用逐节翻译与重述，而不是网页的逐句镜像。
+## 学习目标
 
-## 实验目标
+本实验介绍 Project 2 Gitlet 所依赖的核心工程知识：
 
-这是 Gitlet 的关键前置 Lab。你将学习：
+- 在命令行中编译和运行 Java 程序；
+- 理解程序的当前工作目录（CWD）；
+- 使用相对路径和绝对路径；
+- 通过 `File` 和课程提供的 `Utils.java` 读写文件；
+- 使用 Java 序列化，让对象在程序退出后仍能保存；
+- 使用 `make` 和集成测试；
+- 使用远程 JVM 调试命令行程序。
 
-1. 从命令行编译、运行 Java，并运行测试。
-2. 用 Java 操作文件和目录。
-3. 将 Java 对象序列化到文件，并在下次运行时恢复。
-4. 用一个小型 `Capers` 程序练习持久化设计。
+实验真正需要编写代码的部分从 **Canine Capers** 开始，但前面的背景必须认真阅读，否则后面的持久化逻辑会很难理解。
 
-## 1. 持久化的含义
-
-此前程序状态只存在于进程内，程序退出后全部消失。持久化要求把状态写到磁盘，使下一次运行能继续读取。
-
-Gitlet 的 commit、branch、staging area 都需要持久化；否则每次执行一条命令后仓库状态就会丢失。
-
-## 2. Java 编译与 Make
-
-理解：
+先获取骨架：
 
 ```bash
-javac ...
-java ...
+git pull skeleton master
+```
+
+## 一、持久化的概念
+
+此前课程中的程序只在运行期间保存状态。程序一结束，实例变量和静态变量都会消失。例如 Project 0 的 2048 无法在退出后重新加载之前的进度。
+
+现实程序通常要跨多次运行保存状态。例如：
+
+```bash
+git add Hello.java Friends.java
+```
+
+即使 `git add` 已经退出，随后运行：
+
+```bash
+git status
+```
+
+Git 仍然知道哪些文件被加入暂存区。即使关机一年，这些信息仍会存在。
+
+实现持久化的关键是**文件系统**：程序把数据写入磁盘，下一次运行时再读回来。
+
+> Java 的静态变量不会跨进程保存。程序结束后，实例变量和静态变量全部丢失。要跨运行保留数据，必须将其写到文件系统中。
+
+## 二、Java 的编译与命令行运行
+
+过去你可能一直点击 IntelliJ 的绿色运行按钮。Java 也可以直接从终端编译和运行。
+
+Java 源文件是 `.java`；`javac` 将其编译为包含 Java 字节码的 `.class` 文件；`java` 再执行编译后的类。
+
+确认 Java 版本至少为 15：
+
+```bash
+javac -version
+java -version
+```
+
+Windows 用户必须使用 Git Bash，而不是以 `C:` 开头的普通命令提示符。
+
+进入实验目录：
+
+```bash
+cd $REPO_DIR
+cd lab6/capers
+```
+
+编译所有 Java 文件：
+
+```bash
+javac *.java
+```
+
+`*.java` 是通配符，表示当前目录下所有 `.java` 文件。编译后会出现若干 `.class` 文件。
+
+查看编译后的字节码：
+
+```bash
+cat Main.class
+```
+
+它对人类来说大多是不可读字符，但 JVM 能执行。
+
+直接运行下面命令会失败：
+
+```bash
+java Main
+```
+
+错误类似：
+
+```text
+Error: Could not find or load main class Main
+Caused by: java.lang.NoClassDefFoundError: capers/Main (wrong name: Main)
+```
+
+原因是 `Main.java` 位于 `capers` 包中。运行包内类时，必须在包目录的父目录运行，并使用完整规范名称：
+
+```bash
+cd ..
+java capers.Main
+```
+
+### 向 `main` 传递参数
+
+运行类时，实际调用的是：
+
+```java
+main(String[] args)
+```
+
+参数直接写在类名后：
+
+```bash
+java capers.Main story "this is a single argument"
+```
+
+此时：
+
+```java
+args = new String[]{"story", "this is a single argument"};
+```
+
+双引号可将包含空格的内容作为一个参数。
+
+用 IntelliJ 打开：
+
+```text
+sp21-s***/lab6/pom.xml
+```
+
+在 `Main.java` 中找到：
+
+```java
+if (args.length == 0) {
+    Utils.exitWithError("Must have at least one argument");
+}
+```
+
+其后临时加入：
+
+```java
+System.out.println("args: " + Arrays.toString(args));
+```
+
+如果 `Arrays` 变红，按 `Alt+Enter`（macOS 为 `Option+Enter`）导入 `java.util.Arrays`。
+
+从终端运行：
+
+```bash
+javac capers/Main.java
+java capers.Main story "this is a single argument"
+```
+
+预期：
+
+```text
+args: [story, this is a single argument]
+```
+
+实验正式实现时，要删除这条调试输出。
+
+## 三、使用 Make 编译和测试
+
+Capers 和 Gitlet 都具有持久状态。一次测试往往需要：
+
+1. 启动程序执行一个命令；
+2. 等程序退出；
+3. 再启动程序执行另一个命令；
+4. 验证第二次运行是否记住第一次运行的数据。
+
+因此，本实验不主要依赖 JUnit，而使用课程提供的 Python 集成测试框架，并通过 Unix 工具 `make` 执行。
+
+安装好 `make` 和 Python 后，在 `lab6` 及其子目录中运行：
+
+```bash
 make
+```
+
+它会编译项目中的 Java 文件。输出可能类似：
+
+```text
+"/Library/Developer/CommandLineTools/usr/bin/make" -C capers default
+javac -g -Xlint:unchecked -Xlint:deprecation -cp "..::;..;" CapersRepository.java Dog.java Main.java Utils.java
+touch sentinel
+```
+
+运行测试：
+
+```bash
 make check
 ```
 
-`Makefile` 把常用编译和测试命令统一成短命令。它不是 Java 的一部分，而是构建自动化工具。
+清理 `.class` 等生成文件：
 
-## 3. Current Working Directory
+```bash
+make clean
+```
 
-Java 中的相对路径以当前工作目录（CWD）为基准。可用：
+`check` 和 `clean` 称为 Make target。
+
+如果出现 `python3: command not found` 或权限错误，请查看文末 FAQ。
+
+## 四、Java 中的文件与目录
+
+### 1. 当前工作目录（CWD）
+
+Java 程序的当前工作目录，是你**从哪个目录启动程序**。程序中可通过：
 
 ```java
 System.getProperty("user.dir")
 ```
 
-查看 CWD。IntelliJ 中需检查 Run Configuration 的 Working Directory，否则命令行与 IDE 运行可能读写到不同位置。
+查询。
 
-## 4. 绝对路径与相对路径
+例如：
 
-- 绝对路径从文件系统根开始。
-- 相对路径从 CWD 开始。
-- 不要用字符串硬拼路径分隔符。
-- 使用 `File`、`Paths` 或课程提供的 `Utils.join`。
+```java
+class Example {
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir"));
+    }
+}
+```
 
-常用操作包括创建目录、检查文件存在、列出普通文件、读取内容和写入内容。
+若你先进入文件所在目录再运行：
 
-## 5. Serializable
+```bash
+cd /home/Michelle/example
+javac Example.java
+java Example
+```
 
-需要持久化的对象实现 `Serializable`。课程工具提供类似方法：
+输出会是：
 
-- `readContents(File file)`
-- `writeObject(File file, Serializable obj)`
-- `readObject(File file, Class<T> expectedClass)`
-- `join(...)`
+```text
+/home/Michelle/example
+```
 
-序列化适合保存对象状态，但必须明确文件存放位置、对象生命周期和更新时机。
+Windows 下则类似：
 
-## 6. Canine Capers 练习
+```text
+C:\Users\Michelle\example
+```
 
-核心文件通常包括：
+在 IntelliJ 中，CWD 位于：
 
-- `Main.java`
-- `CapersRepository.java`
-- `Dog.java`
+```text
+Run → Edit Configurations → Working Directory
+```
 
-建议顺序：
+在终端中可用：
 
-1. 定义 `CAPERS_FOLDER`。
-2. 定义 `DOG_FOLDER`。
-3. 实现 `setUpPersistence`。
-4. 在 `Main` 中解析命令并调用仓库方法。
-5. 实现 `writeStory`。
-6. 实现 `Dog.saveDog` 与 `Dog.fromFile`。
-7. 实现 `makeDog`。
-8. 实现 `celebrateBirthday`。
-9. 运行 `make check`。
+```bash
+pwd
+```
 
-命令的典型语义：
+### 2. 绝对路径与相对路径
 
-- 初始化持久化目录。
-- 向故事文件追加文本。
-- 创建并保存一只狗。
-- 读取某只狗、增长年龄并重新保存。
+- **绝对路径**：相对于文件系统根目录的位置。
+  - Windows：`C:/Users/Michelle/example/Example.java`
+  - macOS/Linux：`/home/Michelle/example/Example.java`
+- **相对路径**：相对于当前工作目录的位置。
+  - 若 CWD 已是 `example`，则路径可以只是 `Example.java`。
+  - 若 CWD 是其父目录，则为 `example/Example.java`。
 
-## 7. 调试持久化程序
+`~` 表示用户主目录，但主目录与文件系统根目录不是一回事。
 
-持久化 bug 常来自：
+本实验中通常应使用相对路径，使所有生成内容位于 `lab6` 的工作目录中，而不是写到计算机上的随机位置。
 
-- CWD 错误。
-- 路径拼接错误。
-- 目录未创建。
-- 修改对象后忘记重新保存。
-- 读错文件。
-- 同名对象覆盖规则不一致。
-- 测试之间残留旧数据。
+### 3. `File` 对象
 
-调试时应检查磁盘上的实际目录树，而不只盯着 Java 变量。
+Java 的 `File` 类可表示文件或目录。
 
-## 完成标准
+```java
+File f = new File("dummy.txt");
+```
 
-- Capers 命令能跨多次进程运行保留状态。
-- `make check` 通过。
-- 能解释序列化、CWD、相对路径和仓库目录的关系。
-- 为 Gitlet 写设计文档前，已经完成本 Lab。
+这只创建了一个指向路径的 Java 对象，并没有真的创建磁盘文件。
+
+创建文件：
+
+```java
+f.createNewFile();
+```
+
+检查是否存在：
+
+```java
+f.exists();
+```
+
+课程提供的 `Utils.java` 简化了文件读写。例如：
+
+```java
+Utils.writeContents(f, "Hello World");
+```
+
+### 4. 目录
+
+```java
+File d = new File("dummy");
+d.mkdir();
+```
+
+还可以查看 `mkdirs()`，它能创建多级目录。
+
+请重点熟悉 `Utils.java` 中的读写、连接路径、序列化辅助方法。
+
+## 五、Serializable 与对象持久化
+
+如果要保存一个复杂对象，可以手工把它变成字符串，再自己解析回来，但这种做法很繁琐。
+
+Java 提供**序列化**：把对象转成字节流写入文件；下一次运行时再反序列化成对象。
+
+要允许某个类被序列化，让它实现：
+
+```java
+import java.io.Serializable;
+
+public class Model implements Serializable {
+    ...
+}
+```
+
+`Serializable` 没有要求实现的方法，它只是一个标记接口。
+
+标准 Java 写法较长：
+
+```java
+Model m = ....;
+File outFile = new File(saveFileName);
+try {
+    ObjectOutputStream out =
+        new ObjectOutputStream(new FileOutputStream(outFile));
+    out.writeObject(m);
+    out.close();
+} catch (IOException excp) {
+    ...
+}
+```
+
+读取：
+
+```java
+Model m;
+File inFile = new File(saveFileName);
+try {
+    ObjectInputStream inp =
+        new ObjectInputStream(new FileInputStream(inFile));
+    m = (Model) inp.readObject();
+    inp.close();
+} catch (IOException | ClassNotFoundException excp) {
+    ...
+    m = null;
+}
+```
+
+使用 `Utils` 后，写对象只需：
+
+```java
+writeObject(outFile, m);
+```
+
+读对象：
+
+```java
+m = readObject(inFile, Model.class);
+```
+
+## 六、练习：Canine Capers
+
+你要实现一个使用文件操作和序列化的小程序。
+
+骨架包含：
+
+- `Main.java`：程序入口，根据命令行参数调用正确方法；
+- `CapersRepository.java`：协调其他类，绝大多数 FIXME 位于这里；
+- `Dog.java`：表示一只拥有姓名、品种和年龄的狗；
+- `Utils.java`：文件与序列化工具。
+
+本实验不测试非法输入和错误情况；Gitlet 中则必须处理。
+
+### 1. 支持的命令
+
+#### `story [text]`
+
+将 `text` 和换行符 `"\n"` 追加到 `.capers` 目录中的故事文件，然后打印当前完整故事。打印内容必须包括刚追加的文字。
+
+#### `dog [name] [breed] [age]`
+
+持久化创建一只指定姓名、品种和年龄的狗，并打印其 `toString()`。可假设狗名唯一。
+
+#### `birthday [name]`
+
+持久化增加指定狗的年龄，并打印狗的信息和生日祝福。
+
+示例：
+
+```bash
+java capers.Main story "Once upon a time, there was a beautiful dog."
+```
+
+输出：
+
+```text
+Once upon a time, there was a beautiful dog.
+```
+
+第二次运行：
+
+```bash
+java capers.Main story "That dog was named Fjerf."
+```
+
+输出必须包含之前保存的内容：
+
+```text
+Once upon a time, there was a beautiful dog.
+That dog was named Fjerf.
+```
+
+创建狗：
+
+```bash
+java capers.Main dog Mammoth "German Spitz" 10
+```
+
+输出：
+
+```text
+Woof! My name is Mammoth and I am a German Spitz! I am 10 years old! Woof!
+```
+
+生日：
+
+```bash
+java capers.Main birthday Qitmir
+```
+
+输出类似：
+
+```text
+Woof! My name is Qitmir and I am a Saluki! I am 4 years old! Woof!
+Happy birthday! Woof! Woof!
+```
+
+### 2. 持久化目录
+
+所有持久数据都应放在当前工作目录下的 `.capers` 目录。点号前缀使其默认隐藏，用户不需要知道内部实现细节。
+
+推荐结构：
+
+```text
+.capers/
+├── dogs/      # 每只狗的持久化数据
+└── story      # 当前故事文本
+```
+
+这些文件和目录应由程序创建，不应手动创建。
+
+删除全部持久状态：
+
+```bash
+rm -rf .capers
+```
+
+注意不要误删源代码目录 `capers`。
+
+### 3. 推荐实现顺序
+
+1. `setUpPersistence`：如果需要的目录和文件不存在，就创建它们；
+2. `writeStory`：读取旧故事、追加新文本，再覆盖写回完整内容；
+3. `Dog` 构造器和 `toString`；
+4. `saveDog`：将 `Dog` 序列化到文件；
+5. `Dog.fromFile`：根据姓名读取狗对象；
+6. `haveBirthday`：修改年龄后必须重新保存；
+7. `Main.main`：解析命令行参数并分派命令。
+
+## 七、测试
+
+除了 `make check`，还应手工测试：
+
+```bash
+make
+java capers.Main story Hello
+java capers.Main story World
+ls -a .capers
+```
+
+测试文件位于：
+
+```text
+lab6/testing/our
+```
+
+一个 `.in` 文件代表一个集成测试。例如：
+
+```text
+# Two uses of the `story` command
+> story "Hello"
+Hello
+<<<
+> story "World"
+Hello
+World
+<<<
+```
+
+规则：
+
+- `#` 开头为注释；
+- `>` 后是传给 `capers.Main.main()` 的参数；
+- 直到 `<<<` 的内容是预期输出；
+- 输出必须完全匹配。
+
+这类测试称为**集成测试**：一次测试会跨多个类和多次程序运行，不像单元测试只隔离一个小组件。
+
+## 八、提交
+
+通过全部 `make check` 后，你应修改了：
+
+- `capers/Main.java`
+- `capers/Dog.java`
+- `capers/CapersRepository.java`
+
+提交：
+
+```bash
+git commit -m "<commit message>"
+git push origin master
+```
+
+然后在 Gradescope 提交。本实验没有风格检查。
+
+## 九、强制结尾：远程调试
+
+完成并提交后，仍应做这一节。它会教你如何调试 Capers 和 Gitlet 的多次进程执行。
+
+### 1. 配置远程 JVM 调试
+
+先用 Git 将 Lab 6 临时恢复到初始骨架，以便观察失败测试；实验结束后务必切回自己的解答。
+
+在 IntelliJ 中：
+
+1. 打开 Lab 6；
+2. `Run → Edit Configurations`；
+3. 点击 `+`；
+4. 选择 `Remote JVM Debug`；
+5. 给配置起一个易识别的名称；
+6. 保持课程说明中的默认端口与设置。
+
+### 2. 从测试运行器启动调试
+
+进入 `lab6/testing`，运行某个测试：
+
+```bash
+python3 runner.py --debug our/test02-two-part-story.in
+```
+
+若要保留测试结束后的 `.capers` 文件夹：
+
+```bash
+python3 runner.py --keep --debug our/test02-two-part-story.in
+```
+
+交互命令：
+
+- `n`：不调试当前命令，直接运行并转到下一条，类似 Step Over；
+- `s`：调试当前命令，类似 Step Into；输入后在 IntelliJ 点击 Debug；
+- `q`：退出调试。
+
+先不断输入 `n`，找出究竟是哪一次程序执行首次产生错误。若启用了 `--keep`，测试目录会被保存在类似：
+
+```text
+test02-two-part-story_0
+```
+
+找到出错命令后，重新运行测试，在该命令处输入 `s`，然后用 IntelliJ 连接远程 JVM，并使用正常的断点、单步和变量观察。
+
+### 3. 持久化错误的特殊性
+
+测试第二条命令输出错误，不一定说明第二次执行有 bug。可能第一次执行没有正确写入持久化数据，第二次执行只是读到了错误状态。
+
+调试时第一目标应是找到**最早产生错误状态的那次执行**。否则你可能花很久调试一个本身正确的后续命令。
+
+Gitlet 使用完全相同的调试方式。
+
+## 十、提示、FAQ 与常见误区
+
+### 实现提示
+
+- `setUpPersistence`：确保所需目录/文件不存在时会被创建；
+- `writeStory`：使用 `readContentsAsString` 和 `writeContents`。仅使用 `writeContents` 会覆盖旧故事，不能直接“追加”；
+- `saveDog`：使用 `writeObject`，目标 `File` 必须表示文件而不是目录；
+- `fromFile`：使用 `readObject`；
+- 修改对象后若要求“持久化”，必须再次把修改后的对象写回文件。
+
+### Python 命令差异
+
+若你的系统运行 Python 的命令不是 `python3`：
+
+```bash
+make check PYTHON=<你的 Python 命令>
+```
+
+例如：
+
+```bash
+make check PYTHON=py
+```
+
+也可修改 `Makefile` 中对应配置，避免每次重复输入。
+
+### `File` 常见误解
+
+- `new File(...)` 不会创建实际文件或目录；
+- 创建文件要调用 `createNewFile()`；
+- 创建目录要调用 `mkdir()` 或 `mkdirs()`；
+- `File` 对象可以表示文件，也可以表示目录；
+- `Utils.join(d, s)` 只是创建表示 `d` 下 `s` 路径的 `File` 对象，不会创建实际文件；
+- `writeObject(file, object)` 的第一个参数必须是文件路径；
+- “持久地修改”意味着不仅修改内存中的对象，还必须把修改写回文件系统。
 
 ---
 

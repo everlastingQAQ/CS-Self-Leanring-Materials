@@ -1,102 +1,127 @@
 ---
 title: "Lab 7：BSTMap"
 description: "CS61B Spring 2021 Lab 7：BSTMap中文学习资料。"
-hide:
-  - toc
 ---
 
 # Lab 7：BSTMap
 
-- 原标题：Lab 7: BSTMap
-- 原页面：`https://sp21.datastructur.es/materials/lab/lab7/lab7`
+> 原文：https://sp21.datastructur.es/materials/lab/lab7/lab7<br>
+> 说明：正文由 ChatGPT 直接翻译；接口、类名、方法名和代码保持原样。
 
-> **文档性质**：本文件依据 CS 61B Spring 2021 官方页面，由 ChatGPT 独立阅读后制作中文学习版。  
-> 为保留技术准确性，类名、方法名、文件名、命令、报错文本和 API 名称保持英文。本文采用逐节翻译与重述，而不是网页的逐句镜像。
+## 简介
 
-## 实验目标
+从零实现 `BSTMap`：以二叉搜索树为核心，实现 `Map61B` 接口。完成后比较：
 
-从零实现一个以二叉搜索树为核心的 `BSTMap`，并让它实现 `Map61B` 接口。完成后，与链表 Map `ULLMap` 和 Java `TreeMap` 比较性能。
+- 你的 `BSTMap`；
+- 基于无序链表的 `ULLMap`；
+- Java 内置 `TreeMap`；
+- 部分测试还会对比 `HashMap`。
 
-## 核心文件
+## BSTMap 实现要求
 
-创建：
+在 `BSTMap.java` 中创建：
 
-```text
-BSTMap.java
+```java
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>
 ```
 
-类声明应实现 `Map61B<K, V>`。本 Lab 要求实现接口中的主要 Map 操作；`remove`、`iterator` 和 `keySet` 可以直接抛出：
+要求实现 `Map61B` 的全部方法，以下三个除外：
+
+- `remove`
+- `iterator`
+- `keySet`
+
+本 Lab 必做部分中，这些方法应抛出：
 
 ```java
 throw new UnsupportedOperationException();
 ```
 
-## 建议的数据结构
+代码只有在类和所有接口方法签名都存在后才能编译。可以先为未完成的方法写占位实现并抛异常，再逐个完成。
 
-定义内部节点：
+额外实现不在接口中的：
 
-```text
-key
-value
-left
-right
+```java
+public void printInOrder()
 ```
 
-并维护：
+它按 Key 递增顺序打印整张 map。Autograder 不检查输出，但调试很有用。
 
-- 根节点引用
-- 当前键值对数量
+`K` 必须支持 `compareTo`，因此使用 bounded type parameter。建议定义 private nested `BSTNode` 类保存 key、value、left、right 等信息；具体设计自行决定。
 
-二叉搜索树不变量：
+使用 `TestBSTMap.java` 测试。可参考：Lecture 16 slides、课程参考书中的 BST 代码、Princeton Algorithms BST，以及已提供的 `ULLMap.java`。
 
-- 左子树所有 key 小于当前 key。
-- 右子树所有 key 大于当前 key。
-- 相同 key 的 `put` 应更新 value，而不是增加 size。
+## 性能测试
 
-## 需要完成的行为
+### `InsertRandomSpeedTest`
 
-重点方法通常包括：
+测试随机字符串插入速度。程序询问：
 
-- `clear`
-- `containsKey`
-- `get`
-- `size`
-- `put`
-- `printInOrder`
+- 每个 String 的长度；
+- 插入次数。
 
-递归实现很自然，但必须处理：
+然后把随机 String 作为 key，与 Integer value 组成 `<String, Integer>` 对，插入：
 
-- 空树。
-- 查找不存在的 key。
-- 更新已有 key。
-- 插入新 key 时正确增加 size。
+- `BSTMap`
+- `ULLMap`
+- Java `TreeMap`
+- Java `HashMap`
 
-## 性能比较
+用足够大的输入观察渐近趋势，并把结果写入 `speedTestResults.txt`。格式和数据点数量不限。
 
-理论上：
+### `InsertInOrderSpeedTest`
 
-- 平衡 BST 的查找和插入约为 `Θ(log N)`。
-- 极度倾斜的 BST 最坏可退化为 `Θ(N)`。
-- `ULLMap` 基于无序链表，查找通常为 `Θ(N)`。
-- Java `TreeMap` 使用自平衡树，性能更稳定。
+与随机测试类似，但按字典序递增插入字符串。运行后观察 BST 形状及性能变化，与同学或 TA 讨论。
 
-实验要求通过实际计时比较，而不是只背复杂度。
+## 可选实现
 
-## 可选练习
+不计分，但 Autograder 可反馈：
 
-原页面还提供额外的渐进复杂度问题和扩展功能。自学时可进一步实现：
+- `iterator()`：返回遍历 key 的 iterator；
+- `keySet()`；
+- `remove(K key)`；
+- `remove(K key, V value)`。
 
-- `keySet`
-- `iterator`
-- `remove`
+`remove` 规则：key 不存在返回 `null`；存在则删除 `(key, value)` 并返回 value。额外挑战是在不维护第二个“所有 key 集合”实例变量的情况下实现 `keySet` 与 `iterator`。
 
-## 完成标准
+## 提交
 
-- 编译通过并实现要求的方法。
-- 基础与随机测试通过。
-- 重复 `put` 不错误增加 size。
-- 能解释自己的树在最坏情况下为何可能退化。
+提交：
+
+- `BSTMap.java`
+- `speedTestResults.txt`
+
+正常通过 Git 和 Gradescope 提交。Lab 结束时 TA 会讲解参考实现。
+
+## 可选渐近分析题
+
+给定含 `N` 个键值对的 `BSTMap B`，以及随机键值对 `(K, V)`。除非另行说明，复杂度按比较次数计算。
+
+判断 1–7 真/假：
+
+1. `B.put(K, V)` ∈ O(log `N`)
+2. `B.put(K, V)` ∈ Θ(log `N`)
+3. `B.put(K, V)` ∈ Θ(`N`)
+4. `B.put(K, V)` ∈ O(`N`)
+5. `B.put(K, V)` ∈ O(`N²`)
+6. 令 `g(N)` 为 `N` 次随机 `B.put(K,V)` 后再调用 `B.containsKey(K)` 的平均比较次数，则 `g(N) ~ 2 ln(N)`。这里 `g(N) ~ f(N)` 表示 `g(N)/f(N) -> 1`。
+7. 对 `C != K`，同时运行 `B.containsKey(K)` 与 `B.containsKey(C)` ∈ Ω(log `N`)。
+
+第 8 题：`numberOfNodes(b)` 对以 `b.root` 为根、含 `n` 个结点的 BSTMap 运行时间为 Θ(`n`)。给出 `mystery(b,z)` 在 `b` 含 `N` 个结点时最紧的 Big-O 界：
+
+```java
+public Key mystery(BSTMap b, int z) {
+    if (z > numberOfNodes(b) || z <= 0)
+        return null;
+    if (numberOfNodes(b.left) == z - 1)
+        return b.root.key;
+    else if (numberOfNodes(b.left) > z)
+        return mystery(b.left, z);
+    else
+        return mystery(b.right, z - numberOfNodes(b.left) - 1);
+}
+```
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab7/lab7){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab7/lab7<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

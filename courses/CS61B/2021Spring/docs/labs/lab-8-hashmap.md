@@ -1,94 +1,185 @@
 ---
 title: "Lab 8：HashMap"
 description: "CS61B Spring 2021 Lab 8：HashMap中文学习资料。"
-hide:
-  - toc
 ---
 
 # Lab 8：HashMap
 
-- 原标题：Lab 8: HashMap
-- 原页面：`https://sp21.datastructur.es/materials/lab/lab8/lab8`
+> 原文：https://sp21.datastructur.es/materials/lab/lab8/lab8<br>
+> 说明：正文由 ChatGPT 直接翻译；接口、类名、方法名和代码保持原样。
 
-> **文档性质**：本文件依据 CS 61B Spring 2021 官方页面，由 ChatGPT 独立阅读后制作中文学习版。  
-> 为保留技术准确性，类名、方法名、文件名、命令、报错文本和 API 名称保持英文。本文采用逐节翻译与重述，而不是网页的逐句镜像。
+## 简介
 
-## 实验目标
+实现 `Map61B` 的哈希表版本 `MyHashMap`。完成后比较：
 
-完成 `MyHashMap`，它实现 `Map61B` 接口。与 Lab 7 不同，本次底层结构是哈希表，并要求实现 `keySet` 与 `iterator`。
+- `MyHashMap`
+- 链表实现 `ULLMap`
+- Java 内置 `HashMap`
+- 使用不同 bucket 数据结构的多个 `MyHashMap` 子类。
 
-## 核心结构
+## MyHashMap
 
-哈希表由 bucket 数组组成。每个 bucket 存放哈希冲突的多个节点。典型节点包含：
+### 必做接口
 
-```text
-key
-value
+Starter code 位于 `MyHashMap.java`。实现 `Map61B` 的全部方法，但 `remove` 可抛：
+
+```java
+throw new UnsupportedOperationException();
 ```
 
-核心字段通常包括：
+本次必须实现：
 
-- buckets
-- size
-- loadFactor
-- 默认初始容量
-- 最大负载因子
+- `keySet()`
+- `iterator()`，遍历已存储 key
 
-## 索引计算
+两者可按任意顺序返回 key。建议维护一个 `HashSet` 实例变量存放全部 key。
 
-对 key 计算哈希值，并映射到合法下标。实现时要避免负下标，可使用安全的非负转换或 `Math.floorMod` 思路。
+若想逐步实现，可先写出全部接口方法签名并抛异常，让项目先编译。
 
-`null` key 是否支持，应严格按课程 skeleton 和测试要求处理，不要自行扩展语义。
+### Bucket 与工厂方法
 
-## 需要实现的方法
+哈希表 bucket 可使用 `LinkedList`、`ArrayList`、`TreeSet`、`PriorityQueue`、`HashSet` 等。Starter 利用多态、继承和 factory method 方便替换 bucket：
 
-- `clear`
-- `containsKey`
-- `get`
-- `size`
-- `put`
-- `keySet`
-- `iterator`
+```text
+Map61B.java
+└── MyHashMap.java
+    ├── MyHashMapALBuckets.java
+    ├── MyHashMapHSBuckets.java
+    ├── MyHashMapLLBuckets.java
+    ├── MyHashMapPQBuckets.java
+    └── MyHashMapTSBuckets.java
+```
 
-`remove` 可抛出 `UnsupportedOperationException`。
+核心字段：
 
-### `put`
+```java
+private Collection<Node>[] buckets;
+```
 
-- key 不存在：插入新节点，增加 size。
-- key 已存在：只更新 value。
-- 插入后或插入前检查负载因子。
-- 扩容时必须重新哈希所有现有 key，不能只复制 bucket 下标。
+含义：
 
-### `keySet` 与 `iterator`
+- `buckets` 是 `MyHashMap` 的 private 数组；
+- 每个数组元素是一组 `Node`，即一个 bucket；
+- `Node` 是保存单个 key-value mapping 的 private helper；
+- `Collection` 是 `ArrayList`、`LinkedList`、`TreeSet`、`HashSet`、`PriorityQueue` 等共同实现的接口。
 
-`keySet` 返回所有当前 key。`iterator` 遍历这些 key，顺序不限，但不能漏项或重复。
+Java 不能直接创建泛型数组：
 
-## Bucket 类型比较
+```java
+new Collection<Node>[size] // 非法
+```
 
-原实验允许改变 bucket 的具体集合类型，再进行速度测试。你需要理解：
+应创建：
 
-- bucket 很短时，链表或简单集合足够。
-- 哈希分布差或负载过高时，单个 bucket 会变长。
-- 总体性能依赖哈希函数、容量和扩容策略。
+```java
+new Collection[size]
+```
 
-## 性能比较
+然后只把 `Collection<Node>` 放入数组。
 
-完成后与：
+创建 bucket 时必须使用：
 
-- `ULLMap`
-- Java `HashMap`
-- 不同 bucket 实现的 `MyHashMap`
+```java
+protected Collection<Node> createBucket() {
+    return new LinkedList<>();
+}
+```
 
-进行计时对比。平均情况下哈希表查询接近常数时间，但这依赖良好哈希分布和负载控制。
+不要在主实现中到处直接 `new LinkedList<>()`，因为子类需要 override `createBucket` 来提供不同 bucket 类型。还提供 `createTable` 和 `createNode` factory；后两者不强制使用，但为风格统一而存在。
 
-## 完成标准
+### 构造方法
 
-- 所有接口方法行为正确。
-- 更新已有 key 不增加 size。
-- 扩容后所有 key 仍可查询。
-- iterator 遍历完整。
-- 能解释为什么扩容时必须 rehash。
+实现：
+
+```java
+public MyHashMap();
+public MyHashMap(int initialSize);
+public MyHashMap(int initialSize, double loadFactor);
+```
+
+默认值：
+
+```text
+initialSize = 16
+loadFactor = 0.75
+```
+
+### 实现要求
+
+1. 初始 bucket 数等于 `initialSize`。
+2. 当前负载因子超过阈值时扩容：
+
+```text
+load = N / M
+```
+
+其中 `N` 为键值对数量，`M` 为 bucket 数。
+3. 使用 separate chaining 解决冲突。
+4. `MyHashMap.java` 只能导入 `ArrayList`、`LinkedList`、`Collection`、`HashSet`、`Iterator`、`Set`；主 bucket 类型必须为允许类型之一。
+5. 对 `Collection<Node>[]` 只使用 `Collection` 接口支持的操作；需要的主要方法是 `add`、`remove`、`iterator`。
+6. 查找 Node 时遍历 bucket，并用 `.equals()` 比较 key。
+7. 必须乘法扩容，不要加法扩容；无需缩容。
+8. 在 hashCode 分布良好的假设下，操作应为摊还常数时间。
+9. `hashCode()` 可能为负数，计算 bucket index 时必须处理。
+10. 重复插入同一个 key 时更新 value，不增加 size。
+11. 可假设不会插入 `null` key。
+
+### 测试
+
+- `TestMyHashMap.java`：基本实现。
+- `TestMyHashMapBuckets.java`：对每一种 bucket 子类复用基本测试。
+- `TestHashMapExtra.java`：可选 remove 测试。
+
+继续性能实验前必须通过前两个测试文件。
+
+## HashMap 速度测试
+
+完成实现后运行：
+
+- `InsertRandomSpeedTest.java`
+- `InsertInOrderSpeedTest.java`
+
+随机测试读取输入规模 `N`，生成 `N` 个长度 10 的字符串，作为 `<String,Integer>` 插入 `MyHashMap`、`ULLMap` 和 Java `HashMap`。记录结果到：
+
+```text
+lab8/speedTestResults.txt
+```
+
+格式与数据点数量不限。
+
+按序插入测试中，你的实现应大致落在 Java HashMap 同一数量级，通常在约 10 倍以内。讨论：什么时候更适合 `BSTMap` / `TreeMap`，而不是 `HashMap`？把回答写入结果文件。
+
+## 更换 Bucket 类型的速度测试
+
+运行 `speed/BucketsSpeedTest.java`。程序读取字符串长度 `L` 和操作规模 `N`，比较：
+
+- `MyHashMapALBuckets`：`ArrayList`
+- `MyHashMapLLBuckets`：`LinkedList`
+- `MyHashMapTSBuckets`：`TreeSet`
+- `MyHashMapPQBuckets`：`PriorityQueue`
+- `MyHashMapHSBuckets`：`HashSet`
+
+观察随 `N` 的扩展趋势，讨论并记录结果。
+
+当前泛型实现为了只依赖 `Collection`，即使用 `TreeSet` 或 `HashSet` bucket，也会线性遍历整个 bucket。思考：若能利用 `TreeSet` 的对数查找或 `HashSet` 的常数查找，外层哈希表是否会进一步加速？无需实现，只记录讨论。
+
+## 可选练习
+
+- `remove(K key)`
+- `remove(K key, V value)`
+- 不维护第二个 key 集合变量而实现 `keySet` 与 `iterator`
+
+`remove`：key 不存在返回 `null`；存在则删除并返回 value。
+
+## 提交
+
+提交：
+
+- `MyHashMap.java`
+- `speedTestResults.txt`
+
+正常使用 Git 与 Gradescope。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab8/lab8){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab8/lab8<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

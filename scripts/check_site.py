@@ -19,8 +19,8 @@ COURSE_SITE = SITE_ROOT / "CS61B" / "2021Spring"
 REMOTE_IMAGE_RE = re.compile(r"!\[[^\]]*\]\(https?://", re.IGNORECASE)
 EXPECTED_CHAPTERS = 22
 EXPECTED_LEGACY_REDIRECTS = EXPECTED_CHAPTERS + 2
-EXPECTED_HTML_PAGES = 64 + EXPECTED_LEGACY_REDIRECTS
-EXPECTED_COURSEWORK = {"labs": 17, "homeworks": 3, "projects": 8, "exams": 4}
+EXPECTED_HTML_PAGES = 56 + EXPECTED_LEGACY_REDIRECTS
+EXPECTED_COURSEWORK = {"labs": 11, "homeworks": 3, "projects": 6, "exams": 4}
 SEARCH_TERMS = ("并查集", "最短路径", "泛型", "JUnit", "Gitlet", "BYOW", "期中考试")
 PAGES_RECOMMENDED_MAX_BYTES = 1_000_000_000
 
@@ -94,11 +94,16 @@ def main() -> None:
         content_files = [path for path in (DOCS_ROOT / group).glob("*.md") if path.name != "index.md"]
         if len(content_files) != expected_count:
             errors.append(f"expected {expected_count} {group} sources, got {len(content_files)}")
-        if group in {"labs", "homeworks", "projects"}:
-            for content_file in content_files:
-                source = content_file.read_text(encoding="utf-8")
-                if not re.search(r"(?m)^hide:\n  - toc$", source):
-                    errors.append(f"{group} page must not expand its page outline: {content_file.name}")
+
+    expected_new_coursework = (
+        DOCS_ROOT / "projects" / "project-1ec-autograder.md",
+        DOCS_ROOT / "projects" / "project-3-game-sharing.md",
+    )
+    for source_file in expected_new_coursework:
+        if not source_file.is_file():
+            errors.append(f"missing updated coursework source {source_file.relative_to(PROJECT_ROOT)}")
+    if (DOCS_ROOT / "homeworks" / "hw-1-cancelled.md").exists():
+        errors.append("HW 1 must not be published")
 
     for markdown in DOCS_ROOT.rglob("*.md"):
         text = markdown.read_text(encoding="utf-8")
@@ -163,9 +168,9 @@ def main() -> None:
 
     for group in ("labs", "homeworks", "projects"):
         for html_file in (COURSE_SITE / group).glob("*/index.html"):
-            parser = pages.get(html_file.resolve())
-            if parser and parser.toc_links:
-                errors.append(f"{group} page expands its outline in the sidebar: {html_file.parent.name}")
+            html_text = html_file.read_text(encoding="utf-8")
+            if 'class="md-sidebar md-sidebar--secondary"' not in html_text:
+                errors.append(f"{group} page is missing the standard right-side table of contents: {html_file.parent.name}")
 
     for html_file, parser in list(pages.items()):
         visible_text = " ".join(parser.text)
