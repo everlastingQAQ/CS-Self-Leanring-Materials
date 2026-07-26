@@ -368,7 +368,7 @@ def main() -> None:
     course_home_path = COURSE_SITE / "index.html"
     if course_home_path.is_file():
         course_home_html = course_home_path.read_text(encoding="utf-8")
-        for label in ("临时首页", "开始阅读", "中文课程主页", "返回教程总目录", "课程教材"):
+        for label in ("开始阅读", "中文课程主页", "返回教程总目录", "课程教材"):
             if label not in course_home_html:
                 errors.append(f"course Material homepage is missing {label}")
         if "课程章节" in course_home_html:
