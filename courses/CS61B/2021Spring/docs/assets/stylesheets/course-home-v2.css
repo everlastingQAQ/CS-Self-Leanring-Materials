@@ -145,6 +145,12 @@ table#calendar .proj { color: #4cbb17; }
 .calendar-source-links { margin-top: 8px; font-size: 12px; text-align: right; }
 #build_time { margin-top: 18px; font-size: 12px; text-align: right; }
 
+.course-site-footer {
+  margin: 30px 12px 18px;
+  font-size: 12px;
+  text-align: center;
+}
+
 @media (max-width: 750px) {
   .navitem { margin: 0 10px; }
   #coursename { margin: 22px 12px 14px; font-size: 28px; line-height: 34px; }

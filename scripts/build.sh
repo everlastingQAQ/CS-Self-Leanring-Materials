@@ -19,6 +19,7 @@ docker run --rm \
   --workdir /site \
   "$image_name" build --config-file courses/CS61B/2021Spring/mkdocs.yml --strict --clean \
   --site-dir /site/dist/CS61B/2021Spring
+python3 "$project_dir/scripts/normalize_sitemaps.py" "$dist_dir"
 python3 "$project_dir/scripts/generate_legacy_redirects.py" "$dist_dir"
 python3 "$project_dir/scripts/stamp_release.py" "$dist_dir"
 python3 "$project_dir/scripts/check_site.py" "$dist_dir"

@@ -11,6 +11,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit
 
+from import_content import CHAPTER_DESCRIPTIONS
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 COURSE_ROOT = PROJECT_ROOT / "courses" / "CS61B" / "2021Spring"
@@ -25,6 +27,9 @@ EXPECTED_COURSEWORK = {"labs": 11, "homeworks": 3, "projects": 6, "exams": 4}
 EXPECTED_COURSEWORK_IMAGES = 47
 SEARCH_TERMS = ("并查集", "最短路径", "泛型", "JUnit", "Gitlet", "BYOW", "期中考试")
 PAGES_RECOMMENDED_MAX_BYTES = 1_000_000_000
+SITE_URL = "https://docs.everlasting.xin/"
+ICP_NUMBER = "鄂ICP备2026035887号"
+ICP_URL = "https://beian.miit.gov.cn/"
 
 
 class PageParser(HTMLParser):
@@ -33,6 +38,8 @@ class PageParser(HTMLParser):
         self.links: list[tuple[str, str]] = []
         self.anchors: list[dict[str, str | None]] = []
         self.toc_links: list[str] = []
+        self.link_elements: list[dict[str, str | None]] = []
+        self.meta_elements: list[dict[str, str | None]] = []
         self.ids: set[str] = set()
         self.text: list[str] = []
         self.ignored_depth = 0
@@ -45,6 +52,10 @@ class PageParser(HTMLParser):
             self.ids.add(element_id)
         if tag in {"a", "link"} and values.get("href"):
             self.links.append(("href", values["href"] or ""))
+        if tag == "link":
+            self.link_elements.append(values)
+        if tag == "meta":
+            self.meta_elements.append(values)
         if tag == "a" and values.get("href"):
             self.anchors.append(values)
             if self.toc_list_depth:
@@ -86,19 +97,45 @@ def html_target(current: Path, raw_url: str) -> tuple[Path | None, str]:
     return target.resolve(), unquote(parsed.fragment)
 
 
+def front_matter_description(source: str) -> str | None:
+    front_matter = re.match(r"\A---\n(.*?)\n---\n", source, re.DOTALL)
+    if front_matter is None:
+        return None
+    description = re.search(r"^description:\s*(.+?)\s*$", front_matter.group(1), re.MULTILINE)
+    if description is None:
+        return None
+    raw_value = description.group(1)
+    if raw_value.startswith('"'):
+        try:
+            return str(json.loads(raw_value))
+        except json.JSONDecodeError:
+            return None
+    return raw_value.strip("'\"")
+
+
 def main() -> None:
     errors: list[str] = []
     chapter_files = sorted((DOCS_ROOT / "chapters").glob("*.md"))
     if len(chapter_files) != EXPECTED_CHAPTERS:
         errors.append(f"expected {EXPECTED_CHAPTERS} chapter sources, got {len(chapter_files)}")
 
+    coursework_descriptions: list[str] = []
     for group, expected_count in EXPECTED_COURSEWORK.items():
         content_files = [path for path in (DOCS_ROOT / group).glob("*.md") if path.name != "index.md"]
         if len(content_files) != expected_count:
             errors.append(f"expected {expected_count} {group} sources, got {len(content_files)}")
+        for content_file in content_files:
+            description = front_matter_description(content_file.read_text(encoding="utf-8"))
+            if not description:
+                errors.append(f"coursework description is missing in {content_file.name}")
+            else:
+                coursework_descriptions.append(description)
         index_source = (DOCS_ROOT / group / "index.md").read_text(encoding="utf-8")
         if "归档说明" in index_source or "课程服务与提交入口可能已经失效" in index_source:
             errors.append(f"{group} index still contains the archive notice")
+
+    if len(coursework_descriptions) != len(set(coursework_descriptions)):
+        errors.append("coursework descriptions must be unique")
 
     coursework_files = sorted(
         path
@@ -173,8 +210,17 @@ def main() -> None:
         "中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。",
         "原始网站：https://joshhug.gitbooks.io/hug61b/content/",
     )
+    chapter_descriptions: list[str] = []
     for chapter_file in chapter_files:
         source = chapter_file.read_text(encoding="utf-8")
+        description = front_matter_description(source)
+        expected_description = CHAPTER_DESCRIPTIONS.get(chapter_file.name)
+        if description != expected_description:
+            errors.append(f"chapter description is missing or stale in {chapter_file.name}")
+        elif len(description) < 35:
+            errors.append(f"chapter description is too short in {chapter_file.name}")
+        else:
+            chapter_descriptions.append(description)
         if re.search(r"\A#[^\n]+\n\n---\n(?:[ \t]*\n)+---\n", source):
             errors.append(f"duplicate separator below the title in {chapter_file.name}")
         for line in attribution_lines:
@@ -187,6 +233,9 @@ def main() -> None:
             or not source.rstrip().endswith(attribution_lines[-1])
         ):
             errors.append(f"chapter attribution is not confined to the bottom of {chapter_file.name}")
+
+    if len(chapter_descriptions) != len(set(chapter_descriptions)):
+        errors.append("chapter descriptions must be unique")
 
     for markdown in DOCS_ROOT.rglob("*.md"):
         text = markdown.read_text(encoding="utf-8")
@@ -252,6 +301,14 @@ def main() -> None:
             errors.append(
                 f"rendered chapter attribution is not the final article block in {chapter_file.name}"
             )
+        rendered_parser = pages.get(rendered_chapter.resolve())
+        rendered_descriptions = [
+            meta.get("content")
+            for meta in rendered_parser.meta_elements
+            if (meta.get("name") or "").lower() == "description"
+        ] if rendered_parser else []
+        if rendered_descriptions != [CHAPTER_DESCRIPTIONS[chapter_file.name]]:
+            errors.append(f"rendered chapter description is incorrect in {chapter_file.name}")
 
     if len(pages) != EXPECTED_HTML_PAGES:
         errors.append(f"expected {EXPECTED_HTML_PAGES} generated HTML pages, got {len(pages)}")
@@ -279,6 +336,41 @@ def main() -> None:
     normal_pages = set(pages) - {path.resolve() for path in legacy_redirects}
     for html_file in normal_pages:
         html_text = html_file.read_text(encoding="utf-8")
+        parser = pages[html_file]
+        if ICP_NUMBER not in html_text or ICP_URL not in html_text:
+            errors.append(f"ICP registration is missing in {html_file.relative_to(SITE_ROOT)}")
+        if any(
+            (meta.get("name") or "").lower() == "robots"
+            and "noindex" in (meta.get("content") or "").lower()
+            for meta in parser.meta_elements
+        ):
+            errors.append(f"normal page unexpectedly contains noindex: {html_file.relative_to(SITE_ROOT)}")
+        if html_file.name == "index.html":
+            relative_parent = html_file.relative_to(SITE_ROOT).parent.as_posix()
+            expected_canonical = SITE_URL if relative_parent == "." else f"{SITE_URL}{relative_parent}/"
+            canonicals = [
+                link.get("href")
+                for link in parser.link_elements
+                if (link.get("rel") or "").lower() == "canonical"
+            ]
+            if canonicals != [expected_canonical]:
+                errors.append(
+                    f"invalid canonical in {html_file.relative_to(SITE_ROOT)}: {canonicals}"
+                )
+            descriptions = [
+                meta.get("content")
+                for meta in parser.meta_elements
+                if (meta.get("name") or "").lower() == "description"
+            ]
+            og_descriptions = [
+                meta.get("content")
+                for meta in parser.meta_elements
+                if (meta.get("property") or "").lower() == "og:description"
+            ]
+            if len(descriptions) != 1 or not descriptions[0]:
+                errors.append(f"missing meta description in {html_file.relative_to(SITE_ROOT)}")
+            if og_descriptions != descriptions:
+                errors.append(f"Open Graph description mismatch in {html_file.relative_to(SITE_ROOT)}")
         if "__SITE_RELEASE__" in html_text:
             errors.append(f"unstamped release placeholder in {html_file.relative_to(SITE_ROOT)}")
         for marker in (
@@ -292,7 +384,6 @@ def main() -> None:
         ):
             if release and marker not in html_text:
                 errors.append(f"cache refresh marker missing in {html_file.relative_to(SITE_ROOT)}: {marker}")
-        parser = pages[html_file]
         for attribute, url in parser.links:
             parsed = urlsplit(url)
             if parsed.scheme or parsed.netloc or not parsed.path.endswith((".css", ".js")):
@@ -360,6 +451,54 @@ def main() -> None:
         errors.append("portal still contains the previous site name")
     if 'id="课程"' not in portal_html:
         errors.append("portal does not contain the 课程 section")
+    website_schemas = re.findall(
+        r'<script\s+type="application/ld\+json">\s*(.*?)\s*</script>',
+        portal_html,
+        re.DOTALL,
+    )
+    if len(website_schemas) != 1:
+        errors.append(f"portal must contain exactly one WebSite JSON-LD block, got {len(website_schemas)}")
+    else:
+        try:
+            website_schema = json.loads(website_schemas[0])
+            expected_schema = {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "CS自学材料",
+                "alternateName": ["Everlasting Docs", "docs.everlasting.xin"],
+                "url": SITE_URL,
+            }
+            if website_schema != expected_schema:
+                errors.append("portal WebSite JSON-LD does not match the expected site identity")
+        except json.JSONDecodeError as error:
+            errors.append(f"portal WebSite JSON-LD is invalid: {error}")
+    for course_html in COURSE_SITE.rglob("*.html"):
+        if 'type="application/ld+json"' in course_html.read_text(encoding="utf-8"):
+            errors.append(
+                f"course page must not duplicate root WebSite JSON-LD: {course_html.relative_to(SITE_ROOT)}"
+            )
+
+    robots_path = SITE_ROOT / "robots.txt"
+    if robots_path.is_file():
+        robots = robots_path.read_text(encoding="utf-8")
+        for marker in (
+            "User-agent: *",
+            "Allow: /",
+            f"Sitemap: {SITE_URL}sitemap.xml",
+            f"Sitemap: {SITE_URL}CS61B/2021Spring/sitemap.xml",
+        ):
+            if marker not in robots:
+                errors.append(f"robots.txt is missing {marker}")
+
+    for sitemap_path in (SITE_ROOT / "sitemap.xml", COURSE_SITE / "sitemap.xml"):
+        if not sitemap_path.is_file():
+            continue
+        sitemap = sitemap_path.read_text(encoding="utf-8")
+        if "<lastmod" in sitemap:
+            errors.append(f"sitemap contains build-wide lastmod values: {sitemap_path.relative_to(SITE_ROOT)}")
+        sitemap_urls = re.findall(r"<loc>(.*?)</loc>", sitemap)
+        if not sitemap_urls or any(not url.startswith(SITE_URL) for url in sitemap_urls):
+            errors.append(f"sitemap contains missing or non-canonical URLs: {sitemap_path.relative_to(SITE_ROOT)}")
 
     chapter_four = COURSE_SITE / "chapters" / "04-inheritance-and-interfaces" / "index.html"
     if chapter_four.is_file():
@@ -397,6 +536,8 @@ def main() -> None:
             errors.append("course homepage does not contain the two original-style weekly calendars")
         if "calendar-scroll compact" in original_style_html:
             errors.append("course homepage still contains the incorrect long-list calendar")
+        if ICP_NUMBER not in original_style_html or ICP_URL not in original_style_html:
+            errors.append("original-style course homepage is missing the ICP registration")
         for extra_copy in ("中文归档说明", "下列内容由两份公开 ICS", "会议链接按原记录保留"):
             if extra_copy in original_style_html:
                 errors.append(f"course homepage contains non-original explanatory copy: {extra_copy}")

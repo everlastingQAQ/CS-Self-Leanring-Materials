@@ -58,6 +58,31 @@ CHAPTERS = [
     ("21_归约与分解.md", "21-reductions-and-decomposition.md"),
 ]
 
+CHAPTER_DESCRIPTIONS = {
+    "00-introduction.md": "CS61B 中文教材导论，介绍课程学习方式、Java 编程环境、数据结构与算法主题以及配套练习的使用方法。",
+    "01-java-basics.md": "CS61B Java 入门中文教程，讲解变量、控制流、函数、类、对象、静态成员、构造方法与数组等核心语法。",
+    "02-lists.md": "CS61B 列表中文教程，涵盖引用、递归、链表、哨兵节点、双向链表、数组列表与动态扩容策略。",
+    "03-testing.md": "CS61B 测试中文教程，介绍 JUnit、单元测试、测试驱动开发、异常测试以及调试程序的基本方法。",
+    "04-inheritance-and-interfaces.md": "CS61B 继承与接口中文教程，讲解接口实现、方法重写、动态方法选择、类型转换与高阶函数。",
+    "05-generics-and-autoboxing.md": "CS61B 泛型与自动装箱中文教程，介绍泛型类、泛型方法、类型参数、包装类型和 Java 自动装箱机制。",
+    "06-exceptions-iterators-object-methods.md": "CS61B Java 进阶中文教程，讲解异常处理、迭代器与 Iterable 接口，以及 Object 类常用方法。",
+    "07-packages-and-access-control.md": "CS61B 包与访问控制中文教程，介绍 Java 包结构、导入规则、访问修饰符和模块化代码组织方式。",
+    "08-efficient-programming-and-asymptotic-analysis.md": "CS61B 渐近分析中文教程，讲解高效编程、运行时间估算、渐近符号与常见算法复杂度。",
+    "09-disjoint-sets.md": "CS61B 并查集中文教程，涵盖 Quick Find、Quick Union、加权合并、路径压缩与复杂度分析。",
+    "10-adts-and-trees.md": "CS61B 抽象数据类型与树中文教程，介绍 ADT、二叉树、二叉搜索树以及树结构的基本操作。",
+    "11-balanced-trees.md": "CS61B 平衡树中文教程，讲解 2-3 树、旋转操作、左倾红黑树和保持搜索树平衡的方法。",
+    "12-hashing.md": "CS61B 哈希中文教程，介绍哈希函数、哈希表、冲突处理、负载因子、扩容与性能分析。",
+    "13-heaps-and-priority-queues.md": "CS61B 堆与优先队列中文教程，讲解二叉堆、堆操作、优先队列接口及其渐近运行时间。",
+    "14-data-structures-summary.md": "CS61B 数据结构总结中文教程，对比列表、集合、映射、树、哈希表、堆等结构的用途与复杂度。",
+    "15-tries.md": "CS61B Trie 字典树中文教程，介绍字符串键集合、前缀查询、Trie 结构及其时间与空间权衡。",
+    "16-quadtrees-and-kd-trees.md": "CS61B 空间数据结构中文教程，讲解四叉树、K-D 树、最近邻搜索与多维空间划分。",
+    "17-tree-traversals-and-graphs.md": "CS61B 树遍历与图中文教程，介绍深度优先遍历、广度优先遍历以及图模型的基本概念。",
+    "18-graph-traversal-and-representation.md": "CS61B 图遍历与表示中文教程，讲解邻接表、邻接矩阵、DFS、BFS 与图算法实现方式。",
+    "19-shortest-paths.md": "CS61B 最短路径中文教程，介绍最短路径树、Dijkstra 算法、A* 搜索及边权条件。",
+    "20-minimum-spanning-trees.md": "CS61B 最小生成树中文教程，讲解割性质、Prim 算法、Kruskal 算法与并查集的应用。",
+    "21-reductions-and-decomposition.md": "CS61B 归约与分解中文教程，介绍问题归约、图算法应用、拓扑排序与复杂问题的分解方法。",
+}
+
 IMAGE_RE = re.compile(r"!\[([^\]]*)\]\((https?://[^)\s]+)(?:\s+([\"'][^\"']*[\"']))?\)")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+)$")
 ATTRIBUTION_RE = re.compile(
@@ -73,6 +98,15 @@ ATTRIBUTION_FOOTER = (
     "> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>\n"
     "> 原始网站：https://joshhug.gitbooks.io/hug61b/content/"
 )
+FRONT_MATTER_RE = re.compile(r"\A---\n.*?\n---\n+", re.DOTALL)
+
+
+def apply_chapter_metadata(text: str, destination: str) -> str:
+    """Set deterministic SEO metadata while preserving the imported body."""
+    description = CHAPTER_DESCRIPTIONS[destination]
+    body = FRONT_MATTER_RE.sub("", text, count=1)
+    front_matter = f"---\ndescription: {json.dumps(description, ensure_ascii=False)}\n---\n\n"
+    return front_matter + body.lstrip()
 
 
 def normalize_course_text(text: str) -> str:
@@ -257,10 +291,13 @@ def main() -> None:
         for _, destination in CHAPTERS:
             chapter = CHAPTERS_ROOT / destination
             chapter.write_text(
-                move_attribution_to_bottom(chapter.read_text(encoding="utf-8")),
+                apply_chapter_metadata(
+                    move_attribution_to_bottom(chapter.read_text(encoding="utf-8")),
+                    destination,
+                ),
                 encoding="utf-8",
             )
-        print(f"Moved attribution to the bottom of {len(CHAPTERS)} generated chapters.")
+        print(f"Updated metadata and attribution in {len(CHAPTERS)} generated chapters.")
         return
 
     missing = [str(SOURCE_ROOT / source) for source, _ in CHAPTERS if not (SOURCE_ROOT / source).is_file()]
@@ -285,7 +322,10 @@ def main() -> None:
             title_suffix = f" {title}" if title else ""
             return f"![{alt}]({replacements[url]}{title_suffix})"
 
-        rendered = move_attribution_to_bottom(IMAGE_RE.sub(replace_image, text))
+        rendered = apply_chapter_metadata(
+            move_attribution_to_bottom(IMAGE_RE.sub(replace_image, text)),
+            destination,
+        )
         (CHAPTERS_ROOT / destination).write_text(rendered, encoding="utf-8")
 
     summary = {

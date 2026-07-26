@@ -131,9 +131,10 @@ beautifulsoup4==4.13.4
 1. 构建固定依赖版本的 Docker 镜像。
 2. 严格构建根门户到 `dist/`。
 3. 严格构建 CS61B 到 `dist/CS61B/2021Spring/`。
-4. 生成旧地址的静态跳转页。
-5. 为页面、CSS、JavaScript 和搜索索引写入内容版本。
-6. 检查页面数量、链接、锚点、搜索、图片、导航和 Pages 产物。
+4. 移除 Sitemap 中无法准确维护的统一 `lastmod`。
+5. 生成旧地址的静态跳转页。
+6. 为页面、CSS、JavaScript 和搜索索引写入内容版本。
+7. 检查页面数量、链接、锚点、搜索、图片、SEO 元数据、备案信息、导航和 Pages 产物。
 
 构建成功时会看到类似：
 
@@ -176,12 +177,13 @@ HUG61B_SOURCE=/绝对路径/到/Markdown目录 \
 
 - 检查预期的 22 个源文件。
 - 规范标题层级和年份文字。
+- 根据 `scripts/import_content.py` 中的 `CHAPTER_DESCRIPTIONS` 写入每章独立的 SEO 描述。
 - 本地化远程图片。
 - 写入教材来源与许可信息。
 - 准备仓库内的 MathJax 运行时。
 - 更新 `import-manifest.json`。
 
-如果只需把现有教材的来源与许可信息重新移动到每篇底部，不重新下载资源：
+如果只需更新现有教材的 SEO 描述，并把来源与许可信息重新移动到每篇底部，不重新下载资源：
 
 ```bash
 python3 scripts/import_content.py --attribution-only
@@ -308,6 +310,28 @@ shared/overrides/partials/cache-refresh.html
 4. 浏览器扩展或代理是否拦截了版本请求。
 
 不要通过修改 `scripts/stamp_release.py`、删除版本检查或反复手工改 CSS 查询参数来掩盖部署问题。
+
+## 备案与搜索收录
+
+备案号在根门户和课程配置的 `copyright` 中维护，独立课程主页在 `shared/overrides/course-home.html` 中维护。当前统一使用：
+
+```text
+鄂ICP备2026035887号
+https://beian.miit.gov.cn/
+```
+
+修改备案信息时必须同步三处，并运行完整构建；严格检查会验证所有正常页面都包含备案号和链接。
+
+根站的 `WebSite` JSON-LD 位于 `shared/overrides/main.html`，只允许在 `https://docs.everlasting.xin/` 输出。教材页的描述由导入脚本维护，不要只修改生成后的 Markdown。
+
+发布后在 Google Search Console 和 Bing Webmaster Tools 提交：
+
+```text
+https://docs.everlasting.xin/sitemap.xml
+https://docs.everlasting.xin/CS61B/2021Spring/sitemap.xml
+```
+
+本项目不配置百度站长验证或提交。Sitemap 不写入无法准确反映内容变更时间的 `lastmod`；如未来需要恢复，必须使用每一页真实的更新时间。
 
 ## 发布到 GitHub Pages
 

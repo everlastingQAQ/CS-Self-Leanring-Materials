@@ -1,3 +1,7 @@
+---
+description: "CS61B Java 进阶中文教程，讲解异常处理、迭代器与 Iterable 接口，以及 Object 类常用方法。"
+---
+
 # 第 6 章 异常、迭代器与 Object 方法
 
 ---

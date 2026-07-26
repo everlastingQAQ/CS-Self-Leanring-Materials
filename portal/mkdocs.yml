@@ -39,4 +39,6 @@ markdown_extensions:
 extra_css:
   - assets/stylesheets/extra.css?v=20260726-4
 
-copyright: 中文整理：everlasting
+copyright: >-
+  中文整理：everlasting<br>
+  <a class="site-registration" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2026035887号</a>

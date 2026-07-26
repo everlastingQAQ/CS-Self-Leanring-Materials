@@ -1,3 +1,7 @@
+---
+description: "CS61B 并查集中文教程，涵盖 Quick Find、Quick Union、加权合并、路径压缩与复杂度分析。"
+---
+
 # 第 9 章 并查集
 
 ---

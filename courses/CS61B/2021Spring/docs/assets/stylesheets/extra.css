@@ -61,6 +61,20 @@
   margin: 0;
 }
 
+.md-footer-meta__inner {
+  justify-content: center;
+}
+
+.md-copyright {
+  width: 100%;
+  text-align: center;
+}
+
+.site-registration {
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
 @media screen and (max-width: 44.984375em) {
   .md-content__inner {
     line-height: 1.6;

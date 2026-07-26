@@ -14,4 +14,15 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{{ social_title }}">
   <meta name="twitter:description" content="{{ social_description }}">
+  {% if config.site_url == "https://docs.everlasting.xin/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CS自学材料",
+    "alternateName": ["Everlasting Docs", "docs.everlasting.xin"],
+    "url": "https://docs.everlasting.xin/"
+  }
+  </script>
+  {% endif %}
 {% endblock %}
