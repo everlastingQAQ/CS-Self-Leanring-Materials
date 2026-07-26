@@ -7,10 +7,6 @@ description: 课程实验、准备工作与实作周的中文资料。
 
 课程实验、准备工作与实作周的中文资料。
 
-!!! info "归档说明"
-
-    本页资料对应 2021 年春季学期；课程服务与提交入口可能已经失效。
-
 - [Lab 1 Setup：配置计算机](lab-1-setup.md)
 - [Lab 1：IntelliJ、Java 与 Git](lab-1-intellij-java-git.md)
 - [Lab 2：JUnit 与调试](lab-2-junit-debugging.md)

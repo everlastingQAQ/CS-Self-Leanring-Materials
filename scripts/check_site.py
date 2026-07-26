@@ -96,6 +96,9 @@ def main() -> None:
         content_files = [path for path in (DOCS_ROOT / group).glob("*.md") if path.name != "index.md"]
         if len(content_files) != expected_count:
             errors.append(f"expected {expected_count} {group} sources, got {len(content_files)}")
+        index_source = (DOCS_ROOT / group / "index.md").read_text(encoding="utf-8")
+        if "归档说明" in index_source or "课程服务与提交入口可能已经失效" in index_source:
+            errors.append(f"{group} index still contains the archive notice")
 
     coursework_files = sorted(
         path

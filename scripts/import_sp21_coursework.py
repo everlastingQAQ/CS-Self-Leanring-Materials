@@ -444,8 +444,6 @@ def import_markdown(
             f"description: {description}\n"
             "---\n\n"
             f"# {title}\n\n{description}\n\n"
-            "!!! info \"归档说明\"\n\n"
-            "    本页资料对应 2021 年春季学期；课程服务与提交入口可能已经失效。\n\n"
             f"{links}\n"
         )
         (DOCS / group / "index.md").write_text(index, encoding="utf-8")
