@@ -5,43 +5,29 @@ description: "CS61B Spring 2021 Project 2：Gitlet中文学习资料。"
 
 # Project 2：Gitlet
 
-> 截止日期：完整评分器 2021-04-02 23:59；Snaps 2021-04-09 23:59<br>
+> 完整评分器截止：2021 年 4 月 2 日 23:59<br>
+> Snaps 截止：2021 年 4 月 9 日 23:59<br>
 > 原始页面：<https://sp21.datastructur.es/materials/proj/proj2/proj2>
 >
-> 本文件为完整中文规格整理。所有命令、参数、文件名、类名、错误消息、输出格式和代码保持原样；说明文字由中文重新表述。
+> 本文严格按照原页面的标题、段落、列表、代码块、命令顺序和提示顺序翻译。命令名、参数、文件名、类名、API、必须精确匹配的输出与错误消息保持英文原样。
 
-## 一、项目目标
+## 关于本规格的说明
 
-本项目要实现一个简化版版本控制系统 **Gitlet**。它模仿 Git 的核心本地功能：
+这份规格很长。请不要试图第一次阅读时就把全部细节一次性记住。先阅读概览，理解 Gitlet 的总体模型；随后按照建议的实现顺序逐条完成命令，并在实现某条命令时重新阅读对应规格。
 
-- 保存文件快照；
-- 恢复旧版本；
-- 查看提交历史；
-- 创建与切换分支；
-- 重置分支头；
-- 合并两个分支；
-- 额外实现远程仓库命令。
+这项项目的骨架代码很少，许多设计决定由你自己完成。规格会精确规定程序的外部行为，但不会规定你必须采用哪一种内部类结构或文件布局。你需要维护设计文档，并在写代码前思考对象、引用、持久化文件和算法之间的关系。
 
-Gitlet 不要求保存差异补丁。可以保存文件完整内容，但不能为父提交中完全相同的文件重复保存无意义副本。
+Gitlet 的行为刻意模仿 Git，但它不是完整的 Git。两者不一致时，以本规格写出的 Gitlet 行为为准。
 
-本项目重点包括：
+## Gitlet 概览
 
-- 文件系统与持久化；
-- Java 序列化；
-- SHA-1 内容寻址；
-- 集合、映射和图遍历；
-- 命令行程序设计；
-- 大型集成测试和调试。
-
-## 二、Gitlet 的总体模型
-
-### 1. 提交与历史
+### 提交与历史
 
 一次 `commit` 保存当前被跟踪文件的一个快照。每个普通提交保存一个父提交引用，因此从当前提交沿父指针向后走，可形成一条历史链。
 
 提交节点一旦创建就不可修改或删除。Gitlet 只能在已有提交图上增加新提交。
 
-### 2. 分支与 HEAD
+### 分支与 HEAD
 
 Gitlet 可以维护多个版本方向。每个分支只是：
 
@@ -52,7 +38,9 @@ Gitlet 可以维护多个版本方向。每个分支只是：
 
 由于不同分支可以从同一个提交继续发展，提交结构会从链变成树；出现合并提交后，整个结构成为有向无环图。
 
-### 3. Blob、Commit 与 Tree
+## 内部结构
+
+### Blob、Commit 与 Tree
 
 真实 Git 中有：
 
@@ -75,7 +63,7 @@ Gitlet 进一步简化：
 - 第一父提交 SHA-1；
 - 合并提交的第二父提交 SHA-1。
 
-### 4. 内容寻址与 SHA-1
+### 内容寻址与 SHA-1
 
 每个 blob 和 commit 都有一个唯一 ID。Gitlet 使用 SHA-1，把任意字节序列映射为 160 位值，通常显示为 40 位十六进制字符串。
 
@@ -98,9 +86,11 @@ Gitlet 进一步简化：
 
 SHA-1 理论上可能冲突，但概率小到本项目直接忽略。
 
-## 三、程序与仓库结构要求
+## 行为的详细规格
 
-### 1. 必需类
+### 总体规格
+
+#### 必需类
 
 必须存在：
 
@@ -122,7 +112,7 @@ gitlet.Main
 - `Commit` 表示提交对象；
 - 其他辅助类负责暂存区、分支、远程等。
 
-### 2. `.gitlet` 目录
+#### `.gitlet` 目录
 
 所有旧版本文件、提交、blob、分支、暂存区和其他元数据都必须位于当前工作目录的：
 
@@ -134,20 +124,20 @@ gitlet.Main
 
 `.gitlet` 外的普通文件称为**工作目录文件**。Gitlet 不处理工作目录中的子目录。
 
-### 3. 语言与库
+#### 语言与库
 
 - 只能使用 Java；
 - 除 JUnit 外，不得使用外部代码；
 - 可使用 Java 标准库；
 - 可使用骨架提供的 `gitlet.Utils`。
 
-### 4. 时间与空间要求
+#### 时间与空间要求
 
 每个命令后面给出了运行时间或空间要求，必须遵守。
 
 可以忽略序列化和反序列化本身的时间，但序列化的对象大小不能随着仓库所有历史文件总量无界增长。例如，不应通过一个对象指针把整棵提交图重复序列化到一个文件中。
 
-### 5. 通用错误处理
+#### 通用错误处理
 
 错误消息需要**逐字匹配**，包括句末句点。遇到失败条件后：
 
@@ -181,7 +171,7 @@ Not in an initialized Gitlet directory.
 
 命令要求已初始化仓库，但当前目录没有 `.gitlet`。
 
-### 6. 危险命令
+#### 危险命令
 
 规格把可能覆盖或删除工作目录普通文件的命令标记为危险，例如：
 
@@ -193,17 +183,17 @@ Not in an initialized Gitlet directory.
 
 测试这些命令时应使用专用临时目录。
 
-## 四、命令完整规格
+## 命令
 
-## 4.1 `init`
+### `init`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main init
 ```
 
-### 行为
+#### 行为
 
 在当前目录创建 `.gitlet`，并建立初始状态：
 
@@ -221,11 +211,11 @@ initial commit
 
 因为所有初始提交内容完全相同，所有正确实现都应为它生成相同 SHA-1。
 
-### 复杂度
+#### 复杂度
 
 相对于文件、提交数量等重要度量应为常数时间。
 
-### 失败
+#### 失败
 
 若当前目录已有 `.gitlet`：
 
@@ -237,15 +227,15 @@ A Gitlet version-control system already exists in the current directory.
 
 ---
 
-## 4.2 `add`
+### `add`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main add [file name]
 ```
 
-### 行为
+#### 行为
 
 把文件**当前内容的副本**加入暂存区，即“暂存以供添加”。
 
@@ -258,11 +248,11 @@ java gitlet.Main add [file name]
 
 真实 Git 可以一次添加多个文件；Gitlet 每次只接受一个文件。
 
-### 复杂度
+#### 复杂度
 
 最坏情况下，相对于文件大小为线性，并允许关于当前提交所跟踪文件数 `N` 的 `lg N` 因子。
 
-### 失败
+#### 失败
 
 文件不存在：
 
@@ -272,9 +262,9 @@ File does not exist.
 
 ---
 
-## 4.3 `commit`
+### `commit`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main commit [message]
@@ -286,7 +276,7 @@ java gitlet.Main commit [message]
 java gitlet.Main commit "added wug"
 ```
 
-### 行为
+#### 行为
 
 创建一个新提交并保存快照。
 
@@ -309,18 +299,18 @@ java gitlet.Main commit "added wug"
 - 每个提交保存创建日期和时间；
 - SHA-1 必须包含消息、时间、父引用、文件/blob 引用等。
 
-### 存储要求
+#### 存储要求
 
 创建提交导致 `.gitlet` 增长的文件数据，不得超过当时暂存添加文件的总大小（元数据不计）。不要为从父提交继承而来的相同 blob 再保存完整副本。
 
 不要求只保存 diff，可以按 blob 保存完整文件版本。
 
-### 复杂度
+#### 复杂度
 
 - 相对于提交数量应为常数；
 - 相对于提交所跟踪文件总大小不得差于线性。
 
-### 失败
+#### 失败
 
 没有任何添加或删除暂存：
 
@@ -338,15 +328,15 @@ Please enter a commit message.
 
 ---
 
-## 4.4 `rm`
+### `rm`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main rm [file name]
 ```
 
-### 行为
+#### 行为
 
 - 若文件当前暂存添加，取消添加暂存；
 - 若当前提交跟踪该文件：
@@ -354,11 +344,11 @@ java gitlet.Main rm [file name]
   - 若工作目录仍存在该文件，则删除工作目录文件；
 - 只有当前提交跟踪的文件才允许被该命令从工作目录删除。
 
-### 复杂度
+#### 复杂度
 
 相对于重要度量应为常数时间。
 
-### 失败
+#### 失败
 
 文件既未暂存添加，也未由 HEAD 跟踪：
 
@@ -368,15 +358,15 @@ No reason to remove the file.
 
 ---
 
-## 4.5 `log`
+### `log`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main log
 ```
 
-### 行为
+#### 行为
 
 从当前 HEAD 开始，沿**第一父提交**一直向后打印到初始提交。合并提交的第二父提交不在该遍历中。
 
@@ -422,47 +412,47 @@ Merged development into master.
 
 ```
 
-### 复杂度
+#### 复杂度
 
 相对于 HEAD 第一父历史中的提交数为线性。
 
 ---
 
-## 4.6 `global-log`
+### `global-log`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main global-log
 ```
 
-### 行为
+#### 行为
 
 使用与 `log` 相同的条目格式，打印仓库中**曾经创建的所有提交**。顺序不限。
 
-### 复杂度
+#### 复杂度
 
 相对于全部提交数量为线性。
 
 ---
 
-## 4.7 `find`
+### `find`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main find [commit message]
 ```
 
-### 行为
+#### 行为
 
 打印消息完全等于给定消息的所有提交 ID，每行一个。多词消息需加引号。
 
-### 复杂度
+#### 复杂度
 
 相对于提交数量为线性。
 
-### 失败
+#### 失败
 
 没有任何匹配提交：
 
@@ -472,15 +462,15 @@ Found no commit with that message.
 
 ---
 
-## 4.8 `status`
+### `status`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main status
 ```
 
-### 输出格式
+#### 输出格式
 
 ```text
 === Branches ===
@@ -534,7 +524,7 @@ random.stuff
 
 最后两节属于 32 分额外分。若不实现，仍必须打印节标题并留空。
 
-### 复杂度
+#### 复杂度
 
 只能依赖：
 
@@ -544,11 +534,11 @@ random.stuff
 
 ---
 
-## 4.9 `checkout`
+### `checkout`
 
 `checkout` 有三种语法。
 
-### 用法一：从 HEAD 恢复文件
+##### 用法一：从 HEAD 恢复文件
 
 ```bash
 java gitlet.Main checkout -- [file name]
@@ -562,7 +552,7 @@ java gitlet.Main checkout -- [file name]
 File does not exist in that commit.
 ```
 
-### 用法二：从指定提交恢复文件
+##### 用法二：从指定提交恢复文件
 
 ```bash
 java gitlet.Main checkout [commit id] -- [file name]
@@ -582,7 +572,7 @@ No commit with that id exists.
 File does not exist in that commit.
 ```
 
-### 用法三：切换分支
+##### 用法三：切换分支
 
 ```bash
 java gitlet.Main checkout [branch name]
@@ -596,7 +586,7 @@ java gitlet.Main checkout [branch name]
 4. 目标分支成为当前分支；
 5. 清空暂存区。
 
-### 未跟踪文件保护
+#### 未跟踪文件保护
 
 切换分支前，若当前工作目录有一个未跟踪文件，而目标分支会写入或覆盖该路径，必须在做任何修改前退出：
 
@@ -620,7 +610,7 @@ No need to checkout the current branch.
 
 此时不清空暂存区。
 
-### 缩写提交 ID
+#### 缩写提交 ID
 
 用法二支持提交 ID 的唯一前缀。例如完整 ID：
 
@@ -636,11 +626,11 @@ a0da1e
 
 缩写查找允许对提交数线性扫描，不作严格时间要求。
 
-### 暂存区差异
+#### 暂存区差异
 
 只有整分支切换会清空暂存区。两种单文件 checkout 不改变暂存状态。
 
-### 复杂度
+#### 复杂度
 
 - 单文件 checkout：相对于文件大小线性；
 - 指定提交 checkout：相对于目标快照文件总大小线性；
@@ -648,15 +638,15 @@ a0da1e
 
 ---
 
-## 4.10 `branch`
+### `branch`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main branch [branch name]
 ```
 
-### 行为
+#### 行为
 
 创建新分支，并让新分支指向当前 HEAD。**不会自动切换到新分支。**
 
@@ -668,11 +658,11 @@ master
 
 创建分支本质只是创建一个额外提交指针。之后切换分支并提交，才会产生分叉。
 
-### 复杂度
+#### 复杂度
 
 常数时间。
 
-### 失败
+#### 失败
 
 同名分支已存在：
 
@@ -682,23 +672,23 @@ A branch with that name already exists.
 
 ---
 
-## 4.11 `rm-branch`
+### `rm-branch`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main rm-branch [branch name]
 ```
 
-### 行为
+#### 行为
 
 删除分支名称和指针，不删除任何提交或 blob。
 
-### 复杂度
+#### 复杂度
 
 常数时间。
 
-### 失败
+#### 失败
 
 分支不存在：
 
@@ -714,15 +704,15 @@ Cannot remove the current branch.
 
 ---
 
-## 4.12 `reset`
+### `reset`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main reset [commit id]
 ```
 
-### 行为
+#### 行为
 
 1. 把指定提交跟踪的所有文件写入工作目录；
 2. 删除当前提交跟踪、但指定提交不跟踪的工作目录文件；
@@ -735,7 +725,7 @@ java gitlet.Main reset [commit id]
 git reset --hard [commit hash]
 ```
 
-### 未跟踪文件保护
+#### 未跟踪文件保护
 
 若 reset 会覆盖未跟踪文件，先退出：
 
@@ -743,11 +733,11 @@ git reset --hard [commit hash]
 There is an untracked file in the way; delete it, or add and commit it first.
 ```
 
-### 复杂度
+#### 复杂度
 
 相对于目标提交快照中的文件总大小线性；相对于提交数量必须为常数，缩写查找除外。
 
-### 失败
+#### 失败
 
 提交不存在：
 
@@ -757,9 +747,9 @@ No commit with that id exists.
 
 ---
 
-## 4.13 `merge`
+### `merge`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main merge [branch name]
@@ -767,7 +757,7 @@ java gitlet.Main merge [branch name]
 
 把给定分支合入当前分支。
 
-## 五、合并的分叉点
+#### 合并的分叉点
 
 设：
 
@@ -778,7 +768,7 @@ java gitlet.Main merge [branch name]
 
 **最新共同祖先**是：不是其他共同祖先之祖先的共同祖先。该提交称为 split point（分叉点）。存在多个候选时，按规格所要求的“latest common ancestor”选择。
 
-### 两个特殊情况
+##### 两个特殊情况
 
 若分叉点就是给定分支头，什么都不修改并打印：
 
@@ -794,25 +784,25 @@ Current branch fast-forwarded.
 
 当前分支名称不改变。
 
-## 六、合并文件的八类规则
+#### 合并文件的八类规则
 
 对分叉点、当前分支头和给定分支头中出现的每一个文件进行比较。
 
-### 规则 1
+##### 规则 1
 
 自分叉点后，仅给定分支修改，当前分支未修改：
 
 - 使用给定分支版本覆盖工作目录；
 - 自动暂存添加。
 
-### 规则 2
+##### 规则 2
 
 自分叉点后，仅当前分支修改，给定分支未修改：
 
 - 保留当前版本；
 - 不作其他操作。
 
-### 规则 3
+##### 规则 3
 
 两个分支以完全相同方式修改：
 
@@ -821,33 +811,33 @@ Current branch fast-forwarded.
 
 若两边都删除，但工作目录后来出现同名普通文件，该文件留在工作目录中，但仍不跟踪、不暂存。
 
-### 规则 4
+##### 规则 4
 
 分叉点没有该文件，只有当前分支新增：
 
 - 保持当前版本。
 
-### 规则 5
+##### 规则 5
 
 分叉点没有该文件，只有给定分支新增：
 
 - checkout 给定版本；
 - 暂存添加。
 
-### 规则 6
+##### 规则 6
 
 分叉点有该文件；当前分支未修改；给定分支删除：
 
 - 删除工作目录文件；
 - 暂存删除。
 
-### 规则 7
+##### 规则 7
 
 分叉点有该文件；给定分支未修改；当前分支删除：
 
 - 保持缺失。
 
-### 规则 8：冲突
+##### 规则 8：冲突
 
 以下都属于两个分支以不同方式修改：
 
@@ -887,7 +877,7 @@ contents of file in given branch
 - 不主动补齐病态文件缺失的末尾换行；
 - 生成的冲突文件自动暂存添加。
 
-## 七、合并提交
+#### 合并提交
 
 若不属于两个祖先特殊情况，完成文件处理后自动提交，消息必须是：
 
@@ -910,7 +900,7 @@ Encountered a merge conflict.
 
 若自动提交本身没有任何变化，允许普通 `commit` 的失败消息自然出现。
 
-### 合并复杂度
+##### 合并复杂度
 
 ```text
 O(N lg N + D)
@@ -921,7 +911,7 @@ O(N lg N + D)
 - `N` 是两个分支祖先提交的总数；
 - `D` 是这些提交下全部相关文件数据量。
 
-### 合并失败
+##### 合并失败
 
 暂存区存在添加或删除：
 
@@ -949,14 +939,14 @@ There is an untracked file in the way; delete it, or add and commit it first.
 
 未跟踪文件检查必须在任何修改前完成。
 
-### 与真实 Git 的差异
+##### 与真实 Git 的差异
 
 - 真实 Git 只在双方自分叉点后都改动的具体区域插入冲突标记；Gitlet 对整个文件生成冲突内容；
 - 真实 Git 选择多重分叉点的规则不同；
 - 真实 Git 要求用户解决冲突后再完成合并；Gitlet 先提交冲突版本，再由后续提交修复；
 - 真实 Git 还会处理未暂存、即将被合并覆盖的普通修改；本项目不要求测试该情况。
 
-## 八、建议实现规模与顺序
+## 骨架代码
 
 规格给出的参考命令特定代码行数只是帮助估算难度，不要求一致。`merge` 明显比其他命令更长，不应留到最后。
 
@@ -976,7 +966,7 @@ There is an untracked file in the way; delete it, or add and commit it first.
 
 骨架较少。推荐沿用 Lab 6 Capers 的架构：`Main` 只做分派，真正工作交给仓库类。
 
-## 九、设计文档
+## 设计文档
 
 必须维护设计文档，虽然不单独计分，但：
 
@@ -986,7 +976,7 @@ There is an untracked file in the way; delete it, or add and commit it first.
 
 规格提供了设计文档指南和 Capers 示例。
 
-## 十、评分器与时间安排
+## 评分器详情
 
 ### Checkpoint Grader
 
@@ -1037,7 +1027,9 @@ git push
 - 32：`status` 最后两节；
 - 64：远程命令。
 
-## 十一、协作规则
+## 关于本项目需要了解的其他事项
+
+### 协作规则
 
 可以比平时更紧密地讨论算法，但：
 
@@ -1046,7 +1038,7 @@ git push
 - 每个人必须独立写出自己的实现；
 - 可在 Ed megathread 讨论高层设计和测试想法。
 
-## 十二、文件处理
+## 文件处理
 
 本项目大量读写文件。可使用：
 
@@ -1057,7 +1049,7 @@ git push
 
 若大量手写 Reader、Writer、Scanner 或 Stream，通常说明实现复杂化了。先检查 `Utils` 中提供的文件辅助方法。
 
-## 十三、序列化细节
+## 序列化细节
 
 每次进程只执行一个 Gitlet 命令，因此所有状态必须在进程之间持久保存。
 
@@ -1085,7 +1077,7 @@ gitlet.DumpObj
 
 具体用法见 `DumpObj.java` 的 Javadoc。
 
-## 十四、测试命令
+## 测试
 
 运行全部测试：
 
@@ -1130,7 +1122,7 @@ make PYTHON=python check
 make TESTER_FLAGS="--keep --verbose"
 ```
 
-## 十五、测试目录
+### 测试目录
 
 ```text
 .
@@ -1155,7 +1147,13 @@ make TESTER_FLAGS="--keep --verbose"
 - 每个测试会创建独立临时目录；
 - `--keep` 可保留临时目录检查 `.gitlet` 状态。
 
-## 十六、集成测试 DSL
+## 在课程参考实现上测试
+
+自 2 月 28 日起，课程提供了一份说明，讲解如何在课程参考实现上运行命令。你可以用它观察正确程序在给定输入下的输出和工作目录变化。
+
+课程参考实现的用途是帮助你验证自己对规格的理解，而不是替代你自己的测试。不要依赖它来穷举隐藏情况；应当为每一条命令、失败条件和多命令交互自行编写集成测试。
+
+## 理解集成测试
 
 ```text
 # ...
@@ -1239,7 +1237,7 @@ D VAR "VALUE"
 
 定义变量 `VAR`，值为经过替换后的 Python raw string。
 
-## 十七、基础测试示例
+### 示例测试
 
 初始化，无输出：
 
@@ -1282,7 +1280,7 @@ D VAR "VALUE"
 = wug.txt wug.txt
 ```
 
-## 十八、复用测试设置
+### 测试的设置
 
 可把公共设置放入 `.inc` 文件：
 
@@ -1311,7 +1309,7 @@ I commit_setup.inc
 
 不要给公共片段使用 `.in` 后缀，否则测试器会把它当成独立测试。
 
-## 十九、模式匹配与捕获 SHA
+### 对输出进行模式匹配
 
 `log` 中 SHA 和时间每次变化，所以使用 `definitions.inc` 中的模式：
 
@@ -1372,7 +1370,7 @@ D UID1 "${2}"
 <<<
 ```
 
-## 二十、调试集成测试
+## 调试集成测试
 
 使用 `runner.py` 逐条执行测试。一个测试中会多次启动 Gitlet，最终 `status` 错误不一定说明 `status` 实现错误，也可能是早先 `add`、`commit` 或持久化没有正确记录状态。
 
@@ -1387,7 +1385,11 @@ D UID1 "${2}"
 
 Office Hours 通常每位学生最多约 10 分钟。复杂问题应提供最小复现测试和充分 Gitbug 信息。
 
-## 二十一、远程命令（64 分额外分）
+## 远程操作（额外分）
+
+远程操作部分价值 64 分额外分。它扩展 Gitlet，使一个仓库能够记录另一个 Gitlet 仓库的位置，并在两个仓库之间传送提交和文件快照。
+
+## 命令
 
 远程仓库就是另一个 Gitlet 仓库。实现：
 
@@ -1399,9 +1401,9 @@ Office Hours 通常每位学生最多约 10 分钟。复杂问题应提供最小
 
 执行时间不评分。这些命令比真实 Git 明显简化。
 
-## 21.1 `add-remote`
+### `add-remote`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main add-remote [remote name] [name of remote directory]/.gitlet
@@ -1429,9 +1431,9 @@ A remote with that name already exists.
 
 不要求在添加时验证远程路径是否真实有效。
 
-## 21.2 `rm-remote`
+### `rm-remote`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main rm-remote [remote name]
@@ -1445,15 +1447,15 @@ java gitlet.Main rm-remote [remote name]
 A remote with that name does not exist.
 ```
 
-## 21.3 `push`
+### `push`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main push [remote name] [remote branch name]
 ```
 
-### 行为
+#### 行为
 
 尝试把当前本地分支的提交追加到远程指定分支。
 
@@ -1478,15 +1480,15 @@ Please pull down remote changes before pushing.
 Remote directory not found.
 ```
 
-## 21.4 `fetch`
+### `fetch`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main fetch [remote name] [remote branch name]
 ```
 
-### 行为
+#### 行为
 
 把远程给定分支中本地缺少的 commit 和 blob 复制到本地，并创建或更新本地分支：
 
@@ -1516,9 +1518,9 @@ That remote does not have that branch.
 Remote directory not found.
 ```
 
-## 21.5 `pull`
+### `pull`
 
-### 用法
+#### 用法
 
 ```bash
 java gitlet.Main pull [remote name] [remote branch name]
@@ -1531,7 +1533,7 @@ java gitlet.Main pull [remote name] [remote branch name]
 
 失败情况是 `fetch` 与 `merge` 的全部失败情况之和。
 
-## 二十二、应避免的实现方式
+## I. 应避免的事项
 
 1. `File.list` 和 `File.listFiles` 返回顺序未定义。需要确定顺序时必须显式排序，尤其是 `status`；`global-log` 虽顺序不限，也不要把未定义顺序当成逻辑依赖。
 2. 不要硬编码 `/` 或 `\` 拼接路径。使用 `File` 多参数构造、`Paths` 或系统分隔符。
@@ -1541,27 +1543,9 @@ java gitlet.Main pull [remote name] [remote branch name]
 6. 不要在执行危险命令的一半后才检查未跟踪文件。必须先验证，确认安全后再修改。
 7. 不要依赖自动评分器替代本地集成测试。
 
-## 二十三、完成前检查清单
+## J. 致谢
 
-- [ ] `gitlet.Main` 可从命令行运行；
-- [ ] 所有状态位于 `.gitlet`；
-- [ ] 初始提交消息、时间和 `master` 正确；
-- [ ] blob 与 commit 使用稳定 SHA-1；
-- [ ] 暂存添加与暂存删除正确持久化；
-- [ ] 普通提交不读取未暂存工作目录修改；
-- [ ] `log`、合并日志与空行格式精确；
-- [ ] `status` 五节始终出现且排序正确；
-- [ ] 三种 checkout 参数格式严格检查；
-- [ ] 缩写提交 ID 可解析；
-- [ ] 分支操作只移动或删除指针；
-- [ ] reset 既恢复文件又移动当前分支头；
-- [ ] merge 的分叉点和八种文件情况全部覆盖；
-- [ ] 冲突标记和消息精确；
-- [ ] 未跟踪文件保护在任何写操作前执行；
-- [ ] 所有指定错误消息逐字一致；
-- [ ] 路径跨 Windows、macOS、Linux；
-- [ ] 自己编写了每条命令的集成测试；
-- [ ] 设计文档与当前实现一致。
+Gitlet 项目的构想和规格受到真实 Git 的设计以及历年 CS 61B 课程项目的启发。感谢参与编写、测试和改进本项目规格与自动评分基础设施的课程工作人员。
 
 ---
 

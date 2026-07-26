@@ -5,40 +5,49 @@ description: "CS61B Spring 2021 Lab 8：HashMap中文学习资料。"
 
 # Lab 8：HashMap
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab8/lab8<br>
-> 说明：正文由 ChatGPT 直接翻译；接口、类名、方法名和代码保持原样。
+> 原文：https://sp21.datastructur.es/materials/lab/lab8/lab8
+>
+> 按原页面结构逐段翻译；代码、类型签名、文件名和复杂度术语保持原样。
 
-## 简介
+- [介绍](#介绍)
+- [MyHashMap](#myhashmap)
+  - [概览](#概览)
+  - [起始代码](#起始代码)
+  - [实现要求](#实现要求)
+  - [测试](#测试)
+  - [资源](#资源)
+- [HashMap 速度测试](#hashmap-速度测试)
+- [更换桶类型：速度测试](#更换桶类型速度测试)
+- [可选练习](#可选练习)
+- [实验总结与提交](#实验总结与提交)
 
-实现 `Map61B` 的哈希表版本 `MyHashMap`。完成后比较：
+## 介绍 { #介绍 }
 
-- `MyHashMap`
-- 链表实现 `ULLMap`
-- Java 内置 `HashMap`
-- 使用不同 bucket 数据结构的多个 `MyHashMap` 子类。
+在本实验中，你会完成 `MyHashMap`，它是 `Map61B` 接口的一种实现，表示一个哈希映射。本实验与 Lab 7 非常相似，不过这一次我们构建的是 Hash Map，而不是 Tree Map。
 
-## MyHashMap
+完成实现后，你会把自己的实现性能与基于列表的 Map 实现 `ULLMap` 以及 Java 内置的 `HashMap` 类（它也使用哈希表）进行比较。我们还会比较 `MyHashMap` 使用不同数据结构作为桶时的性能。
 
-### 必做接口
+## MyHashMap { #myhashmap }
 
-Starter code 位于 `MyHashMap.java`。实现 `Map61B` 的全部方法，但 `remove` 可抛：
+### 概览 { #概览 }
 
-```java
-throw new UnsupportedOperationException();
-```
+我们已经在 `MyHashMap.java` 中创建了一个 `MyHashMap` 类，只提供了非常少的起始代码。你的目标是实现 `MyHashMap` 从 `Map61B` 接口继承的所有方法，`remove` 除外。对于 `remove`，应当抛出 `UnsupportedOperationException`。请注意，这一次你应实现 `keySet` 和 `iterator`；其中 `iterator` 返回一个遍历所存储键的 `Iterator`。这两个函数都可以按任意顺序返回键。
 
-本次必须实现：
+对于这些方法，我们建议你简单地创建一个 `HashSet` 实例变量，用它保存所有键。
 
-- `keySet()`
-- `iterator()`，遍历已存储 key
+请注意，在你实现 `Map61B` 的所有方法之前，代码无法编译。你可以一次实现一个方法：先写出所有必需方法的方法签名，但在实现中抛出 `UnsupportedOperationException`；等轮到实际编写某个方法时，再完成它。
 
-两者可按任意顺序返回 key。建议维护一个 `HashSet` 实例变量存放全部 key。
+### 起始代码 { #起始代码 }
 
-若想逐步实现，可先写出全部接口方法签名并抛异常，让项目先编译。
+你可能还记得讲座中的内容：构建哈希表时，可以选择多种不同的数据结构作为桶。经典方法是选择 `LinkedList`。但我们也可以选择 `ArrayList`、`TreeSet`，甚至其他更疯狂的数据结构，例如 `PriorityQueue`，乃至另一个 `HashSet`！
 
-### Bucket 与工厂方法
+![ht-buckets](../assets/coursework/9ca265a119da-ht-buckets.png)
 
-哈希表 bucket 可使用 `LinkedList`、`ArrayList`、`TreeSet`、`PriorityQueue`、`HashSet` 等。Starter 利用多态、继承和 factory method 方便替换 bucket：
+在本实验中，我们会尝试为哈希表中的每个桶使用不同的数据结构，并通过实验观察：把不同数据结构用作哈希表的桶，是否会产生渐近意义上的差异。
+
+你或许可以想象，如果我们在实现 `MyHashMap` 时完全不加考虑，那么要把桶类型替换成另一种桶类型，就需要做大量的“查找 + 替换”。例如，如果想把所有 `ArrayList` 桶换成 `LinkedList` 桶，就必须查找所有出现的 `ArrayList` 并替换成 `LinkedList`。这并不理想。
+
+起始代码的目的，是提供一种更简单的方法，让我们能够在 `MyHashMap` 中试用不同的桶类型。它通过本学期前面学过的多态和继承实现这一点。它还使用了工厂方法；工厂方法用于创建对象。我们会使用工厂方法创建桶。起始文件的继承结构如下：
 
 ```text
 Map61B.java
@@ -50,34 +59,23 @@ Map61B.java
     └── MyHashMapTSBuckets.java
 ```
 
-核心字段：
+`MyHashMap` 使用哈希表实现 `Map61B` 接口。在起始代码中，我们给出了实例变量 `private Collection<Node>[] buckets`，它是哈希表的底层数据结构。让我们拆解一下这段代码的含义：
 
-```java
-private Collection<Node>[] buckets;
-```
+- `buckets` 是 `MyHashMap` 类中的一个 `private` 变量。
+- 它是一个由 `Collection<Node>` 对象组成的数组（或表）；其中，每一个由 `Node` 组成的 `Collection` 都表示哈希表中的一个桶。
+- `Node` 是我们提供的私有辅助类，用于存储单个键值映射。这个类的起始代码应当很容易理解，也不应当需要任何修改。
+- [`java.util.Collection`](https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html) 是大多数数据结构所实现的接口，表示一组对象。`Collection` 接口支持向组中 `add`、从组中 `remove`，以及在组上 `iterate` 等方法。`java.util` 中的许多数据结构都实现了 `Collection`，包括 `ArrayList`、`LinkedList`、`TreeSet`、`HashSet`、`PriorityQueue` 等许多类型。
 
-含义：
+请注意，因为这些数据结构实现了 `Collection`，所以借助多态，我们可以把它们赋给静态类型为 `Collection` 的变量。
 
-- `buckets` 是 `MyHashMap` 的 private 数组；
-- 每个数组元素是一组 `Node`，即一个 bucket；
-- `Node` 是保存单个 key-value mapping 的 private helper；
-- `Collection` 是 `ArrayList`、`LinkedList`、`TreeSet`、`HashSet`、`PriorityQueue` 等共同实现的接口。
+- 因此，我们由 `Collection<Node>` 对象组成的数组，可以使用许多不同类型的数据结构实例化，例如 `LinkedList<Node>` 或 `ArrayList<Node>`。
+- 在创建新的 `Collection<Node>[]` 并把它存入 `buckets` 变量时，请注意：在 Java 中，[不能创建参数化类型的数组](https://docs.oracle.com/javase/tutorial/java/generics/restrictions.html#createArrays)。`Collection<Node>` 是参数化类型，因为我们使用 `Node` 类对 `Collection` 类进行了参数化。因此，对于任何给定的 `size`，表达式 `new Collection<Node>[size]` 都是非法的。要绕过这一限制，应改为创建 `new Collection[size]`，其中 `size` 是所需大小。
 
-Java 不能直接创建泛型数组：
+`Collection[]` 的元素可以是任意类型的集合，例如 `Collection<Integer>` 或 `Collection<Node>`。对于本实验，我们只会向 `Collection[]` 中添加 `Collection<Node>` 类型的元素。
 
-```java
-new Collection<Node>[size] // 非法
-```
+每个 `MyHashMap*Buckets` 类都会使用一种不同的数据结构实例化 `buckets`。例如，`MyHashMapLLBuckets` 使用 `new LinkedList<Node>()` 实例化 `buckets`。实现这一点的机制，是工厂方法 `protected Collection<Node> createBucket()`；它只是返回一个实现了 `Collection` 的数据结构。对于 `MyHashMap.java`，你可以选择任何喜欢的数据结构。
 
-应创建：
-
-```java
-new Collection[size]
-```
-
-然后只把 `Collection<Node>` 放入数组。
-
-创建 bucket 时必须使用：
+例如，如果选择 `LinkedList`，`createBucket` 的方法体就是：
 
 ```java
 protected Collection<Node> createBucket() {
@@ -85,11 +83,15 @@ protected Collection<Node> createBucket() {
 }
 ```
 
-不要在主实现中到处直接 `new LinkedList<>()`，因为子类需要 override `createBucket` 来提供不同 bucket 类型。还提供 `createTable` 和 `createNode` factory；后两者不强制使用，但为风格统一而存在。
+创建新的桶数据结构时，不得使用 `new` 运算符，而必须使用 `createBucket` 方法。起初这可能显得毫无用处，但它允许 `MyHashMap*Buckets.java` 类重写 `createBucket` 方法，从而为每一个桶提供不同的数据结构。
 
-### 构造方法
+这样，我们最终会得到多个不同的类（`MyHashMapTSBuckets.java`、`MyHashMapPQBuckets.java` 等）；它们都使用你在 `MyHashMap` 中编写的实现，但为桶提供不同的类型（`TreeSet`、`PQ` 等）。我们甚至可以拥有一个桶本身也是另一个哈希表的哈希表（`MyHashMapHSBuckets.java`）！随后，我们可以在类似 Lab 7 中所见的速度测试中，直接比较各个 `MyHashMap*Buckets.java` 类。
 
-实现：
+我们还提供了额外的工厂方法：`createTable` 用于创建哈希表的底层数组，`createNode` 用于创建新的 `Node` 对象。使用 `new` 运算符而不是工厂方法来创建底层数组和 `Node` 对象也没有问题；我们只是为了统一而添加了这些方法。
+
+### 实现要求 { #实现要求 }
+
+你应当实现以下构造函数：
 
 ```java
 public MyHashMap();
@@ -97,89 +99,76 @@ public MyHashMap(int initialSize);
 public MyHashMap(int initialSize, double loadFactor);
 ```
 
-默认值：
+下面是 `MyHashMap` 的一些额外要求：
 
-```text
-initialSize = 16
-loadFactor = 0.75
-```
+- 你的哈希映射最初应当拥有等于 `initialSize` 的桶数量。当负载因子超过所设置的 `loadFactor` 时，应增加 `MyHashMap` 的大小。回忆一下，负载因子可以计算为 `loadFactor = N / M`，其中 `N` 是映射中的元素数量，`M` 是桶的数量。负载因子表示平均每个桶中的元素数量。
 
-### 实现要求
+  如果没有给出 `initialSize` 和 `loadFactor`，应设置默认值 `initialSize = 16` 和 `loadFactor = 0.75`（与 Java 的[内置 HashMap](https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html)相同）。
 
-1. 初始 bucket 数等于 `initialSize`。
-2. 当前负载因子超过阈值时扩容：
+- 应使用拉链法（separate chaining）处理冲突。除 `ArrayList`、`LinkedList`、`Collection`、`HashSet`、`Iterator` 和 `Set` 外，不得导入任何库。这意味着对于 `MyHashMap.java`，你应当使用 `ArrayList`、`LinkedList` 或 `HashSet` 之一作为桶类型。有关应如何实现拉链法的更多细节，请参阅上面的“起始代码”一节。
+- 因为我们使用 `Collection<Node>[]` 作为 `buckets`，所以实现 `MyHashMap` 时，只能使用 `Collection` 接口所支持的方法。你唯一需要的方法是 `add`、`remove` 和 `iterator`。在 `Collection` 中搜索 `Node` 时，只需遍历 `Collection`，找到其 `key` 与所搜索键 `.equals()` 的 `Node`。
+- 调整大小时，务必进行乘法式扩容，而不是加法式扩容。不要求缩小容量。
+- 假定插入对象的 `hashCode` 能够很好地分散元素，你的所有 `MyHashMap` 操作都应当具有摊还常数时间（回忆：Java 中每个 `Object` 都有自己的 `hashCode()` 方法）。注意：`hashCode()` 可能返回负值！编写代码时请考虑这一点。有关如何干净地处理这种情况的提示，请查看下面链接的讲座幻灯片。
+- 如果多次插入同一个键，每次都应更新其值。你可以假定永远不会插入 `null` 键。
 
-```text
-load = N / M
-```
+### 测试 { #测试 }
 
-其中 `N` 为键值对数量，`M` 为 bucket 数。
-3. 使用 separate chaining 解决冲突。
-4. `MyHashMap.java` 只能导入 `ArrayList`、`LinkedList`、`Collection`、`HashSet`、`Iterator`、`Set`；主 bucket 类型必须为允许类型之一。
-5. 对 `Collection<Node>[]` 只使用 `Collection` 接口支持的操作；需要的主要方法是 `add`、`remove`、`iterator`。
-6. 查找 Node 时遍历 bucket，并用 `.equals()` 比较 key。
-7. 必须乘法扩容，不要加法扩容；无需缩容。
-8. 在 hashCode 分布良好的假设下，操作应为摊还常数时间。
-9. `hashCode()` 可能为负数，计算 bucket index 时必须处理。
-10. 重复插入同一个 key 时更新 value，不增加 size。
-11. 可假设不会插入 `null` key。
+可以使用 `TestMyHashMap.java` 测试实现。如果选择实现额外的 `remove` 方法，我们在 `TestHashMapExtra.java` 中提供了测试。如果你正确实现了泛型 `Collection` 桶，还应当能够通过 `TestMyHashMapBuckets.java` 中的测试。`TestHashMapBuckets.java` 文件只是针对每个使用不同桶数据结构的 Map 子类，调用 `TestMyHashMap.java` 中的方法。
 
-### 测试
+离开本节之前，确保你能够通过 `TestMyHashMap.java` 和 `TestMyHashMapBuckets.java` 中的测试。
 
-- `TestMyHashMap.java`：基本实现。
-- `TestMyHashMapBuckets.java`：对每一种 bucket 子类复用基本测试。
-- `TestHashMapExtra.java`：可选 remove 测试。
+### 资源 { #资源 }
 
-继续性能实验前必须通过前两个测试文件。
+下面这些资源可能会有帮助：
 
-## HashMap 速度测试
+- 课程参考资料页面中《Data Structures Into Java》第 136 页和第 137 页的 HashMap 代码。
+- 可选《Algorithms》教材的[第 3.4 章](https://algs4.cs.princeton.edu/34hash/)。
+- 可选教材中的 [HashTable 代码](https://algs4.cs.princeton.edu/code/)。
+- `ULLMap.java`（已提供）：一个能够正常工作的、基于无序链表的 `Map61B` 实现。
+- 关于 [HashMaps](https://docs.google.com/)、[继承](https://docs.google.com/)和[子类型多态](https://docs.google.com/)的讲座幻灯片。
 
-完成实现后运行：
+## HashMap 速度测试 { #hashmap-速度测试 }
 
-- `InsertRandomSpeedTest.java`
-- `InsertInOrderSpeedTest.java`
+`InsertRandomSpeedTest.java` 和 `InsertInOrderSpeedTest.java` 中提供了两个交互式速度测试。在完成 `MyHashMap` 之前，不要尝试运行这些测试。准备好后，可以在 IntelliJ 中运行它们。
 
-随机测试读取输入规模 `N`，生成 `N` 个长度 10 的字符串，作为 `<String,Integer>` 插入 `MyHashMap`、`ULLMap` 和 Java `HashMap`。记录结果到：
+`InsertRandomSpeedTest` 类会测试你的 `MyHashMap`、已提供的 `ULLMap` 和 Java 内置 `HashMap` 在插入元素时的速度。它会询问用户输入规模 `N`，然后生成 `N` 个长度为 `10` 的 String，并将它们作为 `<String, Integer>` 对插入映射中。
 
-```text
-lab8/speedTestResults.txt
-```
+尝试运行它，看看随着 `N` 增大，你的数据结构与朴素实现和工业级实现相比如何扩展。把结果记录在所提供的 `lab8/speedTestResults.txt` 文件中。结果没有规定的标准格式，也没有规定所需的数据点数量。
 
-格式与数据点数量不限。
+现在尝试运行 `InsertInOrderSpeedTest`。它的行为与 `InsertRandomSpeedTest` 类似，但这一次，`<String, Integer>` 键值对中的 String 会按照[字典序递增顺序](https://en.wikipedia.org/wiki/Lexicographic_order)插入。请注意，与 Lab 7 不同，你的代码性能应当大致接近 Java 的内置解答——例如控制在大约 `10` 倍以内。这告诉我们，与最先进的 `TreeMap` 相比，最先进的 `HashMap` 相对容易实现。
 
-按序插入测试中，你的实现应大致落在 Java HashMap 同一数量级，通常在约 10 倍以内。讨论：什么时候更适合 `BSTMap` / `TreeMap`，而不是 `HashMap`？把回答写入结果文件。
+什么时候使用 `BSTMap`/`TreeMap` 会比使用 `HashMap` 更好？与你的实验同伴讨论这个问题，并把答案添加到 `speedTestResults.txt`。
 
-## 更换 Bucket 类型的速度测试
+## 更换桶类型：速度测试 { #更换桶类型速度测试 }
 
-运行 `speed/BucketsSpeedTest.java`。程序读取字符串长度 `L` 和操作规模 `N`，比较：
+如果你正确实现了泛型 `Collection` 桶，大部分工作就已经完成了！我们可以直接比较不同的数据结构 `MyHashMap*Buckets.java`。我们提供了 `speed/BucketsSpeedTest.java`，它是一个交互式测试：首先询问用户一个整数 `L`，表示后续操作中所使用 String 的长度；然后在循环中询问用户一个整数 `N`，并对以下五种数据结构分别进行速度测试：
 
-- `MyHashMapALBuckets`：`ArrayList`
-- `MyHashMapLLBuckets`：`LinkedList`
-- `MyHashMapTSBuckets`：`TreeSet`
-- `MyHashMapPQBuckets`：`PriorityQueue`
-- `MyHashMapHSBuckets`：`HashSet`
+- `MyHashMapALBuckets`，使用 `ArrayList` 桶。
+- `MyHashMapLLBuckets`，使用 `LinkedList` 桶。
+- `MyHashMapTSBuckets`，使用 `TreeSet` 桶。
+- `MyHashMapPQBuckets`，使用 `PriorityQueue` 桶。
+- `MyHashMapHSBuckets`，使用 `HashSet` 桶。
 
-观察随 `N` 的扩展趋势，讨论并记录结果。
+尝试运行它，比较不同实现如何随 `N` 扩展。与你的实验同伴讨论结果，并把回答记录在 `speedTestResults.txt` 中。
 
-当前泛型实现为了只依赖 `Collection`，即使用 `TreeSet` 或 `HashSet` bucket，也会线性遍历整个 bucket。思考：若能利用 `TreeSet` 的对数查找或 `HashSet` 的常数查找，外层哈希表是否会进一步加速？无需实现，只记录讨论。
+你可能会注意到，我们的 `MyHashMapTSBuckets` 和 `MyHashMapHSBuckets` 实现通过遍历整个数据结构来搜索 `Node`。但根据我们已经掌握的知识，树和哈希表支持比这更高效的查找。
 
-## 可选练习
+如果能够在 `TreeSet` 上使用对数时间搜索，或者在 `HashSet` 上使用常数时间搜索，我们的哈希表会加速吗？这里不需要实现任何新内容，只需与实验同伴讨论，并把想法记录在 `speedTestResults.txt` 中。
 
-- `remove(K key)`
-- `remove(K key, V value)`
-- 不维护第二个 key 集合变量而实现 `keySet` 与 `iterator`
+## 可选练习 { #可选练习 }
 
-`remove`：key 不存在返回 `null`；存在则删除并返回 value。
+这一部分不会评分，但你仍然可以从自动评分器获得反馈。
 
-## 提交
+在 `MyHashMap` 类中实现 `remove(K key)` 和 `remove(K key, V value)`。作为额外挑战，请在不使用第二个实例变量存储键集合的情况下实现 `keySet()` 和 `iterator`。
 
-提交：
+对于 `remove`，如果参数键在 `MyHashMap` 中不存在，应返回 `null`。否则，删除键值对 `(key, value)` 并返回 `value`。
 
-- `MyHashMap.java`
-- `speedTestResults.txt`
+## 实验总结与提交 { #实验总结与提交 }
 
-正常使用 Git 与 Gradescope。
+实验结束时，你的 TA 会讲解参考解答。如果你尚未完成实验，这会很有帮助，因为我们不希望你在实验课之外被这个实验困住太久。（这也是鼓励你参加实验课的一个理由！）
+
+确保提交完成的 `MyHashMap.java` 和 `speedTestResults.txt`，并像往常一样通过 Git 和 Gradescope 提交。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab8/lab8<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab8/lab8){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

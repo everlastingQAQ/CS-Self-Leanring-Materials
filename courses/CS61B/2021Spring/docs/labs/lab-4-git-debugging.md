@@ -5,49 +5,83 @@ description: "CS61B Spring 2021 Lab 4：Git 与调试中文学习资料。"
 
 # Lab 4：Git 与调试
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab4/lab4<br>
-> 说明：正文由 ChatGPT 直接翻译；命令、代码、commit hash 与工具名称保持原样。
+> 原始页面：<https://sp21.datastructur.es/materials/lab/lab4/lab4>
+>
+> 本文严格按照原页面的标题层级、段落顺序、列表、命令、代码和终端输出翻译。Git 命令、提交哈希示例、代码与程序输出保持原样。
 
-## Lab 前准备
+## 目录
 
-- **先不要从 skeleton 拉取。**这会故意制造 merge conflict，必须在 Lab 指定位置处理。
-- 若已经拉取，请联系 TA 获取恢复步骤。
-- 本 Lab 要求 Lab 1 Gradescope 满分。
-- 先确认本地仓库与 GitHub 同步：
+- [Lab 前准备](#lab-前准备)
+- [简介](#简介)
+- [Git 背景知识](#git-背景知识)
+- [Git 练习](#git-练习)
+  - [第 1 步](#第-1-步)
+  - [第 2 步](#第-2-步)
+  - [第 3 步](#第-3-步)
+  - [第 4 步](#第-4-步)
+  - [第 5 步](#第-5-步)
+  - [第 6 步](#第-6-步)
+- [一个调试谜题](#一个调试谜题)
+- [提交](#提交)
+- [完整回顾](#完整回顾)
+
+## Lab 前准备 { #lab-前准备 }
+
+- **暂时不要从 skeleton 仓库拉取代码。**从 skeleton 仓库拉取会产生合并冲突，你稍后会在本 Lab 中学习怎样修复。即使你已经知道怎样解决合并冲突，我们也希望你使用一种非常具体的方式进行修复，所以请不要忍不住现在就 pull！
+- 如果已经从 skeleton 拉取过代码，请联系你的 TA，询问如何继续完成本 Lab。
+- 本 Lab 要求你已经在 GS 上的 `lab1` 中获得满分。如果尚未满分，请在继续之前联系 TA。
+- 本 Lab 将使用 Git。开始之前，先确保你的仓库已与 GitHub 同步。只需运行：
 
 ```bash
 git push origin master
 ```
 
-成功即可继续；失败时按课程错误说明修复。
+如果命令成功，就可以继续！如果没有成功，你很可能看到了类似[这个错误](https://sp21.datastructur.es/materials/lab/lab4/)的消息。请按照链接中的说明修复错误。
 
-## 简介
+## 简介 { #简介 }
 
-本 Lab 深入练习 Git，并再次训练调试。目标包括：
+由于这是期中考试周，本 Lab 会比平常短一些。你将在本 Lab 中更深入地学习 Git，并通过一个很酷的练习再次练习调试。完成本 Lab 后，你应当会对 Git 工作流更加熟练，调试技能也应当更加精细！
 
-- 本地 Git 工作流：`git add`、`git commit`；
-- 用 `git checkout` 在 commit 之间移动或恢复文件；
-- detached `HEAD`；
-- 远程仓库与 `origin/master`、`skeleton/master`；
-- 解决 merge conflict；
-- 用 JUnit 和 Debugger 穷举式定位错误。
+## Git 背景知识 { #git-背景知识 }
 
-官方要求先观看六段 Git Intro 视频。不要盲目复制网上或朋友提供的 Git 命令；不确定时询问 TA，因为错误 Git 操作可能使仓库更难恢复。
+这一部分需要观看一系列讲解 Git 主要概念的视频，然后亲手练习使用 Git。请观看下面全部六个视频。众所周知，Itai 说话比较慢，所以需要时可以随意提高播放速度！
 
-## Git 练习
+- [Git Intro - Part 1](https://www.youtube.com/)
+- [Git Intro - Part 2](https://www.youtube.com/)
+- [Git Intro - Part 3](https://www.youtube.com/)
+- [Git Intro - Part 4](https://www.youtube.com/)
+- [Git Intro - Part 5](https://www.youtube.com/)
+- [Git Intro - Part 6](https://www.youtube.com/)
 
-现在拉取 starter code：
+具体来说，看完视频后，你应当理解以下概念：
+
+- 本地 Git 工作流：`git add` 和 `git commit`；
+- 使用 `git checkout` 在不同提交之间移动并更新文件；
+- Detached `HEAD` 状态；
+- 远程仓库，例如托管在 [GitHub](https://github.com/) 上的仓库；
+- 本地 Git 与远程仓库的集成：`origin/master` 和 `skeleton/master`；
+- 怎样解决合并冲突。
+
+如果对上述概念有任何疑问，可以参考 [Sarah 的 Git 指南](https://sp19.datastructur.es/materials/guides/using-git.html)、[Git WTFS](https://sp19.datastructur.es/materials/guides/git-wtfs.html)（Git Weird Technical Failure Scenarios——别想歪了！），也可以随时请 TA 解释这些概念。
+
+我们要在这里警告你：对网上找到的 Git 信息保持警惕，因为它们并不都来自可信来源。另外，当你在 Git 上遇到困难时，务必**绝不要**复制网上找到的命令或朋友发给你的命令——有疑问时，一定要询问 TA。
+
+## Git 练习 { #git-练习 }
+
+现在该练习刚刚学到的内容了。请记住，本 Lab 要求你已经在 Gradescope 的 Lab 1 Autograder 中获得满分。如果尚未完成 Lab 1，请咨询 TA。准备好后，请使用下面的命令拉取起始代码；出现合并冲突时不要惊慌！请继续阅读以了解更多信息。
 
 ```bash
 git pull skeleton master
 ```
 
-课程故意在 `lab1/Collatz.java` 中制造冲突。你的 Lab 1 版本原本正确，skeleton 新版本包含下面的错误实现：
+我们故意在你的 `lab1` 目录中引入了一个合并冲突。这个练习的目标是让你练习几个 Git 概念，其中包括合并冲突、Detached HEAD 状态，以及在你的 `sp21-s***` 仓库中 checkout 文件。完成这个练习后，你应当会更熟悉在命令行中沿提交树移动，从而让文件保持在期望状态。
+
+`lab1` 目录中的合并冲突位于 `lab1/Collatz.java` 文件。你在 Lab 1 中更新过这个文件，让它打印从 `n = 5` 开始的 [Collatz 序列](https://en.wikipedia.org/wiki/Collatz_conjecture)。在拉取 `lab4` 起始代码之前，你的解法能够正确打印 Collatz 序列。`skeleton` 仓库后来被更新，其中包含下面这个有 bug 的 `nextNumber(int n)` 方法实现；该方法应当返回 Collatz 序列中 `n` 之后的下一个数：
 
 ```java
 /** Buggy implementation of nextNumber! */
 public static int nextNumber(int n) {
-    if (n == 128) {
+    if (n  == 128) {
         return 1;
     } else if (n == 5) {
         return 3 * n + 1;
@@ -57,53 +91,70 @@ public static int nextNumber(int n) {
 }
 ```
 
-### Step 1：解决冲突，并保留错误版本
+在我们走得太快之前，请注意：如果完成作业期间的任何时刻遇到困难，务必询问 TA。出现问题时越早让他们参与，越容易帮助你恢复。你的任务如下。
 
-解决 `Collatz.java` 的 merge conflict，使文件能编译，且 `nextNumber` 最终必须是上面的**错误版本**。
+### 第 1 步 { #第-1-步 }
 
-运行：
+解决合并冲突，并确保冲突解决后的结果包含这个有 bug 的方法版本。换句话说，完成合并冲突处理之后，`Collatz.java` 应当能够编译，并且包含有 bug 的 `nextNumber` 实现。
 
-```bash
-git log
-```
-
-最新 commit 应是你解决冲突产生的 merge commit，第二新的是 “Added Lab 4 Starter Files”。向前找到完成 Lab 1、包含正确 `Collatz` 的 commit，记下其 hash，并把它称为 `lab1commit`。
-
-### Step 2：提交 Part A
-
-提交到 Gradescope 的 **Lab 4A: Git Exercise Part A**。Autograder 会检查：
-
-- merge conflict 已正确解决；
-- `Collatz.java` 中保留了指定错误版本。
-
-### Step 3：进入旧 commit（detached HEAD）
-
-Checkout 到 `lab1commit`：
-
-```bash
-git checkout <lab1commit>
-git status
-```
-
-应看到类似：
+现在，如果运行 `git log`（它会按顺序列出当前提交之前的提交），你应该会看到类似下面的内容：
 
 ```text
+commit 8f0deeaef048f33a209f6f2fe5927a6fb04cc6cc
+Merge: 225d73e 7aa1b6f
+Author: Neil Kulkarni <neil.kulkarni@berkeley.edu>
+Date:   Sun Feb 7 14:36:52 2021 -0700
+
+    Merge branch 'master' of https://github.com/Berkeley-CS61B/skeleton-sp21
+
+    Fixed the merge conflict in lab4 to contain buggy Collatz!
+commit 7aa1b6fc79cb752e1ed844cd9cdd8c9c21e7f3d4 (HEAD -> master)
+Author: Neil Kulkarni <neil.kulkarni@berkeley.edu>
+Date:   Sun Feb 7 14:26:58 2021 -0700
+
+    Added Lab 4 Starter Files
+
+...
+
+commit 4050fd80377d85aaea6c7cdb486e581d8c422534
+Author: Neil Kulkarni <neil.kulkarni@berkeley.edu>
+Date:   Sat Jan 30 22:56:58 2021 -0800
+
+    Finished Lab 1! Collatz works!
+
+...
+```
+
+也就是说，你应当看到最近的提交是解决合并冲突后产生的合并提交，第二新的提交是 Neil 添加 Lab 4 起始文件的提交，也就是刚刚从 `skeleton` 拉取的那个提交。你可能需要向前翻很久，才能看到完成 Lab 1 时创建的提交。例如，我完成 Lab 1 时创建的提交消息是 “Finished Lab 1! Collatz works!”。
+
+你的提交很可能具有不同的提交消息，也应当拥有不同的提交哈希、作者和日期。记下你完成 Lab 1 时那个提交的提交哈希。我们把这个提交称为 `lab1commit`，以便在之后的步骤中引用它。
+
+### 第 2 步 { #第-2-步 }
+
+在 Gradescope 上提交到 “Lab 4A: Git Exercise Part A” 自动评分器。它会验证你是否正确解决了合并冲突，使 `Collatz.java` 包含有 bug 的 `nextNumber` 实现。
+
+### 第 3 步 { #第-3-步 }
+
+尽管最近的提交在 `lab1/Collatz.java` 中包含一个 bug，幸运的是，你曾经在某个时刻提交过正确的 `Collatz` 实现，也就是 `lab1commit`！由于 Git 中的提交是文件状态的快照，`lab1commit` 保存了正确版本 `Collatz` 的快照。不相信？让我们看一看！
+
+下一步是 checkout 到 `lab1commit`。如果不记得这条命令的语法，请查看上面链接的资料。到达该提交后，输入 `git status`。你应当会看到自己处于 Detached HEAD 状态。如果不记得这是什么，请查看上面的资料！
+
+```text
+NeilKulkarni@Neils-MacBook-Pro sp21-s58 % git status
 HEAD detached at 4050fd8
 nothing to commit, working tree clean
 ```
 
-在 detached HEAD 中可以查看旧快照，但不要修改或 commit。查看旧文件：
-
-```bash
-cat lab1/Collatz.java
-```
-
-应看到完成 Lab 1 时的正确实现，例如：
+请记住，在 Detached HEAD 状态中，你可以自由查看当前提交，但不应当进行任何更改。让我们看看 `lab1/Collatz.java`。你应当会看到自己的旧解法！可以用任何喜欢的方式打开这个文件，但我推荐使用终端命令 `cat`，它会打印文件内容：
 
 ```java
+NeilKulkarni@Neils-MacBook-Pro sp21-s58 % cat lab1/Collatz.java
+/** Class that prints the Collatz sequence starting from a given number.
+ *  @author Neil Kulkarni
+ */
 public class Collatz {
     public static int nextNumber(int n) {
-        return n % 2 == 0 ? n / 2 : 3 * n + 1;
+        return n % 2 == 0 ? n/2 : 3*n + 1;
     }
 
     public static void main(String[] args) {
@@ -117,103 +168,127 @@ public class Collatz {
 }
 ```
 
-### Step 4：回到最新 commit
+### 第 4 步 { #第-4-步 }
 
-Checkout 回 `master`（或课程当时的最新分支）：
+现在，checkout 到最近的提交，以离开 Detached HEAD 状态。你应当验证：由于我们已经回到最近的提交，`lab1/Collatz.java` 再次包含有 bug 的实现：
 
-```bash
-git checkout master
+```java
+NeilKulkarni@Neils-MacBook-Pro sp21-s58 % cat lab1/Collatz.java
+/** Class that prints the Collatz sequence starting from a given number.
+ *  @author YOUR NAME HERE
+ */
+public class Collatz {
+
+    /** Buggy implementation of nextNumber! */
+    public static int nextNumber(int n) {
+        if (n  == 128) {
+            return 1;
+        } else if (n == 5) {
+            return 3 * n + 1;
+        } else {
+            return n * 2;
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        System.out.print(n + " ");
+        while (n != 1) {
+            n = nextNumber(n);
+            System.out.print(n + " ");
+        }
+        System.out.println();
+    }
+}
 ```
 
-再次 `cat lab1/Collatz.java`，确认文件又变回指定错误版本。这说明 checkout commit 会切换整个仓库快照。
+### 第 5 步 { #第-5-步 }
 
-### Step 5：只恢复一个文件
+我们已经验证 `lab1commit` 中包含正确的 `Collatz.java` 内容，也已经回到包含有 bug 的 `Collatz.java` 实现的最近提交。现在，使用 `git checkout` 把 `lab1/Collatz.java` 恢复为它在 `lab1commit` 中的状态。如果忘记怎样 checkout 文件，请复习本 Lab 开头的资料！
 
-当前位于最新 commit，但想让 `Collatz.java` 恢复到 `lab1commit` 中的状态。使用文件 checkout：
-
-```bash
-git checkout <lab1commit> -- lab1/Collatz.java
-```
-
-`git checkout <commit> -- <file>` 不切换整个仓库，只把指定文件替换成目标 commit 中的版本，并自动 stage。运行 `git status` 应看到：
+当你 checkout 一个文件时，Git 会自动把该文件加入暂存区。checkout 之后立刻运行 `git status`，应当返回类似下面的内容：
 
 ```text
+NeilKulkarni@Neils-MacBook-Pro sp21-s58 % git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
 Changes to be committed:
-    modified:   lab1/Collatz.java
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   lab1/Collatz.java
 ```
 
-再次 `cat` 确认已恢复正确实现，然后 commit 并 push。
+再执行一次 `cat lab1/Collatz.java`。你应当会看到解法现在已经更新！接下来提交并推送更改。
 
-### Step 6：提交 Part B
+### 第 6 步 { #第-6-步 }
 
-提交到 **Lab 4B: Git Exercise Part B**。
+提交到 Lab 4B: Git Exercise Part B 自动评分器，以获得这项作业的分数。
 
-### 用 checkout 重启或撤销项目文件
+最后说几句：我们刚刚完成的操作非常强大。我们利用了 Git 会存储文件快照这一事实，并用它恢复到更早的版本！而且在这个过程中，我们还学习了怎样解决合并冲突！
 
-把文件恢复到 skeleton 原始状态：
+这些信息不只是理论。当你完成项目时，会发现它确实具有实际用途。正如 Hug 教授经常说的那样，在项目中从头重新开始完全没有问题（而且受到鼓励！）。现在，我们拥有了做到这一点的手段！可以使用 `git checkout` 命令，把项目文件 checkout 为更早的某个提交中、尚未对它们进行修改时的版本。具体来说，如果想从骨架版本重新开始某个项目文件（例如 Project 0 的 `Model.java` 文件），可以运行下面的命令：
 
 ```bash
 git checkout skeleton/master -- proj0/game2048/Model.java
 ```
 
-通用形式：
-
-```bash
-git checkout skeleton/master -- <file>
-```
-
-把文件恢复到当前 `master` 最新 commit 状态：
+可以自由尝试这条命令！一般来说，`git checkout skeleton/master -- <file>` 会把文件恢复为其骨架代码状态。请记住，你已经在 `proj0` 的开发过程中创建了提交，因此总是可以把 `Model.java` 恢复到任何曾经提交过的状态（包括项目完成时的状态）！如果想把 `Model.java` 恢复为最近一次提交时（也就是完成后的）状态，可以运行下面的命令：
 
 ```bash
 git checkout master -- proj0/game2048/Model.java
 ```
 
-通用形式：
+一般来说，`git checkout master -- <file>` 会把文件恢复为最近提交中的状态。现在，你已经知道怎样重新开始一个项目；如果对重新开始的结果不满意，也知道怎样把重新开始后的项目恢复到它在 `master` 中的状态！
 
-```bash
-git checkout master -- <file>
+## 一个调试谜题 { #一个调试谜题 }
+
+另一项需要学习的重要技能是怎样进行彻底的调试。正确进行调试时，即使你并不完全理解正在调试的代码，也应当能够迅速缩小 bug 可能位于何处的范围。请考虑下面的场景。
+
+你的公司 Flik Enterprises 发布了一个优秀的软件库 `Flik.java`，它能够判断两个 Integer 是否相同。
+
+你收到了一封来自 “Horrible Steve” 的电子邮件，其中描述了他在使用这个库时遇到的问题：
+
+```text
+"Dear Flik Enterprises,
+
+Your library is very bad. See the attached code. It should print out 500
+but actually it's printing out 128.
+
+(attachment: HorribleSteve.java)"
 ```
 
-只要经常 commit，就可以放心尝试重写，再从任意旧 commit 恢复。
+使用下面任意几种技术的组合，判断 bug 位于 Horrible Steve 的代码中，还是位于 Flik Enterprises 的库中：
 
-## 调试谜题
+- 为 Flik 库编写 JUnit 测试。如果想这样做，需要在 `flik` 目录中新建一个文件，并导入 `junit`。请参考前面问题中的测试，了解怎样完成。
+- 使用 IntelliJ 调试器，特别是[条件断点](https://www.jetbrains.com/help/idea/using-breakpoints.html)或[遇到异常时中断](https://www.jetbrains.com/help/idea/examining-suspended-program.html)，这些内容在 Lab 3 中已经学过！
+- 使用打印语句。
+- 重构 Horrible Steve 的代码。重构意味着改变语法而不改变功能。由于 HS 的代码使用了很多奇怪的东西，这可能很难完成。
 
-Flik Enterprises 提供 `Flik.java`，用于判断两个 `Integer` 是否相同。Horrible Steve 报告：他的代码应该打印到 500，却只打印到 128。
+找到 bug 后，修复它，并把代码提交到 Lab 4: Debugging 自动评分器。本部分自动评分器使用隐藏测试，因此无法从 AG 获得任何关于 bug 的信息。如果认为已经修复 bug，却仍然无法通过 AG，请咨询 TA。
 
-任务：判断 bug 位于 `HorribleSteve.java` 还是 `Flik.java`，然后修复。可组合使用：
+提示：JUnit 提供了 `assertTrue(boolean)` 和 `assertTrue(String, boolean)` 方法，它们可能会很有帮助。
 
-- 为 Flik 编写 JUnit 测试；新建测试文件并 import JUnit；
-- IntelliJ Debugger；特别是条件断点与异常断点；
-- print statements；
-- 重构 Horrible Steve 的代码，即不改变功能，只改变写法，使其更易理解。
+尝试对这个 bug 给出简短解释！由于 Lecture 中没有讲过这个确切的问题，Google 是你的朋友。和 Lab 搭档讨论，并向 TA 或 AI 确认答案是否正确（不计分）。
 
-JUnit 可使用：
+## 提交 { #提交 }
 
-```java
-assertTrue(boolean)
-assertTrue(String, boolean)
-```
+这份 Lab 作业有三个独立的自动评分器。Lab 4A: Git Exercise Part A 和 Lab 4B: Git Exercise Part B 用来确认你已经完成 Git 练习；Lab 4: Debugging 用来确认你找到了并修复 “A Debugging Mystery” 中的 bug。这个 AG 还会检查代码风格，因此请确保每个文件都通过风格检查！请记住，可以通过右键单击文件并选择 `Check Style` 来检查风格。
 
-Autograder 使用 Hidden Tests，不会透露 bug。修复后提交 **Lab 4: Debugging**。同时准备一段简短解释：为什么结果在 128 附近出现异常。该问题涉及课程尚未正式讲解的 Java `Integer` 行为，可以查阅可信资料，但不要直接照抄修复命令或答案。
+有关每个 AG 应当在什么时候提交的更多信息，请查看规格中对应的部分。
 
-## 提交
+延期申请：共有三个自动评分器（Lab 4、Lab 4A 和 Lab 4B）。在 Beacon 上，如果为 Lab 4 提交延期申请，它会同时应用于三个自动评分器。
 
-本 Lab 有三个 Autograder：
+## 完整回顾 { #完整回顾 }
 
-1. **Lab 4A: Git Exercise Part A**：检查冲突解决后的错误版本。
-2. **Lab 4B: Git Exercise Part B**：检查从历史恢复正确文件。
-3. **Lab 4: Debugging**：检查 Flik bug 修复，并检查代码风格。
-
-每个文件可右击选择 **Check Style**。Beacon 中对 Lab 4 的 extension request 会同时应用于三个 Autograder。
-
-## 回顾
+本 Lab 介绍了：
 
 - Git 基础；
-- merge conflicts；
-- detached HEAD；
-- 用 Git checkout 恢复 commit 或单个文件；
-- 用 JUnit 调试。
+- 合并冲突；
+- Detached HEAD 状态；
+- 使用 Git checkout 代码；
+- 使用 JUnit 进行调试。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab4/lab4<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab4/lab4){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

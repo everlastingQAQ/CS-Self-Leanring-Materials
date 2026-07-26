@@ -3,26 +3,46 @@ title: "Lab 3：计时与随机测试"
 description: "CS61B Spring 2021 Lab 3：计时与随机测试中文学习资料。"
 ---
 
-# Lab 3：计时测试与随机对比测试
+# Lab 3：计时测试与随机比较测试
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab3/lab3<br>
-> 说明：正文由 ChatGPT 直接翻译；代码、类名、方法名和调试器选项保持原样。
+> 原始页面：<https://sp21.datastructur.es/materials/lab/lab3/lab3>
+>
+> 本文严格按照原页面的标题层级、段落顺序、列表、代码、程序输出和图片位置翻译。代码与标识符保持原样。
 
-## 简介
+## 目录
 
-本 Lab 将：
+- [简介](#简介)
+- [List61B 的计时测试](#list61b-的计时测试)
+  - [为使用糟糕扩容策略的 AList 构造过程计时](#为使用糟糕扩容策略的-alist-构造过程计时)
+  - [为使用良好扩容策略的 AList 构造过程计时](#为使用良好扩容策略的-alist-构造过程计时)
+  - [为 SLList 的 getLast 方法计时](#为-sllist-的-getlast-方法计时)
+- [随机比较测试](#随机比较测试)
+  - [简单比较测试](#简单比较测试)
+  - [随机函数调用](#随机函数调用)
+  - [条件断点](#条件断点)
+  - [添加更多随机调用](#添加更多随机调用)
+  - [添加随机比较](#添加随机比较)
+  - [运行随机测试](#运行随机测试)
+  - [修复 bug 与异常断点](#修复-bug-与异常断点)
+  - [清理](#清理)
+- [结论](#结论)
+- [提交](#提交)
 
-- 为 `SLList` 和 `AList` 编写计时测试；
-- 为有 bug 的 `AList` 实现编写随机对比测试；
-- 学习 conditional breakpoint、resume 和 execution breakpoint。
+## 简介 { #简介 }
 
-## List61B 的计时测试
+在本 Lab 中，你将为 `SLList` 和 `AList` 类创建计时测试。你还将为一个有 bug 的 `AList` 实现创建随机比较测试。
 
-本部分必须使用 `timingtest` package，不要误用 `randomizedtest`。
+在这个过程中，我们还会探索调试器的三个新功能：条件断点、Resume 按钮和异常断点。
 
-### 测量使用糟糕扩容策略构造 AList
+## List61B 的计时测试 { #list61b-的计时测试 }
 
-Starter `AList.addLast` 使用每次只增加 1 个容量的加法扩容：
+对于本 Lab 的这一部分，请确保打开的是 `timingtest` 包中的代码，而不是 `randomizedtest` 包中的代码。
+
+### 为使用糟糕扩容策略的 AList 构造过程计时 { #为使用糟糕扩容策略的-alist-构造过程计时 }
+
+正如 [Lecture](https://docs.google.com/presentation/d/1ZKSPKdEjlLlzmf7LoQJlTUC3w0MPInSXy2DxTEva0yo/edit) 中讨论的那样，乘法式扩容策略会带来快速的添加操作／良好的性能，而加法式扩容策略会带来缓慢的添加操作／糟糕的性能。在本 Lab 的这一部分中，我们将展示如何通过实验说明这一点。
+
+在 `timingtest` 包中，我们提供了 Lecture 中创建的 `AList` 类，并使用下面这种糟糕的扩容策略：
 
 ```java
 public void addLast(Item x) {
@@ -35,7 +55,7 @@ public void addLast(Item x) {
 }
 ```
 
-任务是在不同 `N` 下，用 `addLast` 构造 `AList` 并输出计时表。输出应类似：
+本部分的目标是编写代码，制成一张表格，显示使用上面的 `addLast` 方法创建不同大小的 `AList` 所需的时间。这个计时测试的输出大致如下：
 
 ```text
 Timing table for addLast
@@ -51,25 +71,33 @@ Timing table for addLast
       128000         3.74       128000       374.30
 ```
 
-各列含义：
+第一列 `N` 给出数据结构的大小（它包含多少个元素）。第二列 `time (s)` 给出完成所有操作所需的时间。第三列 `# ops` 给出计时实验期间对 `addLast` 的调用次数。最后，第四列 `microsec/op` 给出每次 `addLast` 调用平均需要多少微秒。
 
-- `N`：最终数据结构大小；
-- `time (s)`：所有操作总用时；
-- `# ops`：`addLast` 调用次数；
-- `microsec/op`：每次调用的平均微秒数。
+注意，在这个实验中，`N` 和 `# ops` 是重复信息，因为调用 `addLast` 128,000 次后，得到的 `N` 也会是 128,000。
 
-本实验中 `N` 与 `# ops` 相同。重点是观察：随着列表变大，每次 `addLast` 的平均耗时明显增加，因此不是常数时间。
+这里需要注意的重要现象是，`addLast` 并不是“常数时间”的。也就是说，每次 `addLast` 调用完成所需的时间会随列表大小显著变化：列表很长时需要 374.30 微秒，而列表很短时只需要 0.20 微秒。Project 1 中针对 `LinkedListDeque` 和 `ArrayDeque` 类的自动评分测试，本质上就是这样工作的：对于那些本应当是常数时间的操作，我们会确保它们耗费的时间确实保持不变。
 
-小规模数据的计时可能不可靠，原因包括缓存、进程切换、分支预测和计时器精度。分析经验结果时，重点看大 `N` 趋势。不同电脑的绝对时间不同没有关系，只要趋势一致。
+你可能注意到，在 N = 1000 和 N = 2000 时，每次 `addLast` 操作的时间相同。这在计时测试中很常见。对于较小的输入，结果不可靠，原因有两个：运行时间的方差很大（这是由缓存、进程切换、分支预测等问题造成的；如果学习 61C，你会了解这些内容），而且计时器的精度（毫秒）不足以分辨 N = 1000 和 N = 2000 之间的差异。
 
-### 改为良好扩容策略
+这甚至可能导致 N = 1000 的运行时间大于 N = 2000。因此，在运行经验计时测试时，我们希望把注意力放在较大的 N 上，例如比较 N = 32000 与 N = 64000 时的行为。
 
-把 `AList` 改为乘法扩容，再运行 `timeAListConstruction`。即使 `N = 128000`，构造也应非常快，每次添加只需不到一微秒的量级。
+你可能还会注意到，在自己的计算机上得到的表格时间可能与上面所写的差别很大。没有关系，只要总体趋势相同即可。在 61C 中，你会具体了解到为什么同一段代码在不同硬件上可能花费大不相同的时间。在 61B（以及大多数以理论为基础的课程）中，我们只关心总体趋势，这种趋势会掩盖所用处理器类型等非理想因素。
 
-可选实验：
+虽然对“总体趋势”进行推理可能显得有些棘手，但课程稍后会学习一种用于处理它的形式体系（渐近分析）。现在先使用你的直觉！
 
-- 把最大 `N` 增加到 1000 万，观察单位操作时间是否仍大致恒定。
-- 尝试不同扩容因子，例如 `1.01`：
+既然已经理解上面的表格，请在 `TimeAList` 类中添加函数 `public void timeAListConstruction`，让它针对 `AList` 生成上面的表格。注意：如果你的计算机稍慢，可以在 64,000 停止，而不是运行到 128,000。务必在 `TimeAList` 类的 `main` 方法中加入对 `timeAListConstruction` 的调用。
+
+为了方便起见，我们提供了一个名为 `printTimingTable(AList<Integer> Ns, AList<Double> times, AList<Integer> opCounts)` 的方法，用于打印上面的表格。其中，`Ns` 是第一列，`times` 是第二列，`opCounts` 是第三列。第四列（`microsec/op`）会自动为你计算。时间值应当以秒为单位。你应当使用 `Stopwatch` 类。请查看 `stopwatchDemo` 中的示例。
+
+有趣的是，请注意我们正在使用被计时的同一种数据结构（`AList`）来存储计时数据！我们通过使用这个数据结构的许多不同实例来做到这一点；正在接受计时的那个实例与存储计时数据的那些实例并不相同。
+
+### 为使用良好扩容策略的 AList 构造过程计时 { #为使用良好扩容策略的-alist-构造过程计时 }
+
+现在修改 `AList` 类，让扩容策略从加法式变为乘法式，然后重新运行 `timeAListConstruction`。此时，即使 N = 128,000，`AList` 对象也应当几乎瞬间完成构造，每次添加操作应该只耗费几分之一个微秒。
+
+可选：尝试把最大 N 提高到更大的值，例如一千万。你应该会看到，每次添加操作的时间仍然保持不变。
+
+可选：尝试使用不同的扩容因子，并观察运行时间如何变化。例如，如果使用 1.01 倍扩容，你仍然应当得到常数时间的 `addLast` 操作！注意，要使用非整数因子，你需要把结果转换为最近的整数。例如，可以使用 `Math.round()`。
 
 ```java
 public void addLast(Item x) {
@@ -82,21 +110,25 @@ public void addLast(Item x) {
 }
 ```
 
-使用非整数因子时注意取整，并保证新容量确实增大。
+### 为 SLList 的 getLast 方法计时 { #为-sllist-的-getlast-方法计时 }
 
-### 测量 `SLList.getLast`
+上面展示了怎样为一个数据结构的构造过程计时。不过，有时我们关心的是：一个方法的运行时间如何依赖于某个已经构造好的数据结构的大小。
 
-有时要测的是“已经构造完成的数据结构上，某个方法的耗时如何随结构大小变化”。流程：
+例如，在你的 `LinkedListDeque` 中，`addLast` 操作应当很快……一次 `addLast` 操作必须花费“常数时间”，也就是说，执行时间不应当依赖于 deque 的大小。
 
-1. 创建 `SLList`。
-2. 加入 `N` 个元素。
-3. **此时才开始计时。**
-4. 执行 `M` 次 `getLast`。
-5. 停止计时，计算总时间与单位操作时间。
+在本 Lab 的这一部分中，我们将展示怎样通过实验测试一个方法的运行时间是否依赖于数据结构大小。
 
-不要在构造列表前启动计时，否则会把构造成本混入 `getLast` 测量。
+假设我们想计算 `SLList` 上 `getLast` 每次操作所需的时间，并想知道这个运行时间如何依赖于 N。为此，需要遵循下面的过程：
 
-编辑 `TimeSLList.timeGetLast`，生成类似：
+1. 创建一个 `SLList`。
+2. 向 `SLList` 添加 N 个项目。
+3. 启动计时器。
+4. 对 `SLList` 执行 M 次 `getLast` 操作。
+5. 查看计时器。这样就得到了完成全部 M 次操作所需的总时间。
+
+非常重要的一点是：只有在第 2 步完成后，才能启动计时器。否则，计时测试会包含构建数据结构所需的运行时间，而我们只关心 `getLast` 的运行时间如何依赖于 `SLList` 的大小。
+
+在 `TimeSLList` 类中编辑函数 `timeGetLast`，使其执行上面的过程，并生成一张类似下面的表格：
 
 ```text
 Timing table for getLast
@@ -112,30 +144,39 @@ Timing table for getLast
       128000         2.57        10000       257.30
 ```
 
-这里始终执行 `M = 10000` 次，因此 `N` 与 `# ops` 不同。结果显示 `SLList.getLast` 会随列表增大而变慢。若结果看起来是常数时间，确认你测的是 `SLList` 而不是 `AList`。
+注意，`N` 与 `# ops` 两列不再相同。这是因为，无论列表大小如何，我们始终调用相同次数的 `getLast`；也就是说，在上述过程的第 4 步中，`M = 10000`。
 
-Project 1 中的 `LinkedListDeque` 必须让相关端点操作与结构大小无关。思考：为什么 `SLList.getLast` 慢？你的 `LinkedListDeque` 用了什么设计使其更快？
+注意，这些操作再次不是常数时间的！（如果你的结果表明操作是常数时间的，请确保你是在 `SLList` 上而不是在 `AList` 上运行测试！）这意味着，列表变大后，`getLast` 操作会变慢。在真实世界的应用中，这会是一个严重的问题。例如，假设列表记录 ATM 交易，而调用 `getLast` 操作是为了获取最近一笔交易并打印收据。
 
-## 随机对比测试
+每使用一次 ATM，下一张收据就会多花一点时间才能打印出来。最终，经过几个月或几年之后，列表会变得非常大，以至于 `getLast` 操作慢到无法使用。虽然这是一个特意构造的例子，但类似的问题确实困扰过真实世界中的系统！
 
-本部分使用 `randomizedtest` package。
+因此，你在 Project 1 中构建的 `LinkedListDeque` 必须具有与数据结构大小无关的运行时间。换句话说，最后一列应当是某个近似不变的值。
 
-### 简单对比测试
+可选思考题：为什么 `getLast` 如此缓慢？你的 `LinkedListDeque` 有什么特殊之处，能够让 `getLast` 函数更快？
 
-对比测试需要两个具有相同接口的实现：
+## 随机比较测试 { #随机比较测试 }
 
-- `AListNoResizing`：容量固定 1000，不实用但实现简单，可信度高，作为“参考实现”。
-- `BuggyAList`：会扩容和缩容，逻辑更复杂，且已知含有 bug，作为“被测实现”。
+对于本 Lab 的这一部分，请确保使用的是 `randomizedtest` 包中的代码，而不是 `timingtest` 包中的代码。
 
-先写 JUnit 测试 `testThreeAddThreeRemove`：
+#### 简单比较测试 { #简单比较测试 }
 
-1. 向两个实现依次添加相同的三个值（例如 4、5、6）。
-2. 连续调用三次 `removeLast`。
-3. 每次都比较两个实现的返回值。
+一种测试代码的技术是进行“比较测试”。在这种测试中，我们拥有同一个类的两种实现。其中一种实现已知（或被强烈认为）是正确的，另一种实现仍在开发中，尚未得到验证。
 
-### 随机调用方法
+例如，我们提供了 `AListNoResizing` 类。这个类不支持任何扩容操作，只是使用一个硬编码为 1000 的数组大小。这意味着它在实践中没有多大用处，因为永远无法保存超过 1000 个项目。不过，由于它极其简单，我们对它能够正常工作抱有很高信心。
 
-新建 JUnit 测试 `randomizedTest()`，先只对 `AListNoResizing` 随机调用 `addLast` 与 `size`：
+相对地，我们还提供了 `BuggyAList` 类。这个类有一个底层数组，会根据所存储的数据量扩大和缩小。由于正确实现扩缩容稍微有些棘手，我们对这个类的正确性更加怀疑。正如名称所暗示的那样，它确实在某处有一个 bug。本 Lab 剩余部分的目标就是找出这个 bug。
+
+让我们先编写一个练习 JUnit 测试作为热身。编写名为 `testThreeAddThreeRemove` 的测试：向正确的 AList 实现和有 bug 的 AList 实现添加相同的值，然后检查后续三次 `removeLast` 调用的结果是否相同。例如，可以先对两者都执行 `addLast(4)`，再对两者都执行 `addLast(5)`，然后对两者都执行 `addLast(6)`。接着，对两者执行 `removeLast`，并验证结果相等。再次对两者执行 `removeLast`，并检查结果相等。
+
+最后，移除最后一个项目（即 4），并验证两者结果相等。完成后，或者在卡住时，可以查看[这个链接中的代码](https://sp21.datastructur.es/materials/lab/lab3/testThreeAddThreeRemove.txt)获得一种解法，但请先尝试在不查看代码的情况下完成！
+
+运行测试，你会看到它应当通过。这个测试还不足以识别 `BuggyAList` 中的 bug。
+
+#### 随机函数调用 { #随机函数调用 }
+
+原则上，可以精心编写一组比较测试，最终找出 bug。不过，另一种可以配合使用的策略是采用随机方法：对两个实现进行随机调用，并使用 JUnit 方法验证它们始终返回相同的值。
+
+下面的代码是一个随机调用 `AList` 方法的函数示例。它会在一个 `AListNoResizing` 对象上随机调用 `addLast` 和 `size`，总共对这两个函数之一进行 N 次调用。
 
 ```java
 AListNoResizing<Integer> L = new AListNoResizing<>();
@@ -144,107 +185,141 @@ int N = 500;
 for (int i = 0; i < N; i += 1) {
     int operationNumber = StdRandom.uniform(0, 2);
     if (operationNumber == 0) {
+        // addLast
         int randVal = StdRandom.uniform(0, 100);
         L.addLast(randVal);
         System.out.println("addLast(" + randVal + ")");
     } else if (operationNumber == 1) {
+        // size
         int size = L.size();
         System.out.println("size: " + size);
     }
 }
 ```
 
-`StdRandom.uniform(0, 2)` 返回 `[0, 2)` 中的随机整数，即 0 或 1。
+创建一个名为 `randomizedTest()` 的新 JUnit 测试，复制并粘贴上面的代码，你应该会看到类似下面的内容：
 
-### Conditional Breakpoint 与 Resume
-
-1. 在 `int operationNumber = ...` 行设置 breakpoint。
-2. Debug 测试，打开 Java Visualizer。
-3. Step Over 后观察 `operationNumber`。
-4. 点击 **Resume**，程序会一直运行到再次命中 breakpoint。
-5. 重复 Resume，观察数组逐渐填入元素。
-6. 右击 breakpoint，在 Condition 中输入：
-
-```java
-L.size() == 12
+```text
+size: 0
+addLast(68)
+size: 1
+size: 1
+addLast(12)
+addLast(19)
+addLast(79)
+...
+size: 265
 ```
 
-7. Resume，程序会在列表大小达到 12 时暂停。
-8. 完成练习后删除条件断点，避免影响后续调试。
+#### 条件断点 { #条件断点 }
 
-### 加入更多随机操作
+虽然下面的功能对今天寻找 bug 没有帮助，但让我们介绍两个新的调试器功能：“Resume” 和“条件断点”。
 
-把随机操作扩展为：
+1. 在写有 `int operationNumber = StdRandom.uniform(0, 2);` 的那一行设置断点。
+2. 然后使用 Debug 选项，让 IntelliJ 在这一行停下来。如果不记得怎样使用 Debug 选项，请查看 [Lab 2](https://sp21.datastructur.es/materials/lab/lab2/lab2)。
+3. 单击 Visualizer，你会看到一个含有许多许多 `null` 的数组；这些位置最终会保存加入列表的数据。
+4. 单击 Step Over，你会看到 `operationNumber` 被设为 0 或 1。这是因为 `StdRandom.uniform(0, 2)` 函数会返回范围 [0, 2) 中的一个随机整数，也就是说，不包括右侧参数。如果选中的数是 0，就会把一个随机数加入列表末尾。如果选中的数是 1，就会打印列表大小。
+5. 单击调试器中的 `Resume` 按钮（下图以黄色高亮），代码会继续运行，直到再次命中断点。
 
-- `addLast`
-- `size`
-- `getLast`
-- `removeLast`
+![Resume 按钮](../assets/coursework/c4a7e0af85d0-resume_button.png)
 
-相应扩大 `StdRandom.uniform` 的范围。只有当 `L.size() > 0` 时才能调用 `getLast` 和 `removeLast`，否则会崩溃。
+6. 尝试单击 Resume 几次，你会看到数组中的位置开始被值填充。注意，每次单击 Resume，代码都会一直运行（就像连续按了很多次 Step Over），直到再次回到断点。
+7. 我们还可以离开 Visualizer，重新查看打印语句的输出。为此，再次单击 `Debugger`（位于 `Java Visualizer` 旁边），然后继续单击 Resume。在某些计算机上，你可能需要单击 `Console`，而不是 `Debugger`。每次单击 Resume 时，都会看到另一条打印语句，对应一次 `addLast` 或 `size` 调用。
+8. 现在让我们尝试条件断点。右键单击断点，会看到一个写有 “Condition:” 的弹出框。在输入框中输入 `L.size() == 12`。
 
-### 加入随机对比
+![条件断点](../assets/coursework/deda8b86fe36-conditional_breakpoint.png)
 
-为参考实现和 `BuggyAList` 执行完全相同的每一个操作；对有返回值的方法，用 JUnit 比较两个返回值。
+9. 单击 Resume，代码会一直运行到断点条件满足，也就是大小等于 12。试着执行并单击 Visualizer，你应该会看到此时大小为 12，数组中有 12 个项目。如果不小心执行过头，很遗憾，必须重新启动测试。
 
-### 运行随机测试
+这两个新功能（Resume 和条件断点）在 Lab 3 的剩余部分中不会再有用。不过，它们在未来的项目中可能会派上用场，而且 Lab 4 会要求你使用它们。此时应当移除这个条件断点，以免影响 Lab 的剩余部分。
 
-多运行几次测试，小 `N` 时可能通过也可能失败。把 `N` 提高到 5000，通常几乎每次都会失败。
+#### 添加更多随机调用 { #添加更多随机调用 }
 
-随机测试的重要限制：
+修改随机测试，让它现在还可能执行另外两个操作：`getLast` 和 `removeLast`。注意，需要修改对 `StdRandom.uniform` 的调用，让它在 0 到 3 之间选择一个数。
 
-- 随机序列不一定触发隐蔽 bug；
-- 不应替代精心设计的确定性单元测试；
-- 更适合作为补充测试手段。
+重要：只有在 `L.size` 大于 0 时，才应当调用 `getLast` 和 `removeLast`！如果大小为 0，这些方法会导致程序崩溃。换句话说，请使用一条 `if` 语句，在大小为零时跳过对 `getLast` 或 `removeLast` 的调用。
 
-### 修复 Bug 与 Execution Breakpoint
+可选：加入这些方法后，使用断点让代码在调用 `removeLast` 的那一行停下来，再使用调试器的 Step Over 功能说服自己 `removeLast` 看起来工作正常。
 
-失败时通常看到：
+#### 添加随机比较 { #添加随机比较 }
+
+上面构建的代码只会调用我们已知正确的实现。修改代码，让每次调用 `AListNoResizing` 的方法时，也调用 `TestBuggyAList` 中的相同方法。代码还应当比较每个具有返回值的方法所返回的值。
+
+如果卡住了，请查看[这个链接中的代码](https://sp21.datastructur.es/materials/lab/lab3/partialRandomizedComparisons.txt)获得一个部分解法，但请先尝试在不查看代码的情况下完成！
+
+#### 运行随机测试 { #运行随机测试 }
+
+尝试运行测试若干次。它有时可能通过，有时可能失败。现在尝试把 N 增大到 5000。此时它几乎每次都应当失败。
+
+这揭示了随机测试的一个重要特点：如果应用的是随机操作，而 bug 又相当隐蔽，那么随机操作序列可能检测不到 bug！有一些方法可以改进随机测试来避免这个问题，但它们超出了本课程的范围。
+
+另一点需要注意：随机测试不应当替代设计良好的单元测试！在可能的情况下，我个人通常更倾向于使用非随机测试，并把随机测试看作一种补充测试方法。关于这个问题的争论，可以查看[这个讨论串](https://news.ycombinator.com/item?id=24349522)。
+
+#### 修复 bug 与异常断点 { #修复-bug-与异常断点 }
+
+既然现在有了一个会失败的测试，我们就想了解它为什么失败。
+
+你会注意到，测试每次失败时，得到的消息大致如下：
 
 ```text
 java.lang.ArrayIndexOutOfBoundsException: Index 7 out of bounds for length 7
+
 at randomizedtest.BuggyAList.resize(BuggyAList.java:31)
 ```
 
-使用异常执行断点：
+一种处理方式是在 `BuggyAList.java` 第 31 行设置条件为 `i == items.length` 的条件断点。这样完全可行，也欢迎你尝试。
 
-1. 打开 Breakpoints 窗口。
-2. 勾选 **Any Exception**。
-3. 设置条件：
+不过，我们将借此机会展示怎样设置一个“异常断点”，使代码崩溃时能够停下来，并把正在发生的事情可视化。
+
+要做到这一点，请单击 `Run -> View Breakpoints`。你应该会看到如下窗口：
+
+![查看断点窗口](../assets/coursework/ab1bb5215644-exception_breakpoint_1.png)
+
+选中左侧写有 “Any exception” 的复选框，然后单击写有 “Condition:” 的位置，并在输入框中准确输入：
 
 ```java
 this instanceof java.lang.ArrayIndexOutOfBoundsException
 ```
 
-4. Debug 测试，程序会在异常即将发生时暂停。
-5. 在 Visualizer 中系统检查数组、size 和 resize 参数。
+完成后，断点窗口应当如下所示：
 
-卡住时重点检查传给 `resize` 的参数，并追踪 `removeLast` 如何导致这个错误参数产生。
+![异常断点条件](../assets/coursework/edda3a37aafd-exception_breakpoint_2.png)
 
-找到 bug 后修复并重跑随机测试。
+单击 Debug 按钮，代码应当恰好在异常即将发生的时刻停止。单击 Visualizer，并尝试弄清楚代码为什么崩溃。现在，真正的问题求解可以开始了！
 
-**注意：**不要在没有条件时长期勾选 Any Exception，因为 JUnit 启动过程会产生并忽略一些内部异常，调试器会停在无关位置。完成后取消 Java Exception Breakpoints。
+Visualizer 窗口中包含许多关于具体问题的线索。这是一个棘手而微妙的问题，但只要系统地进行分析，你应该能够识别它。如果卡住了，请高亮查看下面一段原页面中的隐藏文字：
 
-### 清理测试
+> 把注意力放在传给 `resize` 函数的参数上。尝试弄清楚这个参数有什么问题，再利用这条信息，通过查看 `removeLast` 的代码判断那个错误参数是怎样被传进去的。
 
-随机测试中的打印日志只为教学方便。修复完成后删除所有 `System.out.println`，避免真实测试输出大量无用文本。工程中通常使用 logging，而不是直接 print；Project 1 Extra Credit 会进一步介绍。
+识别出 bug 后，修复它。重新运行测试，验证 `BuggyAList` 现在能够正确工作。
 
-## 总结
+如果遇到困难，务必向你的 GSI 或其他学生求助！
 
-本 Lab 完成了：
+**注意：**如果在没有指定条件的情况下使用这个调试功能，代码会在各种神秘位置停下来。请确保绝不要在未指定条件时选中 “Any Exception”。这是因为启动 JUnit 测试的过程会生成一系列异常，而这些异常最终都会被忽略。这远远超出了本课程的范围。如果已经使用完异常断点，应当取消选中左上角的 “Java Exceptions Breakpoints” 复选框。
 
-- 经验测量构造数据结构的时间；
-- 测量方法运行时间如何依赖结构大小；
-- 两个实现之间的对比测试；
-- 随机调用方法与随机对比；
-- IntelliJ Resume；
-- 条件断点；
-- 异常执行断点。
+#### 清理 { #清理 }
 
-## 提交
+最后：我们的 JUnit 测试中包含打印语句，用于生成所有随机调用的日志。虽然这对教学有帮助，但真实世界的测试不应当这样做，因为它只会产生一大团没有用处的文本。请移除 JUnit 测试中的所有打印语句。
 
-正常提交到 autograder。它会检查计时测试输出，以及修复后的 `BuggyAList` 是否正确。
+注意：通常而言，与其打印随机测试所进行的函数调用，不如把它们记录到日志中。要了解更多内容，请完成 Project 1 的额外加分作业。
+
+## 结论 { #结论 }
+
+在本 Lab 中，我们学习了如何：
+
+- 通过实验测量构造一个数据结构所需的时间；
+- 通过实验测量一个数据结构的方法运行时间如何随数据结构大小变化；
+- 在同一个类的两种实现之间进行比较测试；
+- 随机调用类中的方法；
+- 在同一个类的两种实现之间进行随机比较测试；
+- 使用 IntelliJ 中的 Resume 按钮；
+- 为断点添加条件；
+- 创建异常断点。
+
+## 提交 { #提交 }
+
+与平常一样，把代码提交给自动评分器。自动评分器会检查计时测试的输出以及 `BuggyAList` 类的正确性。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab3/lab3<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab3/lab3){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

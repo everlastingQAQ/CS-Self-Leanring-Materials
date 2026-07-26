@@ -7,7 +7,7 @@ description: "CS61B Spring 2021 HW 2：概念复习中文学习资料。"
 
 > 原文：https://sp21.datastructur.es/materials/hw/hw2/hw2.pdf<br>
 > 日期：2021 年 3 月 15 日<br>
-> 说明：题目正文由 ChatGPT 直接翻译；代码、方法名与数学符号保持原样。
+> 说明：正文按原页面/原 PDF 的题目顺序逐段翻译；代码、方法名与数学符号保持原样。
 
 ## 1. 渐近分析热身
 
@@ -158,7 +158,7 @@ connect(3, 1);
 
 ```text
 kerfuffle, broom, hroom, ragamuffin, donkey, brekky,
-blob, zenzizenzizenzic, drap
+blob, zenzizenzizenzic, yap
 ```
 
 假设：

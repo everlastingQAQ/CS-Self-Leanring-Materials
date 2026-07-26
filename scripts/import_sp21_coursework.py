@@ -9,11 +9,14 @@ The archived course homepage is refreshed only when explicitly requested.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import html
 import json
 import re
 import shutil
+import time
+import unicodedata
 import urllib.request
 from collections import defaultdict
 from datetime import datetime, timedelta
@@ -24,7 +27,7 @@ from zoneinfo import ZoneInfo
 ROOT = Path(__file__).resolve().parents[1]
 COURSE = ROOT / "courses" / "CS61B" / "2021Spring"
 DOCS = COURSE / "docs"
-DEFAULT_SOURCE = Path("/home/everlasting/下载/CS61B_SP21_中文作业Markdown")
+DEFAULT_SOURCE = Path("/home/everlasting/下载/CS61B_SP21_逐字对应中文翻译")
 ORIGINAL_HOME = "https://sp21.datastructur.es/"
 TERM_START = datetime(2021, 1, 19, tzinfo=ZoneInfo("America/Los_Angeles"))
 TERM_END = datetime(2021, 5, 15, tzinfo=ZoneInfo("America/Los_Angeles"))
@@ -44,17 +47,17 @@ CALENDARS = {
 
 # source folder, source filename, output group, output slug, Chinese navigation title
 ITEMS = [
-    ("Labs", "Lab01A_电脑环境配置.md", "labs", "lab-1-setup", "Lab 1 Setup：配置计算机"),
+    ("Labs", "Lab01A_配置你的电脑.md", "labs", "lab-1-setup", "Lab 1 Setup：配置计算机"),
     ("Labs", "Lab01B_IntelliJ_Java_Git.md", "labs", "lab-1-intellij-java-git", "Lab 1：IntelliJ、Java 与 Git"),
-    ("Labs", "Lab02_JUnit与调试.md", "labs", "lab-2-junit-debugging", "Lab 2：JUnit 与调试"),
-    ("Labs", "Lab03_计时测试与随机对比测试.md", "labs", "lab-3-timing-randomized-tests", "Lab 3：计时与随机测试"),
+    ("Labs", "Lab02_JUnit测试与调试.md", "labs", "lab-2-junit-debugging", "Lab 2：JUnit 与调试"),
+    ("Labs", "Lab03_计时测试与随机比较测试.md", "labs", "lab-3-timing-randomized-tests", "Lab 3：计时与随机测试"),
     ("Labs", "Lab04_Git与调试.md", "labs", "lab-4-git-debugging", "Lab 4：Git 与调试"),
     ("Labs", "Lab05_Project1同伴代码审查.md", "labs", "lab-5-peer-code-review", "Lab 5：同伴代码审查"),
     ("Labs", "Lab06_Project2入门.md", "labs", "lab-6-project-2", "Lab 6：Project 2 入门"),
     ("Labs", "Lab07_BSTMap.md", "labs", "lab-7-bstmap", "Lab 7：BSTMap"),
     ("Labs", "Lab08_HashMap.md", "labs", "lab-8-hashmap", "Lab 8：HashMap"),
     ("Labs", "Lab12_Project3入门.md", "labs", "lab-12-project-3-rendering", "Lab 12：Project 3 入门"),
-    ("Labs", "Lab13_Project3第二阶段交互.md", "labs", "lab-13-project-3-interactivity", "Lab 13：Project 3 交互"),
+    ("Labs", "Lab13_Project3第二阶段入门.md", "labs", "lab-13-project-3-interactivity", "Lab 13：Project 3 交互"),
     ("Homeworks", "HW0_Java速成.md", "homeworks", "hw-0-java", "HW 0：Java 速成"),
     ("Homeworks", "HW2_概念复习.md", "homeworks", "hw-2-conceptual-review", "HW 2：概念复习"),
     ("Homeworks", "HW3_概念复习.md", "homeworks", "hw-3-conceptual-review", "HW 3：概念复习"),
@@ -70,6 +73,22 @@ GROUPS = {
     "labs": ("实验", "课程实验、准备工作与实作周的中文资料。"),
     "homeworks": ("作业", "课程家庭作业的中文资料。"),
     "projects": ("项目", "课程编程项目、阶段说明与展示要求的中文资料。"),
+}
+
+IMAGE_RE = re.compile(
+    r"!\[([^\]]*)\]\((https?://[^)\s]+)(?:\s+([\"'][^\"']*[\"']))?\)"
+)
+INTERNAL_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(#([^)]+)\)")
+HEADING_RE = re.compile(r"^(#{1,6})\s+(.+)$")
+IMAGE_URL_ALIASES = {
+    "https://sp21.datastructur.es/materials/lab/lab3/img/exception_breakpoint_1.png":
+        "https://sp21.datastructur.es/materials/lab/lab3/img/breakpoints.png",
+    "https://sp21.datastructur.es/materials/lab/lab3/img/exception_breakpoint_2.png":
+        "https://sp21.datastructur.es/materials/lab/lab3/img/breakpoints_filled_in.png",
+    "https://sp21.datastructur.es/materials/proj/proj1/img/java_visualizer.png":
+        "https://sp21.datastructur.es/materials/proj/proj1/java_visualizer.png",
+    "https://sp21.datastructur.es/materials/proj/proj1/img/karplus-strong.png":
+        "https://sp21.datastructur.es/materials/proj/proj1/karplus-strong.png",
 }
 
 LECTURE_TRANSLATIONS = {
@@ -153,10 +172,21 @@ def sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def fetch(url: str) -> bytes:
-    request = urllib.request.Request(url, headers={"User-Agent": "docs.everlasting.xin importer/1.0"})
-    with urllib.request.urlopen(request, timeout=45) as response:
-        return response.read()
+def fetch(url: str, attempts: int = 4) -> bytes:
+    last_error: Exception | None = None
+    for attempt in range(attempts):
+        request = urllib.request.Request(
+            url,
+            headers={"User-Agent": "docs.everlasting.xin importer/1.0"},
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                return response.read()
+        except Exception as error:  # noqa: BLE001 - preserve the final network failure
+            last_error = error
+            if attempt + 1 < attempts:
+                time.sleep(attempt + 1)
+    raise RuntimeError(f"failed to download {url} after {attempts} attempts") from last_error
 
 
 def validate_source(source: Path) -> dict:
@@ -183,6 +213,7 @@ def validate_source(source: Path) -> dict:
     }
     return {
         "source": str(source),
+        "translation_profile": "逐字对应中文翻译",
         "source_inventory_sha256": sha256(readme.read_bytes()),
         "source_document_count": len(source_hashes),
         "imported_content_count": len(ITEMS),
@@ -214,7 +245,143 @@ def normalize_markdown(text: str) -> str:
     return "\n".join(normalized)
 
 
-def import_markdown(source: Path) -> None:
+def vendor_images(
+    source_texts: dict[tuple[str, str], str],
+    refresh_images: bool = False,
+) -> tuple[dict[str, str], dict]:
+    urls = sorted(
+        {
+            match.group(2)
+            for text in source_texts.values()
+            for match in IMAGE_RE.finditer(text)
+        }
+    )
+
+    signatures = {
+        ".gif": (b"GIF87a", b"GIF89a"),
+        ".jpg": (b"\xff\xd8\xff",),
+        ".jpeg": (b"\xff\xd8\xff",),
+        ".png": (b"\x89PNG\r\n\x1a\n",),
+    }
+
+    def validate_image(data: bytes, filename: str, url: str) -> None:
+        suffix = Path(filename).suffix.lower()
+        if not data or (suffix in signatures and not data.startswith(signatures[suffix])):
+            raise RuntimeError(f"downloaded coursework image is invalid: {url}")
+
+    def download(url: str) -> tuple[str, bytes, str, str]:
+        retrieval_url = IMAGE_URL_ALIASES.get(url, url)
+        data = fetch(retrieval_url)
+        basename = Path(urlsplit(url).path).name or "image"
+        safe_basename = re.sub(r"[^A-Za-z0-9._-]+", "-", basename).strip("-") or "image"
+        filename = f"{hashlib.sha256(url.encode()).hexdigest()[:12]}-{safe_basename}"
+        validate_image(data, filename, url)
+        return url, data, filename, retrieval_url
+
+    downloads: dict[str, tuple[bytes, str, str]] = {}
+    previous_items: dict[str, dict] = {}
+    previous_manifest = DOCS / "coursework-import-manifest.json"
+    if not refresh_images and previous_manifest.is_file():
+        try:
+            previous_items = json.loads(previous_manifest.read_text(encoding="utf-8")).get(
+                "localized_images", {}
+            ).get("items", {})
+        except (TypeError, ValueError, json.JSONDecodeError):
+            previous_items = {}
+
+    for url in urls:
+        details = previous_items.get(url, {})
+        cached_path = DOCS / str(details.get("path", ""))
+        if not cached_path.is_file():
+            continue
+        data = cached_path.read_bytes()
+        if len(data) != details.get("bytes") or sha256(data) != details.get("sha256"):
+            continue
+        validate_image(data, cached_path.name, url)
+        downloads[url] = (
+            data,
+            cached_path.name,
+            str(details.get("retrieved_from", IMAGE_URL_ALIASES.get(url, url))),
+        )
+
+    pending_urls = [url for url in urls if url not in downloads]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+        futures = [executor.submit(download, url) for url in pending_urls]
+        for future in concurrent.futures.as_completed(futures):
+            url, data, filename, retrieval_url = future.result()
+            downloads[url] = (data, filename, retrieval_url)
+
+    assets = DOCS / "assets" / "coursework"
+    if assets.exists():
+        shutil.rmtree(assets)
+    assets.mkdir(parents=True)
+
+    replacements: dict[str, str] = {}
+    manifest: dict[str, dict[str, str | int]] = {}
+    for url in urls:
+        data, filename, retrieval_url = downloads[url]
+        (assets / filename).write_bytes(data)
+        replacements[url] = f"../assets/coursework/{filename}"
+        manifest[url] = {
+            "path": f"assets/coursework/{filename}",
+            "sha256": sha256(data),
+            "bytes": len(data),
+        }
+        if retrieval_url != url:
+            manifest[url]["retrieved_from"] = retrieval_url
+    return replacements, {"count": len(urls), "items": manifest}
+
+
+def add_anchor(body: str, heading_pattern: str, anchor: str) -> str:
+    updated, replacements = re.subn(
+        rf"(?m)^({heading_pattern})$",
+        rf'<a id="{anchor}"></a>\n\n\1',
+        body,
+        count=1,
+    )
+    if replacements != 1:
+        raise SystemExit(f"expected one heading for anchor {anchor}, got {replacements}")
+    return updated
+
+
+def heading_key(text: str) -> str:
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = re.sub(r"[`*_~]", "", text)
+    normalized = unicodedata.normalize("NFKC", text).casefold()
+    return "".join(character for character in normalized if character.isalnum())
+
+
+def preserve_internal_anchors(body: str) -> str:
+    anchors_by_heading: dict[str, set[str]] = defaultdict(set)
+    for label, anchor in INTERNAL_LINK_RE.findall(body):
+        anchors_by_heading[heading_key(label)].add(anchor)
+
+    found: set[str] = set()
+    output: list[str] = []
+    for line in body.splitlines():
+        match = HEADING_RE.match(line)
+        anchors = anchors_by_heading.get(heading_key(match.group(2)), set()) if match else set()
+        if len(anchors) > 1:
+            raise SystemExit(f"multiple internal anchors map to one heading: {sorted(anchors)}")
+        if anchors:
+            anchor = next(iter(anchors))
+            if anchor not in found:
+                line = f"{line} {{ #{anchor} }}"
+                found.add(anchor)
+        output.append(line)
+
+    expected = {anchor for anchors in anchors_by_heading.values() for anchor in anchors}
+    missing = sorted(expected - found)
+    if missing:
+        raise SystemExit(f"internal anchors have no matching headings: {missing}")
+    return "\n".join(output)
+
+
+def import_markdown(
+    source_texts: dict[tuple[str, str], str],
+    image_replacements: dict[str, str],
+) -> None:
     grouped: dict[str, list[tuple[str, str]]] = defaultdict(list)
     for group in GROUPS:
         destination = DOCS / group
@@ -223,12 +390,19 @@ def import_markdown(source: Path) -> None:
         destination.mkdir(parents=True)
 
     for folder, filename, group, slug, title in ITEMS:
-        source_path = source / folder / filename
-        body = normalize_markdown(source_path.read_text(encoding="utf-8"))
+        body = normalize_markdown(source_texts[(folder, filename)])
+        body = IMAGE_RE.sub(
+            lambda match: (
+                f"![{match.group(1)}]({image_replacements[match.group(2)]}"
+                f"{' ' + match.group(3) if match.group(3) else ''})"
+            ),
+            body,
+        )
+        body = preserve_internal_anchors(body)
         if slug == "project-3-byow":
-            body = body.replace("## 四、Phase 1：世界生成", '<a id="phase-1"></a>\n\n## 四、Phase 1：世界生成')
-            body = body.replace("## 九、Phase 2：交互性", '<a id="phase-2"></a>\n\n## 九、Phase 2：交互性')
-            body = body.replace("## 十七、提交与评分", '<a id="submission"></a>\n\n## 十七、提交与评分')
+            body = add_anchor(body, r"#{2,3} (?:四、)?Phase 1：世界生成", "phase-1")
+            body = add_anchor(body, r"#{2,3} (?:九、)?Phase 2：交互性", "phase-2")
+            body = add_anchor(body, r"## (?:十七、)?提交与评分", "submission")
         description = f"CS61B Spring 2021 {title}中文学习资料。"
         output = (
             "---\n"
@@ -653,9 +827,20 @@ def main() -> None:
         action="store_true",
         help="also download and regenerate the archived original-style homepage and calendars",
     )
+    parser.add_argument(
+        "--refresh-images",
+        action="store_true",
+        help="redownload coursework images instead of reusing the verified local copies",
+    )
     args = parser.parse_args()
     import_record = validate_source(args.source)
-    import_markdown(args.source)
+    source_texts = {
+        (folder, filename): (args.source / folder / filename).read_text(encoding="utf-8")
+        for folder, filename, *_ in ITEMS
+    }
+    image_replacements, image_manifest = vendor_images(source_texts, args.refresh_images)
+    import_record["localized_images"] = image_manifest
+    import_markdown(source_texts, image_replacements)
     if args.refresh_course_home:
         import_record["calendar_sources"] = generate_course_home()
     else:

@@ -5,43 +5,56 @@ description: "CS61B Spring 2021 Lab 5：同伴代码审查中文学习资料。"
 
 # Lab 5：Project 1 同伴代码审查
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab5/lab5<br>
-> 说明：正文由 ChatGPT 直接翻译。
+> 原文：https://sp21.datastructur.es/materials/lab/lab5/lab5
+>
+> 严格按照原页面的标题层级、段落顺序和编号翻译；代码标识符保持原样。
 
-## 简介
+- [介绍](#介绍)
+  - [LinkedListDeque 概览](#linkedlistdeque-概览)
+  - [LinkedListDeque 同伴审查](#linkedlistdeque-同伴审查)
+  - [ArrayDeque 概览](#arraydeque-概览)
+  - [ArrayDeque 同伴审查](#arraydeque-同伴审查)
+- [自我反思与提交](#自我反思与提交)
 
-本 Lab 与实验课中的 1–3 名同学比较 Project 1 解法。本周必须按时参加；无法参加常规时段可去其他 Lab，确实无法参加任何时段时才填写官方豁免表。
+## 介绍 { #介绍 }
 
-TA 会讲解 Project 1 的部分参考解法。**只有在已经完成 Project 1 最终 Gradescope 提交后才能参加本 Lab**，否则可能因提前接触解法而被认定违反学术诚信。
+在本实验中，你会与实验课中的另外 1–3 名学生比较自己对 Project 1 的解答。本周要求准时出席。如果无法参加自己通常参加的实验课，可以改去另一节。如果（并且只有在）你完全无法参加任何一节实验课，请填写[这个豁免表单](https://forms.gle/fcFdFyFb6YtPyu957)。
 
-## LinkedListDeque 概览
+作为本实验的一部分，TA 会讲解 Project 1 解答的一部分。在你向 Gradescope 完成 Project 1 最终提交之前，不要参加本实验，否则你会因学术不诚信而被记录。
 
-TA 先简要介绍 staff 的 `LinkedListDeque` 解法。
+#### LinkedListDeque 概览 { #linkedlistdeque-概览 }
 
-## LinkedListDeque 同伴审查
+你的 TA 会先简要介绍工作人员提供的 `LinkedListDeque` 解答。
 
-与 1–3 名同学组队比较实现。目标不是评判谁写得“高级”，而是互相学习。不要从头到尾逐行讲解整个实现，而应围绕具体问题讨论：
+#### LinkedListDeque 同伴审查 { #linkedlistdeque-同伴审查 }
 
-1. 最麻烦的 bug 是什么？如何修复？是否用了 Debugger、特殊情况，或“改一点然后祈祷 AG 通过”？
-2. 是否删除过某些设计，使代码更简单？
-3. 代码中有哪些 special cases？
-4. 是否使用 private helper methods？
-5. 是否存在重复代码？helper 是否能减少重复？
-6. 哪些地方复用了已有方法或代码？
+与另外 1–3 名学生组成小组并比较解答。你们应当在 Discord 房间中与其他学生组队。不要害怕认识新同学！61B 中的程序员在编程经验和熟悉程度方面差异很大。这里的目标是互相帮助，让彼此变得更好。请友善一些；如果你的解答不够优雅，甚至丑得离谱，也不要感到难过。
 
-讨论后，完成 `self_reflection.txt` 前半部分。
+我当然也写过极其丑陋、毫不优雅的代码！如果你好奇，这里有[我在 1997 年写的一个 1600 行怪物](https://sp21.datastructur.es/materials/lab/lab5/knaveos.html)，以及它运行时的[视频演示](https://youtu.be/XgJUC0Le_Ew)。`knaveos` 不会出现在期中考试中。
 
-## ArrayDeque 概览与审查
+不要忍不住向同伴逐字解释自己的实现究竟如何工作。相反，应当把讨论集中在更具体的问题上。下面列出了一些建议问题：
 
-TA 讲解 `ArrayDeque` 参考方案。然后按相同方式再次结组讨论自己的 `ArrayDeque`。建议换一组同学，但保留原组也可以。继续填写 `self_reflection.txt`。
+1. 你遇到的最烦人的 Bug 是什么，又是如何修复的？你使用调试器了吗？你是通过添加特殊情况修复的吗？你是否做过“改一点然后祈祷”（即做一个很小的修改，然后希望自动评分器认可）？
+2. 为了让代码更简单，你最后有没有删掉某些内容？如果有，删掉了什么？
+3. 你的代码中有没有特殊情况？
+4. 你有没有私有辅助方法？
+5. 你的代码有没有在某些地方重复自身？私有辅助方法会有帮助吗？
+6. 你有没有在某些地方调用或复用代码？
 
-## 自我反思与提交
+讨论结束后，在 `self_reflection.txt` 的前半部分填写你自己的反思。
 
-1. 在 skeleton 提供的 `self_reflection.txt` 中至少回答 4 个问题。
-2. 请 TA 检查文件并领取 magic word。
-3. 把 magic word 写入 `magic_word.txt`。
-4. Push 到 GitHub 并提交 Gradescope。
+#### ArrayDeque 概览 { #arraydeque-概览 }
+
+你的 TA 会讲解 `ArrayDeque` 解答。
+
+#### ArrayDeque 同伴审查 { #arraydeque-同伴审查 }
+
+现在，再次结对，像讨论 `LinkedListDeque` 那样讨论你们的 `ArrayDeque` 解答。填写你的 `self_reflection.txt`。我们建议你与讨论 `LinkedListDeque` 时不同的人交流，但继续留在原小组中讨论 `ArrayDeque` 也没有问题。
+
+## 自我反思与提交 { #自我反思与提交 }
+
+确保你已经回答了起始代码中所提供的 `self_reflection.txt` 文档里的至少 4 个问题。请 TA 检查你的 `self_reflection.txt`，并给你一个需要填写到 `magic_word.txt` 中的魔法词。推送到 GitHub，然后提交到 Gradescope。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab5/lab5<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab5/lab5){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

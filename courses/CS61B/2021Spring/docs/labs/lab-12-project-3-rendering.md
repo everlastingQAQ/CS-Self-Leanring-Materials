@@ -5,43 +5,64 @@ description: "CS61B Spring 2021 Lab 12：Project 3 入门中文学习资料。"
 
 # Lab 12：Project 3 入门
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab12/lab12<br>
-> 说明：正文由 ChatGPT 直接翻译；API、类名、代码与文件名保持原样。
+> 原始页面：<https://sp21.datastructur.es/materials/lab/lab12/lab12>
+>
+> 本文严格按照原页面的标题层级、段落顺序、列表、代码和示例翻译。代码、类名、方法名和文件名保持原样。
 
-> IntelliJ 必须从 `proj3` 目录级别导入，否则 package 配置会出问题。
+> **重要：**在 IntelliJ 中，应当在 `proj3` 目录这一层打开项目，而不是只打开 `lab12` 目录。否则 package 配置会出现问题。
 
-## Lab 前准备
+## 目录
 
-1. 运行 `git pull skeleton master`，获取 Project 3、Lab 12 和 Lab 13 starter files。
-2. 观看官方链接中的往届 Project 3 getting-started 视频；名称和 API 略有变化，但整体设计仍适用。
-3. 阅读 Project 3 Phase 1 spec。
-4. Project 3 是马拉松，不是短跑，不要拖到最后。
-5. 提前联系 Project 3 partner，最好共同完成 Lab。
-6. 整个 Project 3 必须保持同一个 partner。
+- [Lab 前准备](#lab-前准备)
+- [简介](#简介)
+- [第一部分：认识 Tile Rendering Engine](#第一部分认识-tile-rendering-engine)
+  - [Boring World](#boring-world)
+  - [Random World](#random-world)
+- [第二部分：使用 Tile Rendering Engine](#第二部分使用-tile-rendering-engine)
+  - [Hex World 简介](#hex-world-简介)
+  - [绘制一个六边形](#绘制一个六边形)
+  - [绘制六边形镶嵌图案](#绘制六边形镶嵌图案)
+- [现场编程演示](#现场编程演示)
+- [继续完成 Project 3](#继续完成-project-3)
+- [提交](#提交)
 
-## Part I：认识 Tile Rendering Engine
+## Lab 前准备 { #lab-前准备 }
 
-### Boring World
+- 运行 `git pull skeleton master`，获取 Project 3、Lab 12 和 Lab 13 的起始文件。
+- 观看课程链接中的往届 Project 3 入门视频。视频中的名称和 API 与本学期略有不同，但总体设计仍然适用。
+- 阅读 Project 3 Phase 1 的规格。
+- Project 3 是一场马拉松，而不是短跑。不要拖到最后才开始。
+- 提前联系 Project 3 搭档。最好和搭档共同完成本 Lab。
+- 整个 Project 3 必须始终与同一位搭档合作。
 
-1. 在 IntelliJ 中打开 **`proj3`**，不是 `lab12`。
-2. 通过 `pom.xml` 导入。
-3. 本节只关注 `byow.lab12` package。
-4. 运行 `BoringWorldDemo`。
+## 简介 { #简介 }
 
-世界生成分三步：
+本 Lab 将让你熟悉 Project 3 中提供的 Tile Rendering Engine，并练习把一个复杂绘图任务分解成具有清晰抽象层次的辅助方法。
 
-1. 初始化 `TERenderer`。
-2. 生成二维 `TETile[][]`。
-3. 调用 renderer 显示数组。
+第一部分会查看两个演示程序，了解怎样建立并显示一个由 `TETile` 组成的二维世界。第二部分会要求你使用同一套引擎绘制六边形，并把多个六边形组合为镶嵌图案。
+
+## 第一部分：认识 Tile Rendering Engine { #第一部分认识-tile-rendering-engine }
+
+### Boring World { #boring-world }
+
+在 IntelliJ 中打开 **`proj3`**，而不是 `lab12`。通过 `proj3/pom.xml` 导入项目。对于本 Lab，只需关注 `byow.lab12` package。
+
+运行 `BoringWorldDemo`。这个演示程序创建一个非常简单的世界。它的过程可以分为三步：
+
+1. 初始化一个 `TERenderer`；
+2. 创建一个二维 `TETile[][]` 数组；
+3. 要求 renderer 显示这个数组。
+
+创建并初始化 renderer 的代码如下：
 
 ```java
 TERenderer ter = new TERenderer();
 ter.initialize(width, height);
 ```
 
-宽高以 tile 数量为单位。每个 tile 为 16×16 像素，例如 `initialize(10,20)` 创建 10×20 tile，即 160×320 像素窗口。
+这里的宽度和高度以 tile 数量为单位。每个 tile 是 16×16 像素。例如，`initialize(10, 20)` 会建立一个 10×20 tile 的窗口，即 160×320 像素。
 
-可用 `TETile` 构造方法自行创建 tile，也可使用 `Tileset.java` 预生成 tile。初始化空世界：
+你可以使用 `TETile` 构造器创建自己的 tile，也可以使用 `Tileset.java` 中已经创建好的 tile。下面的代码会创建一个空世界：
 
 ```java
 TETile[][] world = new TETile[WIDTH][HEIGHT];
@@ -52,7 +73,7 @@ for (int x = 0; x < WIDTH; x += 1) {
 }
 ```
 
-覆盖某一区域：
+之后，可以覆盖数组中的某个区域：
 
 ```java
 for (int x = 20; x < 35; x += 1) {
@@ -62,25 +83,31 @@ for (int x = 20; x < 35; x += 1) {
 }
 ```
 
-最终显示：
+最后，使用下面的调用显示世界：
 
 ```java
 ter.renderFrame(world);
 ```
 
-修改数组后，只有再次调用 `renderFrame` 才会更新屏幕。尝试替换 `WALL` 和循环边界。Tile 是 immutable，不能写：
+修改数组之后，屏幕不会自动更新。只有再次调用 `renderFrame`，renderer 才会显示新状态。
+
+尝试把 `WALL` 换成其他 tile，并修改循环边界，观察世界如何变化。
+
+`TETile` 是不可变对象，因此不能通过下面这种方式修改某个 tile 的字符：
 
 ```java
-world[x][y].character = 'X'; // 非法设计
+world[x][y].character = 'X';
 ```
 
-### Random World
+### Random World { #random-world }
 
-运行 `RandomWorldDemo.java`。它展示：
+运行 `RandomWorldDemo.java`。这个演示展示了三个概念：
 
 - `java.util.Random` 伪随机数生成器；
-- `switch`；
-- 把任务分解给方法，而不是把所有逻辑写在 `main`。
+- `switch` 语句；
+- 把任务委托给多个方法，而不是把所有逻辑都塞进 `main`。
+
+考虑下面的代码：
 
 ```java
 Random r = new Random(1000);
@@ -89,7 +116,7 @@ System.out.println(r.nextInt());
 System.out.println(r.nextInt());
 ```
 
-伪随机序列是确定性的；相同 seed 产生完全相同的序列：
+伪随机序列实际上是确定性的。相同的 seed 会产生完全相同的序列：
 
 ```java
 Random r = new Random(82731);
@@ -105,65 +132,73 @@ System.out.println(r.nextInt());
 System.out.println(r.nextInt());
 ```
 
-两组四个数相同。`new Random()` 未提供 seed 时，会用时间等频繁变化的值生成 seed。
+上面两组四个整数会完全相同。调用 `new Random()` 而不传入 seed 时，Java 会根据时间等不断变化的值选择 seed。
 
-Starter 使用固定 seed `2873123`，因此每次生成同一世界。Project 3 必须利用这一确定性，使相同输入能重建同一世界。
+起始代码使用固定 seed `2873123`，因此每次运行都会生成相同的世界。Project 3 必须利用这种确定性，使相同输入总是能够重建同一个世界。
 
-最重要的设计原则：把复杂任务不断拆成行为清楚的小方法，并形成抽象层级。
+观察 `RandomWorldDemo` 如何使用 `switch`，以及它如何把不同任务交给独立方法。这里最重要的设计原则是：不断把复杂任务拆分为行为清楚的小方法，并建立分层抽象。
 
-## Part II：使用 Tile Rendering Engine
+## 第二部分：使用 Tile Rendering Engine { #第二部分使用-tile-rendering-engine }
 
-### Hex World 目标
+### Hex World 简介 { #hex-world-简介 }
 
-在 `HexWorld` 中创建随机六边形地形世界，类似六边形棋盘。应支持不同边长 `s`，并使用草地、花、沙漠、森林、山脉等不同 tile。
+接下来，在 `HexWorld` 中创建一个由随机六边形地形组成的世界。最终结果应当类似一个六边形棋盘，并使用草地、花、沙漠、森林和山脉等不同 tile。
 
-### 绘制单个六边形
+### 绘制一个六边形 { #绘制一个六边形 }
 
-实现类似：
+首先实现一个方法，它的作用类似：
 
 ```java
 addHexagon(..., int s, ...)
 ```
 
-把边长 `s` 的六边形画到指定位置。要求：
+这个方法应当在指定位置绘制边长为 `s` 的六边形。
 
-- 支持 `s = 2, 3, 4, 5...`；
-- 最宽的“中间”始终有两行相同长度，这样才能无缝 tessellate；
-- 通过 helper methods 拆分绘制和几何计算；
-- 可为关键计算 helper 写 JUnit；
-- 可以设计 `Hexagon` 类，但要认真决定对象知道什么、能做什么；
-- `addHexagon` 的方法签名也是设计任务的一部分。
+你的实现应当：
 
-随机颜色可参考：
+- 支持 `s = 2, 3, 4, 5, ...`；
+- 让六边形最宽的“中间”始终由两行同样长度的 tile 组成，以便多个六边形能够无缝镶嵌；
+- 使用辅助方法拆分绘制逻辑和几何计算；
+- 可以为关键计算辅助方法编写 JUnit 测试；
+- 可以设计一个 `Hexagon` 类，但应当认真思考一个六边形对象应当知道什么、应当能够做什么；
+- 自己设计 `addHexagon` 的完整方法签名，这本身也是任务的一部分。
+
+如果想生成随机颜色，可以参考：
 
 ```java
 TETile.colorVariant(...)
 ```
 
-这个任务可能占用整节 Lab；做不完没关系，重点是设计思考。
+这个任务可能会占用整节 Lab。没有做完并不要紧；重点是认真思考代码设计。
 
-### 绘制六边形镶嵌
+### 绘制六边形镶嵌图案 { #绘制六边形镶嵌图案 }
 
-在单个六边形完成后，尝试排列为含 **19 个六边形**的目标图案。
+完成单个六边形后，尝试把它们排列成目标图案。最终图案应当包含 **19 个六边形**。
 
-严禁把全部工作塞进一个巨大嵌套循环而不写 helper。没有层次化抽象，代码会难以理解、调试，也会让 TA 在有限 Office Hours 时间内无法帮助你。
+不要把全部工作塞进一个巨大的嵌套循环而不编写辅助方法。如果没有分层抽象，代码会难以理解和调试；在有限的 Office Hours 时间中，TA 也很难帮助你。
 
-观看官方 Live Coding Demo，观察 staff 如何逐步拆分问题。
+思考可以使用哪些辅助方法。例如，一个方法可以绘制一列六边形，另一个高层方法可以组合多列。坐标和间距的计算也可以放在独立方法中。
 
-## 进入 Project 3
+## 现场编程演示 { #现场编程演示 }
 
-阅读 Phase 1 spec，并查看 `project3prep.md`。与 partner 或 TA 讨论后填写。世界生成虽然比 Hex World 更复杂，但核心过程相同：确定可测试的小任务，再组合成高层世界生成器。
+观看课程提供的现场编程演示，观察工作人员如何一步一步拆分问题，并让低层绘图操作服务于高层世界生成逻辑。
 
-## 提交
+## 继续完成 Project 3 { #继续完成-project-3 }
 
-提交填写完成的：
+阅读 Phase 1 规格，并查看 `project3prep.md`。与搭档或 TA 讨论后填写这个文件。
+
+Project 3 的世界生成虽然比 Hex World 更复杂，但核心过程相同：先识别能够独立测试的小任务，再把它们组合成更高层的世界生成器。
+
+## 提交 { #提交 }
+
+提交填写完整的：
 
 ```text
 project3prep.md
 ```
 
-只要完整填写并提交即可获得本 Lab 满分。
+只要完整填写并提交这个文件，就可以获得本 Lab 的满分。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab12/lab12<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab12/lab12){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

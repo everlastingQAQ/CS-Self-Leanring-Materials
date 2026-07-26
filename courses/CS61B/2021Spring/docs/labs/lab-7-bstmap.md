@@ -5,123 +5,124 @@ description: "CS61B Spring 2021 Lab 7：BSTMap中文学习资料。"
 
 # Lab 7：BSTMap
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab7/lab7<br>
-> 说明：正文由 ChatGPT 直接翻译；接口、类名、方法名和代码保持原样。
+> 原文：https://sp21.datastructur.es/materials/lab/lab7/lab7
+>
+> 按原页面结构逐段翻译；代码、类型签名、复杂度符号和文件名保持原样。
 
-## 简介
+- [介绍](#介绍)
+- [BSTMap](#bstmap)
+- [所以……它到底有多快？](#所以它到底有多快)
+- [可选练习](#可选练习)
+- [实验总结与提交](#实验总结与提交)
+- [可选渐近分析题](#可选渐近分析题)
 
-从零实现 `BSTMap`：以二叉搜索树为核心，实现 `Map61B` 接口。完成后比较：
+## 介绍 { #介绍 }
 
-- 你的 `BSTMap`；
-- 基于无序链表的 `ULLMap`；
-- Java 内置 `TreeMap`；
-- 部分测试还会对比 `HashMap`。
+在本实验中，你将创建 `BSTMap`：它是 `Map61B` 接口的一种基于 BST 的实现，表示一个基本的、基于树的映射。你会完全从零开始创建它，并把所提供的接口当作指南。
 
-## BSTMap 实现要求
+完成实现后，你会把自己的实现性能与基于列表的 Map 实现 `ULLMap` 以及 Java 内置的 `TreeMap` 类（它也使用 BST）进行比较。
 
-在 `BSTMap.java` 中创建：
+## BSTMap { #bstmap }
 
-```java
-public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>
-```
+创建一个名为 `BSTMap` 的类，使用 BST（二叉搜索树，Binary Search Tree）作为核心数据结构，实现 `Map61B` 接口。你必须在名为 `BSTMap.java` 的文件中完成它。除 `remove`、`iterator` 和 `keySet` 外，你的实现必须实现 `Map61B` 中给出的所有方法。对于这几个方法，应抛出 `UnsupportedOperationException`。
 
-要求实现 `Map61B` 的全部方法，以下三个除外：
+在创建 `BSTMap` 类并实现 `Map61B` 的所有方法之前，你的代码无法编译。你可以一次实现一个方法：先写出所有必需方法的方法签名，但在实现中抛出 `UnsupportedOperationException`；等轮到实际编写某个方法时，再完成它。
 
-- `remove`
-- `iterator`
-- `keySet`
+你的 `BSTMap` 还应额外添加一个 `printInOrder()` 方法（该方法没有在 `Map61B` 接口中给出），按 Key 递增顺序打印 `BSTMap`。我们不会测试这个方法的结果，但你会发现它有助于测试自己的实现！
 
-本 Lab 必做部分中，这些方法应抛出：
-
-```java
-throw new UnsupportedOperationException();
-```
-
-代码只有在类和所有接口方法签名都存在后才能编译。可以先为未完成的方法写占位实现并抛异常，再逐个完成。
-
-额外实现不在接口中的：
+在实现中，你应当假定 `BSTMap<K, V>` 中的泛型键 `K` 扩展了 [`Comparable`](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html)。换句话说，你可以假定泛型键 `K` 具有 `compareTo` 方法。在 Java 中，可以使用[有界类型参数](https://docs.oracle.com/javase/tutorial/java/generics/bounded.html)强制满足这一条件。考虑下面这个摘自 Oracle 文档的示例：
 
 ```java
-public void printInOrder()
+/*
+ * Bounded type parameters allow you to invoke methods defined in the bounds:
+ * The `isEven` method invokes the `intValue` method defined in the
+ * `Integer` class through `n`.
+ */
+
+public class NaturalNumber<T extends Integer> {
+
+    private T n;
+
+    public NaturalNumber(T n)  { this.n = n; }
+
+    public boolean isEven() {
+        return n.intValue() % 2 == 0;
+    }
+
+    // ...
+}
 ```
 
-它按 Key 递增顺序打印整张 map。Autograder 不检查输出，但调试很有用。
+我们还建议你使用一个私有的嵌套 `BSTNode` 类，以帮助完成实现。如何设计和使用这个内部类由你决定！
 
-`K` 必须支持 `compareTo`，因此使用 bounded type parameter。建议定义 private nested `BSTNode` 类保存 key、value、left、right 等信息；具体设计自行决定。
+你可以使用 `TestBSTMap.java` 测试自己的实现。
 
-使用 `TestBSTMap.java` 测试。可参考：Lecture 16 slides、课程参考书中的 BST 代码、Princeton Algorithms BST，以及已提供的 `ULLMap.java`。
+下面这些资源可能会有帮助：
 
-## 性能测试
+- Lecture 16 的[幻灯片](https://docs.google.com/)。
+- 课程资源页面中《Data Structures Into Java》第 109 页和第 111 页的 BST 代码。
+- [可选教材](https://algs4.cs.princeton.edu/)中的 BST 代码。
+- `ULLMap.java`（已提供）：一个能够正常工作的、基于无序链表的 `Map61B` 实现。
 
-### `InsertRandomSpeedTest`
+## 所以……它到底有多快？ { #所以它到底有多快 }
 
-测试随机字符串插入速度。程序询问：
+`InsertRandomSpeedTest.java` 和 `InsertInOrderSpeedTest.java` 中提供了两个交互式速度测试。在完成 `BSTMap` 之前，不要尝试运行这些测试。准备好后，可以在 IntelliJ 中运行它们。
 
-- 每个 String 的长度；
-- 插入次数。
+`InsertRandomSpeedTest` 类会测试你的 `BSTMap`、已提供的 `ULLMap`、Java 内置 `TreeMap` 和 Java 内置 `HashMap`（你会在下一个实验中进一步探索它）在插入元素时的速度。它会询问用户：要插入的每个 String 所需的长度，以及输入规模（要执行的插入次数）。然后，它会生成指定数量、指定长度的 String，并将它们作为 `<String, Integer>` 对插入映射中。
 
-然后把随机 String 作为 key，与 Integer value 组成 `<String, Integer>` 对，插入：
+尝试运行它，看看随着插入次数增加，你的数据结构与朴素实现和工业级实现相比如何扩展。请记住，在小样本上，渐近分析并不具有代表性；如果看到令人困惑的趋势，请确保输入足够大。把结果记录在名为 `speedTestResults.txt` 的文件中。结果没有规定的标准格式，也没有规定所需的数据点数量。
 
-- `BSTMap`
-- `ULLMap`
-- Java `TreeMap`
-- Java `HashMap`
+现在尝试运行 `InsertInOrderSpeedTest`。它的行为与 `InsertRandomSpeedTest` 类似，但这一次，`<String, Integer>` 键值对中的 String 会按照[字典序递增顺序](https://en.wikipedia.org/wiki/Lexicographic_order)插入。如果你观察到任何有趣现象（希望你观察到了），应当与其他学生和/或 TA 讨论。
 
-用足够大的输入观察渐近趋势，并把结果写入 `speedTestResults.txt`。格式和数据点数量不限。
+## 可选练习 { #可选练习 }
 
-### `InsertInOrderSpeedTest`
+这一部分不会评分，但你仍然可以从自动评分器获得反馈。
 
-与随机测试类似，但按字典序递增插入字符串。运行后观察 BST 形状及性能变化，与同学或 TA 讨论。
+在 `BSTMap` 类中实现 `iterator()`、`keySet()`、`remove(K key)` 和 `remove(K key, V value)`。实现 `iterator` 方法时，应当返回一个遍历键的迭代器。实现 `remove()` 相当有挑战性。作为额外挑战，请在不使用第二个实例变量存储键集合的情况下实现 `keySet()` 和 `iterator`。
 
-## 可选实现
+对于 `remove`，如果参数键在 `BSTMap` 中不存在，应返回 `null`。否则，删除键值对 `(key, value)` 并返回 `value`。
 
-不计分，但 Autograder 可反馈：
+## 实验总结与提交 { #实验总结与提交 }
 
-- `iterator()`：返回遍历 key 的 iterator；
-- `keySet()`；
-- `remove(K key)`；
-- `remove(K key, V value)`。
+实验结束时，你的 TA 会讲解参考解答。如果你尚未完成实验，这会很有帮助，因为我们不希望你在实验课之外被这个实验困住太久。（这也是鼓励你参加实验课的一个理由！）
 
-`remove` 规则：key 不存在返回 `null`；存在则删除 `(key, value)` 并返回 value。额外挑战是在不维护第二个“所有 key 集合”实例变量的情况下实现 `keySet` 与 `iterator`。
+确保提交完成的 `BSTMap.java` 和 `speedTestResults.txt`，并像往常一样通过 Git 和 Gradescope 提交。
 
-## 提交
+## 可选渐近分析题 { #可选渐近分析题 }
 
-提交：
+给定 `B`——一个包含 `N` 个键值对的 `BSTMap`——以及 `(K, V)`——一个随机键值对——回答下列问题。
 
-- `BSTMap.java`
-- `speedTestResults.txt`
+除非另有说明，“大 O”界（例如 `O(N)`）和“大 Θ”界（例如 `Θ(N)`）指给定方法调用中的比较次数。
 
-正常通过 Git 和 Gradescope 提交。Lab 结束时 TA 会讲解参考实现。
+对于第 1–7 题，说明陈述是真还是假。对于第 8 题，给出运行时间界。
 
-## 可选渐近分析题
+1. `B.put(K, V)` ∈ `O(log(N))`。
+2. `B.put(K, V)` ∈ `Θ(log(N))`。
+3. `B.put(K, V)` ∈ `Θ(N)`。
+4. `B.put(K, V)` ∈ `O(N)`。
+5. `B.put(K, V)` ∈ `O(N²)`。
+6. 令 `g(N)` 表示：随机调用 `B.put(K, V)` 共 `N` 次，随后调用 `B.containsKey(K)`，完成这些操作所需的平均比较次数。那么，`g(N) ~ 2(ln(N))`。
 
-给定含 `N` 个键值对的 `BSTMap B`，以及随机键值对 `(K, V)`。除非另行说明，复杂度按比较次数计算。
+   > 注意：我们写作 `g(N) ~ f(N)`，表示当 `N` 变大时，`g(N) / f(N) -> 1`。
 
-判断 1–7 真/假：
+7. 对于键 `C != K`，同时运行 `B.containsKey(K)` 和 `B.containsKey(C)` ∈ `Ω(log(N))`。
+8. 设 `BSTMap b` 由一个 `root` Node（Key、Value 对）和两个名为 `left` 与 `right` 的 `BSTMap` 子树组成。进一步假定，方法 `numberOfNodes(BSTMap b)` 返回以 `b.root` 为根的 `BSTMap` 的节点数；它的运行时间是 `Θ(n)`，其中 `n` 是以 `b` 为根的 `BSTMap` 中的 Node 数量。对于某个正整数 `z`，`mystery(b, z)` 的运行时间（以大 O 记号表示）是多少？假定 `b` 有 `N` 个节点，请给出尽可能紧的界。
 
-1. `B.put(K, V)` ∈ O(log `N`)
-2. `B.put(K, V)` ∈ Θ(log `N`)
-3. `B.put(K, V)` ∈ Θ(`N`)
-4. `B.put(K, V)` ∈ O(`N`)
-5. `B.put(K, V)` ∈ O(`N²`)
-6. 令 `g(N)` 为 `N` 次随机 `B.put(K,V)` 后再调用 `B.containsKey(K)` 的平均比较次数，则 `g(N) ~ 2 ln(N)`。这里 `g(N) ~ f(N)` 表示 `g(N)/f(N) -> 1`。
-7. 对 `C != K`，同时运行 `B.containsKey(K)` 与 `B.containsKey(C)` ∈ Ω(log `N`)。
-
-第 8 题：`numberOfNodes(b)` 对以 `b.root` 为根、含 `n` 个结点的 BSTMap 运行时间为 Θ(`n`)。给出 `mystery(b,z)` 在 `b` 含 `N` 个结点时最紧的 Big-O 界：
+你的答案不应包含任何不必要的乘法常数或加法因子。
 
 ```java
 public Key mystery(BSTMap b, int z) {
     if (z > numberOfNodes(b) || z <= 0)
         return null;
-    if (numberOfNodes(b.left) == z - 1)
+    if (numberOfNodes(b.left) == z-1)
         return b.root.key;
     else if (numberOfNodes(b.left) > z)
         return mystery(b.left, z);
     else
-        return mystery(b.right, z - numberOfNodes(b.left) - 1);
+        return mystery(b.right, z-numberOfNodes(b.left) - 1);
 }
 ```
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab7/lab7<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab7/lab7){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

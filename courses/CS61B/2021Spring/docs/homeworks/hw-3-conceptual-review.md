@@ -8,7 +8,7 @@ description: "CS61B Spring 2021 HW 3：概念复习中文学习资料。"
 > 原文：https://sp21.datastructur.es/materials/hw/hw3/hw3.pdf<br>
 > 日期：2021 年 5 月 5 日<br>
 > 提交方式：本作业在 Gradescope 中作为 Quiz 评分，请在 Gradescope 输入最终答案。<br>
-> 说明：正文由 ChatGPT 直接翻译；代码、方法名、顶点名和数学符号保持原样。
+> 说明：正文按原 PDF 页序和题号逐项翻译；代码、方法名、顶点名和数学符号保持原样。
 
 ## 1. 有趣的堆
 

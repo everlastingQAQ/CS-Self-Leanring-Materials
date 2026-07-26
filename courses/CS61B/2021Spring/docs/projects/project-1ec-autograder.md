@@ -3,111 +3,74 @@ title: "Project 1 EC：自动评分器"
 description: "CS61B Spring 2021 Project 1 EC：自动评分器中文学习资料。"
 ---
 
-# Project 1 额外加分：自动评分器
+# Project 1 额外加分：自动评分
 
 > 原始页面：<https://sp21.datastructur.es/materials/proj/proj1/proj1ec>
 >
-> 可选项目，共 32 分额外加分。正文已翻译，代码与精确失败序列格式保持原样。
+> 本文件依照原页面的标题、段落、列表、代码示例和 FAQ 顺序翻译。代码、类名、方法名以及失败序列格式保持原样。
 
-## 一、目标
+## 介绍
 
-你将为 Project 1 的 `ArrayDeque` 编写一个基础随机自动评分器：不断对一个有 bug 的学生实现和一个正确实现执行相同操作，在两者结果第一次不一致时，让 JUnit 测试失败，并显示能复现问题的操作序列。
+这个项目是可选项目，总共价值 32 分额外加分。在这个项目中，你将为 Project 1 的数据结构部分构建一个基础自动评分器。该项目可能颇具挑战，并且属于额外加分内容，因此在 Office Hours 和 Ed 上会被安排为最低帮助优先级。
 
-骨架包含：
+在骨架中，我们为 Project 1 额外加分提供了以下文件：
 
-- `student/StudentArrayDeque.java`：有 bug 的实现；
-- `tester/ArrayDequeSolution.java`：正确实现；
-- `tester/AssertEqualsStringDemo.java`：`assertEquals` 消息示例；
-- `tester/StudentArrayDequeLauncher.java`：学生实现使用示例。
+- `student/StudentArrayDeque.java`：一个有缺陷的 `ArrayDeque` 实现。
+- `tester/ArrayDequeSolution.java`：一个正确的 `ArrayDeque` 实现。
+- `tester/AssertEqualsStringDemo.java`：演示如何使用 `assertEquals`。
+- `tester/StudentArrayDequeLauncher.java`：演示如何使用 `StudentArrayDeque`。
 
-包用于隔离学生代码和测试基础设施。
+你会再次注意到，我们在这里使用包，把学生实现与测试基础设施分离开来。
 
-获取骨架：
+## 获取骨架文件
 
-```bash
-git pull skeleton master
-```
+和以前一样，使用命令 `git pull skeleton master` 拉取骨架。
 
-先运行 `StudentArrayDequeLauncher.java`。若环境正确，会打印 0 到 9，顺序不一定固定。
+## 随机测试
 
-## 二、随机测试
+告诉你一个有趣的秘密：Project 1 的自动评分器在很大程度上依赖随机测试。例如，Gradescope 上的 JUnit 测试会随机调用你的 `LinkedListDeque` 类以及课程的正确实现 `LinkedListDequeSolution` 的方法；一旦发现任何不一致，测试就会失败，并打印出导致失败的操作序列。在项目这一部分，你将使用同样的思路，假装自己正在为该类编写自动评分器。
 
-Project 1 正式自动评分器也大量使用随机差分测试：对学生实现和参考实现调用同样的随机操作，一旦结果不同，就打印导致失败的操作序列。
+这里还会介绍如何制作漂亮的 JUnit 错误消息。这实际上是一项非常重要的技能。如果你的测试具有容易阅读而且有帮助的错误消息，未来的雇主会非常喜欢你。
 
-## 三、任务 I：发现错误
+开始项目时，首先应确保 IntelliJ 已经正确导入项目。尝试运行 `StudentArrayDequeLauncher.java`。如果正常工作，你应当看到 0 到 9 之间的数字被打印出来，但顺序不一定相同。如果遇到问题，请按照 Lab 2 中的说明操作。
 
-在 `tester` 包中新建：
+### 任务 I
 
-```text
-TestArrayDequeEC.java
-```
-
-顶部：
+接下来，在 `tester` 包中创建名为 `TestArrayDequeEC.java` 的 JUnit 测试文件。文件开头应包含所需的 package 声明：
 
 ```java
 package tester;
+```
 
+然后确保添加必要的 import：
+
+```java
 import static org.junit.Assert.*;
 import org.junit.Test;
 import student.StudentArrayDeque;
 ```
 
-编写一个带 `@Test` 的 JUnit 测试，方法名不限。
+在这个文件中编写一个用 `@Test` 注解标记的 JUnit 测试。测试方法叫什么并不重要。你的测试应随机调用 `StudentArrayDeque` 和 `ArrayDequeSolution` 的方法，直到二者在某个输出上产生分歧。可以使用 `StdRandom` 库生成随机数。
 
-测试应：
+把 `StudentArrayDequeLauncher` 当作指导。如果复制粘贴其中的代码，请务必使用 `@source` 标记注明来源。你在 Project 1 中编写的测试在这里也可能很有用。
 
-1. 创建 `StudentArrayDeque<Integer>`；
-2. 创建 `ArrayDequeSolution<Integer>`；
-3. 使用 `StdRandom` 随机选择操作；
-4. 对两者执行完全相同的操作；
-5. 对有返回值的操作比较结果；
-6. 一旦不同，使用断言失败。
+这项额外加分作业不会测试 `equals(Object o)` 和 `iterator()` 方法，因此只为其他方法编写测试。
 
-不测试：
+在这个项目中，Deque 的类型必须使用 `Integer`，即 `StudentArrayDeque<Integer>`。只使用 `addFirst`、`addLast`、`removeFirst` 和 `removeLast` 方法就应能够找到错误；当然，你也可以尝试其他方法。
 
-- `equals(Object o)`；
-- `iterator()`。
+你的测试不应引发 `NullPointerException`。确保永远不要从空的 `ArrayDeque` 中删除，因为 `Integer x = ad.removeFirst()` 可能导致 `NullPointerException`。此外，在本项目中，从 Deque 取出值时始终使用 `Integer`，不要使用 `int`；也就是说，不要写 `int x = ad.removeFirst()`。为什么这会产生问题，请阅读下方“常见问题”。
 
-只使用以下操作就足以找到 bug：
+### 任务 II
 
-- `addFirst`
-- `addLast`
-- `removeFirst`
-- `removeLast`
+当你成功让测试稳定失败后，更棘手的部分开始了。仅仅告诉学生代码失败，只会带来眼泪、悲伤、困惑以及深夜的 Ed 帖子。因此，你要修改自动评分器，让它告诉学生真正有用的信息。
 
-也可以测试 `get`、`size` 等。
+为此，我们将利用 `assertEquals(message, expected, actual)` 方法。它会向用户输出有帮助的消息。
 
-### 避免空指针
+此方法如何使用，可以查看 examples 文件夹中的 `AssertEqualsStringDemo.java`。
 
-不要从空 deque 删除。
+修改 `TestArrayDequeEC.java`，使传递给 `assertEquals` 的 `message` 参数包含一系列会导致 `StudentArrayDeque` 输出错误答案的操作。
 
-获取返回值时必须用：
-
-```java
-Integer x = deque.removeFirst();
-```
-
-而不是：
-
-```java
-int x = deque.removeFirst();
-```
-
-学生实现可能错误地返回 `null`。把 `null Integer` 自动拆箱为基本类型 `int` 会在你的测试代码中抛出 `NullPointerException`，这不是本项目期望的失败方式。
-
-若复制 `StudentArrayDequeLauncher` 的代码，应在 Javadoc 中使用 `@source` 标注来源。
-
-## 四、任务 II：生成有用的失败序列
-
-只说“测试失败”对学生没有帮助。改用：
-
-```java
-assertEquals(message, expected, actual);
-```
-
-`message` 必须精确包含从测试开始到失败为止的操作序列，而且最后一条必须是产生错误返回值的操作。
-
-例如：
+传给 `assertEquals` 的字符串消息必须是一系列方法调用，并且序列中的最后一次调用会产生错误返回值。例如，若先在前端添加 5，再在前端添加 3，随后从前端删除时得到错误值，那么传给 `assertEquals` 的 String 消息必须**恰好**是下面这样，每条命令之间有换行：
 
 ```text
 addFirst(5)
@@ -115,7 +78,7 @@ addFirst(3)
 removeFirst()
 ```
 
-不要在消息中添加 expected/actual：
+不需要把 expected 和 actual 值放进 String 消息，因为它们会作为 `expected` 和 `actual` 参数单独传给 `assertEquals`。换句话说，你的消息**不应该**长这样：
 
 ```text
 addFirst(5)
@@ -123,9 +86,7 @@ addFirst(3)
 removeFirst(), student was 3, correct was 7
 ```
 
-上面是错误格式，因为 JUnit 已经通过 `expected` 和 `actual` 参数显示这些值。
-
-也不能记录失败之后的操作，或在一条操作后附加返回值：
+它也不应该长这样：
 
 ```text
 addFirst(5)
@@ -134,86 +95,41 @@ removeFirst(): 3
 removeLast(): 4
 ```
 
-### 推荐做法
+## 提示
 
-随着每次随机操作同步累积：
+- 编写一次比较整个 Deque 的测试可能不是好主意。假设你写了一个返回 `false` 的 `compareDeques(studentDeque, solutionDeque)` 方法。即使该方法返回 `false`，它也没有告诉你是哪一个操作导致了失败。测试单个操作的输出要容易得多，例如比较 `student.removeFirst()` 与 `solution.removeFirst()`。
+- 如果你坚持一次比较整个 Deque，`assertEquals` 不会按你希望的方式工作。例如，即便 `deque1` 和 `deque2` 中的所有元素都相同，`assertEquals(deque1, deque2)` 也不会返回 true。如果确实想比较整个 Deque，需要编写自己的比较方法；不过老实说，这项作业完全没有必要这样做。
+- `StdRandom` 类是生成随机数最简单的方式。可查看其官方文档了解方法列表。
+- 本作业不需要进行任何异常捕获或抛出，我们此时还没有在 CS 61B 中学习这些内容。
+- 在执行操作的同时构建失败序列！不要等检测到失败之后才尝试构造它，那样非常困难。
 
-```java
-String message = "";
-message += "addFirst(" + value + ")\n";
-```
+## 常见问题
 
-对无返回值操作只追加记录；对有返回值操作，先追加该操作，再比较结果：
+#### 怎样为 `printDeque()` 编写测试？
 
-```java
-message += "removeFirst()\n";
-assertEquals(message, solutionResult, studentResult);
-```
+这会相当复杂，而且我们的自动评分器也没有聪明到能够读取你的输出。请测试其他方法。如果你真的非常好奇，可以搜索 “redirect standard output”。
 
-不要等失败后再尝试重建序列，因为很容易漏掉操作或顺序。
+#### 我遇到了 “reference to assertEquals is ambiguous” 错误。
 
-## 五、提示
+遇到神秘错误消息时，应当始终尝试在网上搜索。请记住，成为能够自给自足的程序员是 CS 61B 的主要目标之一。Google 的第一个结果应该就足够了。
 
-- 不建议每次比较整个 deque；这无法指出哪一个操作首次返回错误；
-- 直接比较 `removeFirst`、`removeLast`、`get`、`size` 的单个返回值更合适；
-- `assertEquals(deque1, deque2)` 不会自动逐元素比较，除非该类实现了合适的 `equals`；
-- 使用 `StdRandom` 生成操作类型和值；
-- 不需要编写异常捕获或主动抛异常；
-- 失败必须来自 JUnit 断言，而不是运行时异常；
-- 保持测试可重复调试时，可临时固定随机种子，但最终仍应稳定发现 bug。
+#### 我不断遇到 `NullPointerException`
 
-## 六、FAQ
+首先，确保没有尝试从可用大小之外的位置执行 `get`。其次，如果你写了类似 `int result = deque.removeFirst()` 的代码，请改写为 `Integer result = deque.removeFirst()`。
 
-### 如何测试 `printDeque()`？
+发生这一错误，是因为 Java 会自由地把 `Integer`（装箱类型）转换为 `int`（基本类型），这叫作拆箱。可是只有引用类型能够为 null；因此，如果尝试自动把 null `Integer` 转换为 `int`，你的代码就会得到 `NullPointerException`。`StudentArrayDeque` 本身有缺陷，可能错误地返回 null，从而在你的代码中触发这个问题。
 
-需要重定向标准输出，较复杂，且该额外加分评分器不会可靠解析它。测试其他方法即可。
+#### 自动评分器在抱怨我的失败序列。
 
-### `reference to assertEquals is ambiguous`
+可以想象，这个 gold project 的自动评分器是一头奇怪而复杂的野兽，因为它必须对自动评分器的输出进行自动评分。为了简化事情，失败 assert 的 String 参数必须包含失败序列，并且**只能**包含失败序列；所有测试必须因为 assert 失败而失败，不能因为 null pointer exception 失败。传给 assert 语句的 String 参数中不能包含任何无关信息。
 
-这是重载和自动装箱导致的类型歧义。显式统一 expected 与 actual 类型，例如都使用 `Integer`，并检查导入的断言版本。
+#### 自动评分器仍然在抱怨我的失败序列。
 
-### 一直出现 `NullPointerException`
+必须包含引发失败的那个操作。例如，如果 `size()` 返回错误值，就必须在失败序列中包含 `size()`，因为要求提供的是“一系列方法调用，其中序列中的最后一次调用产生错误返回值”。还要确保失败序列只出现一次。
 
-检查：
+#### 我把这些都试过了，自动评分器仍然在抱怨我的失败序列。
 
-1. 是否在空队列删除；
-2. 是否越界 `get`；
-3. 是否把返回值保存到 `int` 而不是 `Integer`。
-
-自动拆箱：
-
-```java
-Integer value = null;
-int x = value; // NullPointerException
-```
-
-### 自动评分器说失败序列格式错误
-
-失败断言的 message 必须：
-
-- 只包含操作序列；
-- 每个操作占一行；
-- 不含额外解释、返回值或 expected/actual；
-- 最后一行必须是首次产生错误结果的操作；
-- 测试不得因空指针等异常失败；
-- 同一失败序列不要重复出现。
-
-如果是 `size()` 首次错误，必须在序列末尾加入：
-
-```text
-size()
-```
-
-### 序列仍无法复现
-
-把在线评分器报告的序列复制到一个简单 `Quick.java`：
-
-1. 新建 `StudentArrayDeque`；
-2. 按顺序执行所有操作；
-3. 打印最后一步结果；
-4. 与测试报告对比。
-
-若不一致，通常是测试日志漏记了一步、记录了没执行的操作，或在执行顺序上有偏差。
+从在线自动评分器中复制它报告的失败序列，编写一个简单的 `Quick.java` 文件：创建 `studentDeque`，执行列出的操作，并打印最后一步的结果。你很可能会发现，实际结果与测试在自动评分器中报告的并不相同。最可能的原因是漏记了某个操作，或者加入了实际上没有执行的操作。
 
 ---
 

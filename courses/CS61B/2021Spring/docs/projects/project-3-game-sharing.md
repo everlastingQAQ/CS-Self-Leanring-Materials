@@ -3,57 +3,34 @@ title: "Project 3：游戏共享"
 description: "CS61B Spring 2021 Project 3：游戏共享中文学习资料。"
 ---
 
-# Project 3 扩展：远程游戏共享
+# Project 3：游戏共享
 
 > 作者：Boren Tsai<br>
 > 原始页面：<https://sp21.datastructur.es/materials/proj/proj3/proj3GameSharing>
 >
-> 本文件为完整中文说明。类名、方法签名、命令、IP、端口和程序输出保持原样。
+> 本文件按照原页面的标题、段落、编号列表、代码块及示例顺序翻译。类名、方法名、命令、程序参数、IP 地址和端口示例保持原样。
 
-## 一、介绍
+我们为 Project 3：BYOW 添加了一项功能，允许任意两名学生远程玩对方的游戏。为新冠安全欢呼吧。
 
-这一扩展允许两名学生远程玩对方的 BYOW 游戏。主机运行 `BYOWServer`，远程玩家运行 `BYOWClient`。
+## 介绍
 
-整体模型类似联网游戏：
+这里有两名 61B 学生 Alice 和 Bob。Alice 和 Bob 各自都做出了非常棒的游戏，并且都想玩对方的作品；可是因为居家令，他们无法见面。Alice 十分沮丧，于是去 Office Hours 表达失望。
 
-- 客户端负责本地显示、音频、UI 和采集用户输入；
-- 远程服务器接收并执行输入；
-- 服务器把正确游戏状态和画布信息发回客户端；
-- 客户端显示服务器计算出的结果。
+幸运的是，助教 Arjun 接下了 Alice 的求助单，并告诉了她一个令人兴奋的消息：Alice 和 Bob 仍然能够玩对方的游戏！Arjun 先让 Alice 再次从 `skeleton` 拉取代码，然后解释说，Alice 可以使用课程提供的 `BYOWServer` 托管游戏，Bob 则可以使用 `BYOWClient` 连接并游玩。Arjun 把这一方案比作在线玩 Minecraft。客户端就是用户用来游玩游戏的程序。
 
-需要在 `Engine` 中新增：
+客户端负责所有本地计算，例如图形、音频、UI（用户界面）以及记录输入。与此同时，远程服务器（即不在你的本地机器上）通过互联网监听并执行客户端输入。之后，服务器把渲染正确游戏状态、输出正确音频等所需的信息发送回客户端。
 
-```java
-interactWithRemoteClient
-```
+为了分享彼此的游戏，他们需要在 `Engine` 类中实现一个新方法：`interactWithRemoteClient`。
 
-## 二、获取 Networking 骨架
+## 网络
 
-重新从 `skeleton` 拉取代码，得到：
+为了实现这一功能，我们在 `proj3` 中加入了一层网络支持。核心功能已经在 `Networking` 文件夹中提供。你会在其中看到两个类：`BYOWClient` 和 `BYOWServer`。**重要：**为了获得这个文件夹，你需要再次从 `skeleton` 拉取代码。你不需要修改这两个文件中的任何一个。
 
-```text
-Networking/
-├── BYOWClient.java
-└── BYOWServer.java
-```
+如上所述，你需要在 `Engine.java` 中实现 `interactWithRemoteClient`。正如方法名所暗示的那样，你会在这个方法中使用 `BYOWServer` 与 `BYOWClient` 交互。这两个类已经完整实现，不需要作任何调整。`interactWithRemoteClient` 的参数是输入字符串 `-p [4-digit port number]`。
 
-这两个类已经完整实现，不需要修改。
+### Main
 
-你只需：
-
-- 在 `Engine.java` 实现 `interactWithRemoteClient`；
-- 修改 `Main.main`；
-- 使用服务器 API 替代本地输入和画布发送。
-
-`interactWithRemoteClient` 接受的启动参数格式是：
-
-```text
--p [4-digit port number]
-```
-
-## 三、修改 `Main`
-
-骨架原先包含：
+BYOW 服务器的“入口点”已经存在于你的代码中：
 
 ```java
 else if (args.length == 2 && args[0].equals("-p")) {
@@ -61,16 +38,10 @@ else if (args.length == 2 && args[0].equals("-p")) {
 }
 ```
 
-需要：
+你要用支持服务器所需的代码替换这条打印语句。此外，需要修改 `main` 方法定义，让它抛出 `IOException`。下面给出课程的 `main` 方法作为参考；带 `+` 的行是要加入的内容。
 
-1. 把 `main` 声明为可抛出 `IOException`；
-2. 创建 `Engine`；
-3. 调用 `interactWithRemoteClient(args[1])`。
-
-参考：
-
-```java
-public static void main(String[] args) throws IOException {
+```diff
++ public static void main(String[] args) throws IOException {
     if (args.length > 2) {
         System.out.println("Can only have two arguments - the flag and input string");
         System.exit(0);
@@ -79,8 +50,8 @@ public static void main(String[] args) throws IOException {
         engine.interactWithInputString(args[1]);
         System.out.println(engine.toString());
     } else if (args.length == 2 && args[0].equals("-p")) {
-        Engine engine = new Engine();
-        engine.interactWithRemoteClient(args[1]);
++       Engine engine = new Engine();
++       engine.interactWithRemoteClient(args[1]);
     } else {
         Engine engine = new Engine();
         engine.interactWithKeyboard();
@@ -88,7 +59,11 @@ public static void main(String[] args) throws IOException {
 }
 ```
 
-## 四、`BYOWServer` 接口
+为了加入远程游戏共享，下面提供了文档和进一步的指导。
+
+### BYOWServer
+
+课程提供了一个 `BYOWServer` 类，它会替你完成所有网络魔法。你不需要修改该类，不过愿意的话也可以修改。`BYOWServer` 具有以下接口：
 
 ```java
 public class BYOWServer {
@@ -103,134 +78,37 @@ public class BYOWServer {
 }
 ```
 
-### 构造函数
+创建 `BYOWServer` 时，必须提供一个 `port` 端口号。端口号可以是你任选的整数。我们建议选择至少四位的端口号，例如 4005。这个数字完全是任意的。如果以后修读网络课程，例如 CS 168，你会学到端口是什么。
 
-创建服务器时传入端口号：
-
-```java
-new BYOWServer(4005)
-```
-
-端口可以任意选择，建议至少四位，如 `4005`。
-
-实例化时服务器打印：
+实例化 `BYOWServer` 时，它会打印消息：
 
 ```text
 Server started. Waiting for client to connect…
 ```
 
-构造函数会阻塞，直到客户端连接。连接成功后打印：
+随后，构造器会一直等待，直到客户端连接。
+
+客户端连接后，构造器会打印：
 
 ```text
 Client connected!
 ```
 
-### `sendCanvasConfig`
+为了与远程玩家通信，课程提供了以下方法：
 
-```java
-sendCanvasConfig(int width, int height)
-```
+1. 第一个方法 `sendCanvasConfig` 用来告诉客户端应创建多大的 StdDraw 窗口。单位为像素，并且应与 `TERenderer` 类中传给 `setCanvasSize` 的参数一致（第 35 行）。每当改变画布大小时，应当恰好调用一次此函数。作为参考，StdDraw 默认画布为 512 × 512 像素。
+2. 第二个方法 `sendCanvas` 会发送托管计算机的 `StdDraw` 窗口内容。每次更新屏幕时都应调用此方法，也就是显式调用 `StdDraw.showCanvas()` 或 `TERenderer` 的 `renderFrame` 时。
+3. 第三个方法 `clientHasKeyTyped` 与 `StdDraw` 中的 `hasNextKeyTyped` 方法类似。应使用它代替 `StdDraw.hasNextKeyTyped()`。
+4. 第四个方法 `clientNextKeyTyped` 与 `StdDraw` 中的 `nextKeyTyped` 方法类似。应使用它代替 `StdDraw.nextKeyTyped()`。
+5. 第五个方法 `stopConnection` 用于提示客户端停止显示 StdDraw 画布，然后终止连接。建议在游戏退出前调用该方法。
 
-告诉客户端创建多大的 `StdDraw` 画布。
+我们建议创建一个行为与 `interactWithKeyboard` 非常相似的 `interactWithRemoteClient` 方法。只要设计得当，就能避免代码重复，不过你可能会发现，让代码在正确时间调用 `sendCanvas` 有一点烦人。作为参考，Josh Hug 在一年没有看过自己 BYOW 客户端的情况下，为它添加服务器功能大约花了 30 分钟。
 
-- 单位为像素；
-- 必须与 `TERenderer` 中 `setCanvasSize` 参数一致；
-- 默认 StdDraw 画布是 `512 × 512`；
-- 每次改变画布大小时准确调用一次。
+### BYOWClient
 
-### `sendCanvas`
+课程还提供了一个 `BYOWClient` 类。这是一个完整类，可以直接运行。运行该类的 main 方法时，程序会要求你提供 `IP address` 和 `port`。
 
-```java
-sendCanvas()
-```
-
-把主机当前 `StdDraw` 画布内容发送给客户端。
-
-每次更新屏幕后调用，包括：
-
-- 调用 `StdDraw.showCanvas()`；
-- 调用 `TERenderer.renderFrame(...)`；
-- 菜单或 HUD 重绘。
-
-### `clientHasKeyTyped`
-
-```java
-clientHasKeyTyped()
-```
-
-作用对应：
-
-```java
-StdDraw.hasNextKeyTyped()
-```
-
-远程模式中使用服务器方法，而不是直接读取主机键盘。
-
-### `clientNextKeyTyped`
-
-```java
-clientNextKeyTyped()
-```
-
-作用对应：
-
-```java
-StdDraw.nextKeyTyped()
-```
-
-返回客户端输入的下一个字符。
-
-### `stopConnection`
-
-```java
-stopConnection()
-```
-
-通知客户端停止显示画布并终止连接。建议游戏退出前调用。
-
-## 五、实现建议
-
-`interactWithRemoteClient` 应与：
-
-```java
-interactWithKeyboard
-```
-
-行为高度相似。良好设计应复用：
-
-- 菜单状态机；
-- 种子输入；
-- avatar 移动；
-- 世界更新；
-- HUD；
-- 保存与退出。
-
-差异主要是：
-
-| 本地键盘模式 | 远程模式 |
-|---|---|
-| `StdDraw.hasNextKeyTyped()` | `server.clientHasKeyTyped()` |
-| `StdDraw.nextKeyTyped()` | `server.clientNextKeyTyped()` |
-| 本地画布显示 | 每次更新后 `server.sendCanvas()` |
-| 本地退出 | 退出前 `server.stopConnection()` |
-
-若现有代码把输入源抽象成接口，通常可以避免大量重复代码。最容易遗漏的是画布每次更新后都要发送。
-
-## 六、`BYOWClient`
-
-`BYOWClient` 已完整实现，直接运行其 `main` 方法。程序会询问：
-
-- `IP address`
-- `port`
-
-本机测试填写：
-
-```text
-IP Address: localhost
-Port: 4005
-```
-
-示例输出：
+若要在本地测试，请为 `IP address` 输入 `localhost`；当程序要求输入 `port` 时，给出实例化 `BYOWServer` 时使用的同一个数字。例如，如果采用课程建议，这个数字就是 `4005`。示例如下：
 
 ```text
 BYOW Client. Please Enter the following information to connect to a server...
@@ -239,117 +117,59 @@ Port (this must be a number): 4005
 CONFIGURING CANVAS
 ```
 
-端口必须与服务器启动端口相同。
+### 测试你的代码
 
-## 七、本地测试
+实现 `interactWithRemoteClient` 后，先用命令行参数 `-p 4005`（或你选择的其他端口号）运行 `Main`。然后运行 `BYOWClient`，输入 `localhost` 和相同的端口号。此时应打开两个 StdDraw 窗口，一个代表服务器，另一个代表客户端。如果实现正确，这两个窗口应显示相同内容。
 
-1. 运行 `Main`，程序参数：
+### 支持远程游戏
 
-```text
--p 4005
-```
+当你成功得到两个互相镜像的 `StdDraw` 窗口——一个用于服务器，一个用于客户端——就可以开始实现真正的多人游戏了。
 
-2. 再运行 `BYOWClient`；
-3. IP 输入：
+如果你还没有实现 `interactWithRemoteClient`，请**回头**先完成它。正确实现 `interactWithRemoteClient` 后，才算做好支持远程游戏的准备。
 
-```text
-localhost
-```
-
-4. 端口输入：
-
-```text
-4005
-```
-
-应出现两个 `StdDraw` 窗口：
-
-- 一个服务器窗口；
-- 一个客户端窗口。
-
-若实现正确，两者内容应完全同步，客户端按键应驱动服务器游戏。
-
-## 八、支持真正远程连接
-
-确认本地服务器和客户端已经镜像成功后，再配置公网隧道。
-
-原课程推荐使用 `ngrok`。
-
-### 安装并加入 PATH
-
-下载 `ngrok`，把可执行文件加入环境变量：
+首先，需要下载一个超级酷的软件 ngrok。注册账号并下载它。把 `ngrok` 可执行文件加入 `PATH` 环境变量；在终端中使用：
 
 ```bash
 export PATH=$PATH:[path to ngrok executable]
 ```
 
-例如位于 Downloads：
+例如，如果可执行文件位于 Downloads 文件夹，上面的命令就是：
 
 ```bash
 export PATH=$PATH:~/Downloads/
 ```
 
-### 开启 TCP 隧道
-
-假设服务器使用端口 `4005`：
+现在，假设已经把 `ngrok` 可执行文件加入 PATH，并且使用端口 `4005`，打开一个新终端并运行：
 
 ```bash
 ngrok tcp 4005
 ```
 
-ngrok 会显示类似：
+该命令会把服务器使用的 `localhost:4005` 暴露给整个互联网，让其他人能够使用 `tcp` 协议连接。运行该命令后，终端会显示原页面中的示意图。
+
+![ngrok TCP 隧道示例](../assets/coursework/875d5efe0663-ngrok.png)
+
+在 `Forwarding` 一行中，可能会看到：
 
 ```text
 tcp://2.tcp.ngrok.io:17993 -> localhost:4005
 ```
 
-其中：
+实际上，这会把本机的 `localhost:4005` 暴露到互联网。只要 ngrok 会话仍在运行，所有发送到 `tcp://2.tcp.ngrok.io:17993` 的信息都会被转发到本机的 `localhost:4005`。在这个例子中，ngrok 隧道的 `IP address` 是 `2.tcp.ngrok.io`，`port` 是 `17993`。注意，填写 `IP address` 时不需要 `tcp://` 前缀。
 
-- 客户端 IP：`2.tcp.ngrok.io`
-- 客户端端口：`17993`
-- 输入 IP 时不要包含 `tcp://`。
+下面看看怎样使用 `ngrok` 让互联网上的人连接到你的 BYOW Server。首先，以程序参数 `-p 4005` 运行 `Main` 类的 main 方法。接着在新终端中输入 `ngrok tcp 4005`。把 ngrok 打开的隧道的 `IP address` 和 `port` 发给朋友。朋友运行 `BYOWClient` 后，在客户端中输入你发给他的这些信息。
 
-### 远程游戏步骤
+连接建立后，**TADA！**你的朋友现在应该能够远程玩你的游戏，而你可以在一旁观看。
 
-主机：
+注意：这还带来了一些有趣的可能性，例如让服务器在玩家游戏过程中修改世界。玩得开心。
 
-1. 用 `-p 4005` 启动 `Main`；
-2. 新终端执行 `ngrok tcp 4005`；
-3. 把 ngrok 显示的主机名和端口发给朋友。
+### 一分悬赏
 
-远程玩家：
+原则上，可以制作一个基于网页的客户端。课程工作人员还没有这样做。不过，如果有人创建了一个能够连接 BYOW 服务器的网站，课程会奖励你 **1 个额外加分点**，并且未来很可能把它作为官方课程资源。
 
-1. 运行 `BYOWClient`；
-2. 输入主机提供的 ngrok 地址；
-3. 输入 ngrok 端口；
-4. 连接后即可远程操作主机上的游戏。
+## 免责声明
 
-主机可以观看玩家操作，也可以进一步扩展成服务器同时修改世界的玩法。
-
-## 九、One Point Bounty
-
-理论上可以制作浏览器客户端。课程当时没有提供实现。
-
-若有人创建能连接 BYOW Server 的网站客户端，课程奖励 **1 个 bonus point**，并可能把它作为以后课程资源。
-
-## 十、免责声明
-
-发送 `StdDraw` 画布会产生额外编码、传输和网络开销，因此远程游戏很可能有明显延迟。这是正常且预期的，不代表实现错误。
-
-## 十一、完成检查清单
-
-- [ ] 已重新拉取 `Networking` 文件夹；
-- [ ] 未修改 `BYOWClient` 和 `BYOWServer`；
-- [ ] `Main.main` 声明 `throws IOException`；
-- [ ] `-p` 分支调用 `interactWithRemoteClient`；
-- [ ] 端口字符串正确解析为整数；
-- [ ] 远程输入使用 `clientHasKeyTyped` / `clientNextKeyTyped`；
-- [ ] 初始化或改变画布时调用 `sendCanvasConfig`；
-- [ ] 每次重绘后调用 `sendCanvas`；
-- [ ] 退出前调用 `stopConnection`；
-- [ ] localhost 测试出现两个同步窗口；
-- [ ] 远程测试使用正确 ngrok IP 和端口；
-- [ ] 能接受网络延迟属于正常现象。
+由于保存 StdDraw 画布会产生额外开销，同时网络本身也有限制，因此远程功能很可能会出现延迟。这完全正常，也是预期行为。希望你能享受玩彼此游戏的过程。
 
 ---
 

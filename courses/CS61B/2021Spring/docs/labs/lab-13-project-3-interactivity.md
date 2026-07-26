@@ -3,113 +3,136 @@ title: "Lab 13：Project 3 交互"
 description: "CS61B Spring 2021 Lab 13：Project 3 交互中文学习资料。"
 ---
 
-# Lab 13：Project 3 Phase 2——交互入门
+# Lab 13：Project 3 第二阶段入门
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab13/lab13<br>
-> 说明：正文由 ChatGPT 直接翻译；API、类名、方法名和代码保持原样。
+> 原文：https://sp21.datastructur.es/materials/lab/lab13/lab13
+>
+> 按原页面结构逐段翻译；代码、方法名、API 名称和字符串字面量保持原样。
 
-## 简介
+- [介绍](#介绍)
+- [记忆游戏](#记忆游戏)
+- [`generateRandomString`](#generaterandomstring)
+- [`drawFrame`](#drawframe)
+- [`flashSequence`](#flashsequence)
+- [`solicitNCharsInput`](#solicitncharsinput)
+- [`startGame`](#startgame)
+- [有帮助的 UI](#有帮助的-ui)
+- [提交与评分](#提交与评分)
 
-本 Lab 为 Project 3 第二阶段“Interactivity”做准备。此时不要求 Phase 1 完全结束，但应已接近完成。Lab 代码不会直接进入 Project 3，而是训练 `StdDraw`、随机数、键盘输入和 UI 组织方式。
+## 介绍 { #介绍 }
 
-## Memory Game
+本实验会帮助你开始项目第二阶段：交互性。希望你在做本实验时，已经在世界生成方面取得了显著进展。我们并不要求你在完成本实验时已经结束第一阶段，但你（希望）应当已经接近完成。
 
-使用 `StdDraw` 与 `java.util.Random` 构建类似 Simon 的键盘记忆游戏：
+与 Lab 12 一样，本实验不会直接向你的项目贡献任何实际代码；它会帮助你更加熟悉项目所需的有用工具，并教你一些最终可能会使用的编程范式。
+
+## 记忆游戏 { #记忆游戏 }
+
+为了准备制作你的游戏，我们会使用 `StdDraw` 和 `java.util.Random` 构建一个简单的记忆游戏。这个游戏很像电子玩具 [Simon](https://en.wikipedia.org/wiki/Simon_(game))，不过它在电脑上运行，并使用键盘而不是 4 个彩色按钮。游戏目标是：一个随机生成的目标字符串会逐个字母短暂显示在屏幕上，随后玩家需要把它输入出来。
+
+目标字符串起初只有一个字母；每当玩家成功输入一个字符串后，游戏都会通过加长目标字符串而变得更难。
+
+最终，我们希望 `MemoryGame.java` 拥有一个能够启动可玩记忆游戏的 `main` 方法；但与其直接跳进游戏实现，不如先尝试拆解运行游戏所需完成的任务。对于这个记忆游戏，大致如下：
 
 1. 创建游戏窗口。
 2. 随机生成目标字符串。
-3. 每次显示一个字符。
-4. 等待玩家输入同样数量的字符。
-5. 正确则进入更长的一轮；错误则显示 Game Over 并结束。
+3. 每次一个字符地在屏幕上显示目标字符串。
+4. 等待玩家输入，直到其输入的字符数量与目标字符串中的字符数量相同。
+5. 如果玩家输入与目标字符串匹配，则回到第 2 步，但使用一个更长的随机目标字符串；如果不匹配，则打印游戏结束消息并退出。
 
-目标字符串第一轮长度为 1，每成功一轮长度加 1。
+一般而言，良好的编码实践是：先构建用途明确的小过程，再使用这些基础过程组合出更复杂的方法。最终，你只需要在 `main` 方法中写几行代码，就能构建出像游戏或文本编辑器这样复杂的东西。查看 `MemoryGame.java`，你会看到我们已经写好了几个方法头，每个方法会处理上面的一项任务。
 
-关键工程原则：先实现职责明确的小过程，再组合成复杂方法。这样 `main` 最终只需少量高层代码，也便于单元测试。
+对于 Project 3，我们强烈建议你采用这种过程：识别游戏的步骤，并把它拆分为独立方法。它会为你的开发提供一条清晰的前进道路，也会为单元测试提供明确的分界点。
 
-## `generateRandomString`
+实验结束时，你会得到一个功能类似下面 GIF 的程序：
 
-1. 修改 `MemoryGame` 构造方法，使用第一个程序参数作为 seed 创建 `Random`。
-2. 实现 `generateRandomString(int n)`，使用该 `Random` 生成长度为 `n` 的小写字符串。
-3. 使用 starter 中的 private `CHARACTERS` 字段。
-4. 可直接使用 `java.util.Random`，也可用 `byow.Core.RandomUtils`；后者底层仍调用传入的 `Random`。
+![Memory Game Example](../assets/coursework/817e828aaa56-memory-game-example.gif)
 
-Java 字符提示：
+## `generateRandomString` { #generaterandomstring }
 
-```java
-char c = 'B';
-String s = "and can be longer";
-String favClass = "CS 61" + 'B';
-String B = Character.toString('B');
-```
+第一个任务：我们需要能够随机生成一个指定长度的字符串。如上面简要提到的那样，应当使用 `java.util.Random` 完成随机生成。
 
-## `drawFrame`
+修改 `MemoryGame` 构造函数，创建一个 `Random` 对象，并使用程序的第一个参数作为种子。之后，补全 `generateRandomString`，使它使用你的 `Random` 对象生成一个随机字符串，其长度由输入 `n` 指定。因为我们只希望生成由小写字符组成的字符串，所以为了方便你，我们提供了私有字段 `CHARACTERS`。
 
-本 Lab 直接使用 Princeton `StdDraw`，不是 Tile Engine。`StdDraw` 更新画面时需要清空画布并重画整个 frame。
+你可以选择直接使用 `java.util.Random` 的方法，也可以使用 `byow.Core.RandomUtils` 中有帮助的工具方法。所有工具方法都把一个 `Random` 对象作为参数，因此它们在底层确实都使用了相应的 `java.util.Random` 方法；如果你好奇这些工具如何工作，可以查看它们！
 
-实现 `drawFrame(String s)`：
+在使用 `char` 和 `String` 类型的变量时，你可能会遇到问题。下面是关于它们的三个有用知识点：
 
-1. 清空 canvas；
-2. 设置大号粗体字体（size 30 合适）；
-3. 把输入字符串居中绘制；
-4. 显示 canvas。
+1. 在 Java 中，`Character` 或 `char` 使用单引号包裹，如 `'B'`；而 `String` 对象使用双引号包裹，如 `"and can be longer"`。
+2. 可以使用 `+` 运算符把 `char` 添加到 `String` 中：
 
-相关 API：
+   ```java
+   String favClass = "CS 61" + 'B';
+   ```
 
-- `StdDraw.setFont`
-- `StdDraw.clear`
-- `StdDraw.text`
-- `StdDraw.setPenColor`
-- `StdDraw.show`
+3. 可以通过下面的方法把 `char` 转换为 `String`：
 
-## `flashSequence`
+   ```java
+   String B = Character.toString('B');
+   ```
 
-输入目标字符串，逐字符居中显示：
+## `drawFrame` { #drawframe }
 
-- 每个字符显示 1 秒；
-- 字符之间空白 0.5 秒。
+现在有了随机字符串，我们需要能够每次一个字母地在屏幕上显示它。为此，我们会使用 Princeton 的 `StdDraw` 库。它已经位于 `javalib` 文件夹中，因此如果你通过 `pom.xml` 正确导入了项目，就能够访问 `StdDraw` 为我们提供的所有有用方法。与 Lab 12 不同，这一次你会直接使用 `StdDraw`，而不是依赖瓦片引擎。
 
-## `solicitNCharsInput`
+我们使用 `StdDraw` 库，是因为它相当轻量，并且容易上手；但使用它时，你应当了解这个库的一些怪异之处。尤其是，每当我们想更改屏幕上显示的内容时，都必须清除整个屏幕，并重新绘制希望显示的全部内容。因此，拥有这样一个方法会极其有用：它先清除画布，绘制下一帧所需的一切，然后显示画布。
 
-使用：
+最终，`drawFrame` 会成为我们的这个方法；但现在先保持简单。我们知道自己需要在屏幕上显示字符串，并且字符串应当足够醒目。补全 `drawFrame`：让它清除画布，把字体设置为大号粗体（大小 `30` 很合适），绘制输入字符串并使其位于画布中央，然后把画布显示在屏幕上。现在很适合查看 [`StdDraw`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html) API，并弄清楚它的确切工作方式。
 
-- `StdDraw.hasNextKeyTyped()`：检查键盘队列中是否还有按键；
-- `StdDraw.nextKeyTyped()`：取出并返回最早按下的字符。
+一些值得查看的有用方法包括：
 
-实现方法读取 `n` 个按键，拼成字符串并返回。玩家每输入一个字符，都应把当前累计字符串居中显示，让玩家看到已输入内容。
+- [`StdDraw.setFont`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#setFont-java.awt.Font-)
+- [`StdDraw.clear`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#clear--)
+- [`StdDraw.text`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#text-double-double-java.lang.String-)
+- [`StdDraw.setPenColor`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#setPenColor-java.awt.Color-)
+- [`StdDraw.show`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#show--)
 
-`nextKeyTyped` 返回 `char`，因此只能处理对应字符的键。本 Lab 不实现 Backspace 删除功能。
+## `flashSequence` { #flashsequence }
 
-## `startGame`
+使用目前已经构建的内容，我们需要定义一个过程，每次一个字符地呈现目标字符串。编写 `flashSequence`，让它接收输入字符串，并每次把一个字符显示在屏幕中央。每个字符应当在屏幕上显示 `1` 秒；字符之间应当有短暂的 `0.5` 秒间隔，在此期间屏幕为空白。
 
-把所有子过程组合为完整游戏：
+## `solicitNCharsInput` { #solicitncharsinput }
 
-1. 从 round 1 开始。
-2. 居中显示 `Round: <round>`。
-3. 生成长度等于 round 的随机字符串。
-4. 逐字符闪现目标。
-5. 读取相同长度输入。
-6. 比较：
-   - 正确：round 加 1，回到步骤 2；
-   - 错误：结束，并居中显示 `Game Over! You made it to round: <round>`。
+每次一个字符地显示目标字符串后，我们需要等待玩家输入自己的字符串。对于这项任务，我们必须使用 `StdDraw` 的按键监听 API，读取玩家输入的内容。本实验中相关的方法是 `hasNextKeyTyped` 和 `nextKeyTyped`。它们会与 `StdDraw` 用来存储用户所有已按下并释放的按键的队列交互。
 
-完成后 `MemoryGame.java` 应可直接运行和游玩。
+`hasNextKeyTyped` 会查看队列中是否还留有任何按键；`nextKeyTyped` 则移除队列前端的按键并返回它。请注意，`nextKeyTyped` 以 `char` 的形式返回按键——这是 `StdDraw` 的另一个怪异之处，并且它使我们无法使用键盘上那些不对应 `char` 值的按键。
 
-## 改进 UI
+熟悉 `StdDraw` 如何处理键盘输入后，编写 `solicitNCharsInput`：使用 `StdDraw` 读取 `n` 次按键，并返回与这些按键对应的字符串。此外，随着用户输入按键，目前已经构建出的字符串应当居中显示在屏幕上，让用户能够看到自己已经按下了什么。
 
-功能完成后，修改 `drawFrame`：游戏未结束时在顶部绘制状态栏：
+一个很不错的附加功能是：允许用户在输入错误时删除字符；但因为 `StdDraw` 无法处理退格键，我们会直接忽略这个功能，并声称这是为了让游戏更难。
 
-- 左侧：`Round: <round>`；
-- 中间：当前任务 `Watch!` 或 `Type!`；
-- 右侧：随机鼓励语。
+## `startGame` { #startgame }
 
-Starter 提供 `ENCOURAGEMENT` 集合，可自行增加内容。
+就快完成了！现在我们已经定义了所有子过程，是时候把它们组合起来并运行游戏了。`startGame` 方法应当启动游戏，并开始游戏循环，直到玩家无法正确输入目标字符串。`startGame` 的代码应当看起来像是把下面这个过程翻译成代码：
 
-## 提交与评分
+1. 从第 `1` 轮开始游戏。
+2. 在屏幕中央显示消息 `"Round: "`，后面跟上轮数。
+3. 生成一个随机字符串，其长度等于当前轮数。
+4. 每次一个字母地显示随机字符串。
+5. 等待玩家输入一个与目标字符串长度相同的字符串。
+6. 检查玩家是否输入正确。
+   - 如果输入正确，把轮数增加 `1`，然后从第 2 步重复。
+   - 如果输入错误，结束游戏，并在屏幕中央显示消息 `"Game Over! You made it to round:"`，后面跟上玩家失败时的轮数。
 
-本 Lab 没有 Gradescope code grader。按当学期要求，在截止时间前提交 **Phase 1 Review Form** 即获得 64 分。
+完成这些内容后，你应当能够运行 `MemoryGame.java` 并玩自己的游戏！它非常简陋，当然也不漂亮，但下一节会稍微改善这一点。
 
-即使不直接评分，也强烈建议完成可运行版本；Project 3 遇到渲染或交互问题时，这个小程序可作为清晰参考。
+## 有帮助的 UI { #有帮助的-ui }
+
+此时，你已经有了一个可以玩的、功能正常的游戏，但它的呈现方式绝对算不上令人愉快。最重要的是，如果有人在完全不了解背景的情况下拿到这个游戏，就会很难弄清楚正在发生什么。因为游戏非常简单，我们可以通过在顶部显示一条消息来解决这个问题，告诉玩家应该做什么：`"Watch!"` 或 `"Type!"`。
+
+既然已经做到这里，另一个值得显示的内容是当前轮数，让玩家知道目标字符串有多长；并且，因为我们是友善的人，最好还给玩家显示一句鼓励的话。最终，我们希望得到类似下面的内容：
+
+![UI_Example](../assets/coursework/59f38de5d072-image.png)
+
+因为这是对用户界面（UI）的更改，所以需要修改 `drawFrame`，让它具备这一功能。向 `drawFrame` 方法添加内容，使得只要游戏尚未结束，就在屏幕顶部绘制一个栏，其中包含：左侧显示轮数，即 `"Round: " + round number`；中央显示当前任务（`"Watch!"` 或 `"Type!"`）；右侧显示一句鼓励的话。
+
+对于鼓励语，你应当从某个好话集合中随机选择一句显示。为了方便你，我们提供了包含一些短语的私有字段 `ENCOURAGEMENT`，但你可以自由添加自己的短语。
+
+## 提交与评分 { #提交与评分 }
+
+本实验没有 Gradescope 评分器。只要在 `4/16 11:59 PM` 前提交 [Phase 1 Review Form](https://forms.gle/1xbRNMjdyqZwZuWo9)，你就会获得本实验的 `64` 分。
+
+即使没有评分器，我们仍强烈建议你确保自己理解这里的所有方法，并创建一个完全能够工作的解答。这样，当你在完成 Project 3: BYOW 时对某个渲染方面感到困惑，就可以把本实验当作一个小型示例，快速提醒自己这个库是如何工作的。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab13/lab13<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab13/lab13){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }

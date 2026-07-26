@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -21,6 +22,7 @@ EXPECTED_CHAPTERS = 22
 EXPECTED_LEGACY_REDIRECTS = EXPECTED_CHAPTERS + 2
 EXPECTED_HTML_PAGES = 56 + EXPECTED_LEGACY_REDIRECTS
 EXPECTED_COURSEWORK = {"labs": 11, "homeworks": 3, "projects": 6, "exams": 4}
+EXPECTED_COURSEWORK_IMAGES = 47
 SEARCH_TERMS = ("并查集", "最短路径", "泛型", "JUnit", "Gitlet", "BYOW", "期中考试")
 PAGES_RECOMMENDED_MAX_BYTES = 1_000_000_000
 
@@ -104,6 +106,38 @@ def main() -> None:
             errors.append(f"missing updated coursework source {source_file.relative_to(PROJECT_ROOT)}")
     if (DOCS_ROOT / "homeworks" / "hw-1-cancelled.md").exists():
         errors.append("HW 1 must not be published")
+
+    coursework_manifest_path = DOCS_ROOT / "coursework-import-manifest.json"
+    if not coursework_manifest_path.is_file():
+        errors.append("missing coursework import manifest")
+    else:
+        try:
+            coursework_manifest = json.loads(coursework_manifest_path.read_text(encoding="utf-8"))
+            if coursework_manifest.get("translation_profile") != "逐字对应中文翻译":
+                errors.append("coursework manifest does not identify the verbatim translation set")
+            if coursework_manifest.get("imported_content_count") != 20:
+                errors.append("coursework manifest must record exactly 20 imported pages")
+            ignored = set(coursework_manifest.get("ignored_documents", []))
+            if "Homeworks/HW1_已取消.md" not in ignored:
+                errors.append("coursework manifest does not record HW 1 as ignored")
+            localized = coursework_manifest.get("localized_images", {})
+            image_items = localized.get("items", {})
+            if localized.get("count") != EXPECTED_COURSEWORK_IMAGES or len(image_items) != EXPECTED_COURSEWORK_IMAGES:
+                errors.append(
+                    f"coursework manifest must contain {EXPECTED_COURSEWORK_IMAGES} localized images"
+                )
+            for details in image_items.values():
+                image_path = DOCS_ROOT / str(details.get("path", ""))
+                if not image_path.is_file():
+                    errors.append(f"missing localized coursework image {details.get('path', '')}")
+                    continue
+                image_data = image_path.read_bytes()
+                if len(image_data) != details.get("bytes"):
+                    errors.append(f"localized coursework image size mismatch: {details.get('path', '')}")
+                if hashlib.sha256(image_data).hexdigest() != details.get("sha256"):
+                    errors.append(f"localized coursework image hash mismatch: {details.get('path', '')}")
+        except (TypeError, ValueError, json.JSONDecodeError) as error:
+            errors.append(f"invalid coursework import manifest: {error}")
 
     attribution_lines = (
         "原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。",
@@ -276,6 +310,9 @@ def main() -> None:
         for term in SEARCH_TERMS:
             if term not in search_text:
                 errors.append(f"search index does not contain {term}")
+        for forbidden in ("Homework 1：取消说明", "Percolation 已经取消"):
+            if forbidden in search_text:
+                errors.append(f"HW 1 must not appear in the search index: {forbidden}")
 
     external_scripts: list[str] = []
     for html_file, parser in pages.items():

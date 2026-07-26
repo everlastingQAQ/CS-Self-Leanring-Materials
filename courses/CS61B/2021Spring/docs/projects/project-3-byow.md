@@ -5,15 +5,15 @@ description: "CS61B Spring 2021 Project 3：CS61BYoW中文学习资料。"
 
 # Project 3：CS61BYoW 世界生成与探索引擎
 
-> 团队表单截止：2021-03-31 23:59<br>
-> Phase 1 世界生成截止：2021-04-16 23:59<br>
-> Phase 2 交互截止：2021-04-27 23:59<br>
-> 额外分展示截止：2021-04-30<br>
+> 团队表单截止：2021 年 3 月 31 日 23:59<br>
+> Phase 1 世界生成截止：2021 年 4 月 16 日 23:59<br>
+> Phase 2 交互截止：2021 年 4 月 27 日 23:59<br>
+> 额外分展示截止：2021 年 4 月 30 日<br>
 > 原始页面：<https://sp21.datastructur.es/materials/proj/proj3/proj3>
 >
-> 本文件为完整中文规格整理。类名、方法签名、按键、输入字符串、代码和 API 保持原样。
+> 本文严格按照原页面的标题、段落、列表、代码块、输入示例、评分说明和 FAQ 顺序翻译。类名、方法签名、按键、输入字符串、代码、API 与自动评分协议保持英文原样。
 
-## 一、项目介绍
+## 介绍
 
 Project 3 要与一名搭档共同创建一个可探索世界的引擎。项目从构思、设计、实现、测试一直到展示，尽量模拟完整的软件产品开发周期。
 
@@ -34,7 +34,7 @@ Project 3 要与一名搭档共同创建一个可探索世界的引擎。项目�
 
 项目开始前必须阅读搭档协作指南并提交搭档表单。Phase 2 和额外分不能使用 slip days，因为它们通过 TA checkoff 或展示评分。Phase 1 和 Lab 12、Lab 13 理论上可晚交，但 Phase 2 依赖它们，实际很难在晚交后仍按时完成。
 
-## 二、总体任务
+## 概览
 
 设计并实现一个二维、基于 tile 的俯视角世界探索引擎。
 
@@ -53,9 +53,9 @@ Project 3 要与一名搭档共同创建一个可探索世界的引擎。项目�
 1. **Phase 1：World Generation**：生成满足要求的随机世界；
 2. **Phase 2：Interactivity**：加入菜单、avatar、HUD、交互、保存和加载。
 
-## 三、骨架结构
+### 骨架代码结构
 
-### `byow.TileEngine`
+#### `byow.TileEngine`
 
 包含渲染和 tile 基础结构：
 
@@ -65,7 +65,7 @@ Project 3 要与一名搭档共同创建一个可探索世界的引擎。项目�
 
 **不要修改 `TETile.java` 的 `character` 字段或 `character()` 方法**，否则自动评分可能错误。
 
-### `byow.Core`
+#### `byow.Core`
 
 推荐把项目主要代码放在此包中，但不是强制要求。
 
@@ -91,7 +91,7 @@ public void interactWithKeyboard()
 
 Lab 12 介绍 tile 渲染和伪随机；Lab 13 介绍用户输入和 UI。
 
-### `StdDraw`
+#### `StdDraw`
 
 项目大量使用 `StdDraw`：
 
@@ -107,7 +107,7 @@ Lab 12 介绍 tile 渲染和伪随机；Lab 13 介绍用户输入和 UI。
 
 Phase 2 最终提交和 checkoff 不得引入其他外部库。额外分展示视频可以单独使用外部库。
 
-### 禁止事项
+#### 禁止事项
 
 - 不要使用非 `final` 的 `static` 变量；
 - 不要调用 `System.exit()`，否则自动评分器进程会退出；
@@ -116,7 +116,7 @@ Phase 2 最终提交和 checkoff 不得引入其他外部库。额外分展示�
 
 <a id="phase-1"></a>
 
-## 四、Phase 1：世界生成
+### Phase 1：世界生成
 
 世界必须满足以下全部条件：
 
@@ -144,7 +144,7 @@ Phase 2 最终提交和 checkoff 不得引入其他外部库。额外分展示�
 
 不要求复制示例布局或一定使用上锁的门，但必须满足上述结构要求。
 
-## 五、默认 Tileset 与渲染
+#### 默认 Tileset 与 Tile Rendering Engine
 
 使用 `TETile[][]` 存储世界。常见 tile 可从 `Tileset` 获取，例如：
 
@@ -163,13 +163,13 @@ Phase 2 最终提交和 checkoff 不得引入其他外部库。额外分展示�
 
 但是自动评分调用 `interactWithInputString` 时，该方法本身不得使用 `StdDraw`、初始化 renderer、打开窗口、画图或播放声音。
 
-## 六、启动程序与输入协议
+#### 启动你的程序
 
-### `Main.main`
+##### `Main.main`
 
 用户通过两种方式启动：
 
-#### 命令行字符串模式
+###### 命令行字符串模式
 
 格式：
 
@@ -183,7 +183,7 @@ Phase 2 最终提交和 checkoff 不得引入其他外部库。额外分展示�
 Engine.interactWithInputString(inputString)
 ```
 
-#### 键盘模式
+###### 键盘模式
 
 不提供命令行参数时，调用：
 
@@ -191,7 +191,7 @@ Engine.interactWithInputString(inputString)
 Engine.interactWithKeyboard()
 ```
 
-### Phase 1 输入
+##### Phase 1 输入
 
 至少支持：
 
@@ -227,7 +227,7 @@ N3412S
 
 超过该值的行为不定义。不要用 `Integer.parseInt`，应使用 `Long` 对应解析方法。
 
-### IntelliJ 参数
+##### IntelliJ 参数
 
 可在：
 
@@ -237,7 +237,7 @@ Run > Edit Configurations > Program Arguments
 
 填写输入字符串。若尚未运行过 `main`，可点击方法旁绿色箭头并选择 `Modify Run Configurations`。
 
-### Phase 1 总结
+#### Phase 1 总结
 
 - `Main.main` 接受 `-s inputString`；
 - `interactWithInputString` 返回符合要求的 `TETile[][]`；
@@ -246,7 +246,7 @@ Run > Edit Configurations > Program Arguments
 - 自动评分阶段不包含 avatar 移动；
 - 求助前应有最新设计文档。
 
-## 七、键盘主菜单
+#### 键盘主菜单
 
 `interactWithKeyboard()` 启动后，必须显示主菜单，至少包含：
 
@@ -278,7 +278,7 @@ N23123S
 
 必须直接以种子 `23123` 创建世界，不能再要求自动评分器提供其他输入。
 
-## 八、设计文档
+### 设计文档
 
 由于骨架少、实现高度开放，必须维护 `proj3/README.md` 设计文档。
 
@@ -290,7 +290,7 @@ N23123S
 
 设计文档应随着代码不断更新，而不是只在开始时写一次。
 
-### 设计文档作用
+#### 设计文档指南
 
 描述：
 
@@ -308,7 +308,7 @@ N23123S
 - 调试跨模块问题；
 - 与搭档和 TA 沟通。
 
-### 文档格式
+#### 设计文档各节
 
 使用 Markdown，写在：
 
@@ -318,7 +318,7 @@ proj3/README.md
 
 IntelliJ 可显示 Markdown 预览。
 
-### 第 1 节：Classes and Data Structures
+##### 1. Classes and Data Structures
 
 对每个类列出：
 
@@ -329,7 +329,7 @@ IntelliJ 可显示 Markdown 预览。
 
 保持简洁，不需要在这里解释完整算法。
 
-### 第 2 节：Algorithms
+##### 2. Algorithms
 
 对每个类的方法写高层行为：
 
@@ -351,7 +351,7 @@ IntelliJ 可显示 Markdown 预览。
 
 不同子任务可放在不同类中。若算法调用其他类的方法，应明确写出依赖。
 
-### 第 3 节：Persistence
+##### 3. Persistence
 
 Phase 1 完成后再补充。描述：
 
@@ -362,9 +362,13 @@ Phase 1 完成后再补充。描述：
 
 规格提供了 Capers Lab 设计文档示例作为参考。
 
+#### 示例
+
+原页面提供了一个设计文档示例，用来展示应当描述到什么抽象层次。示例的重点是解释类、数据结构、算法和持久化方案，而不是逐行复述代码。
+
 <a id="phase-2"></a>
 
-## 九、Phase 2：交互性
+### Phase 2：交互性
 
 必须加入：
 
@@ -375,7 +379,7 @@ Phase 1 完成后再补充。描述：
 - 字符串模式中的移动与保存加载；
 - 完全确定性。
 
-### Avatar 移动
+#### Avatar 移动
 
 默认按键：
 
@@ -393,7 +397,7 @@ Phase 1 完成后再补充。描述：
 
 avatar 可以用 `@` 或任何清楚的 tile 表示。
 
-### 交互要求
+#### 交互要求
 
 avatar 必须能以某种方式和世界互动。规格不限定具体形式，可包括：
 
@@ -403,7 +407,7 @@ avatar 必须能以某种方式和世界互动。规格不限定具体形式，�
 - 与实体对话；
 - 触发地形或事件。
 
-### 确定性
+#### 确定性
 
 同一个种子和完全相同的按键序列必须每次产生完全相同结果。
 
@@ -411,7 +415,7 @@ avatar 必须能以某种方式和世界互动。规格不限定具体形式，�
 
 可以使用“回合数”：每个按键算一回合，例如世界随步数变暗。也可以允许空格表示等待一回合。
 
-### 保存文件限制
+#### 保存文件限制
 
 程序可在 `proj3` 目录创建保存文件，但**所有创建文件必须以 `.txt` 结尾**，例如：
 
@@ -421,7 +425,7 @@ savefile.txt
 
 其他后缀会造成自动评分问题。
 
-## 十、UI 外观
+#### UI 外观
 
 世界显示后，UI 至少包含：
 
@@ -454,7 +458,7 @@ TERenderer.initialize(int width, int height, int xOffset, int yOffset)
 - 地图名称；
 - avatar 名称。
 
-## 十一、UI 行为与 `:Q`
+#### UI 行为
 
 探索过程中，用户输入：
 
@@ -482,7 +486,7 @@ TERenderer.initialize(int width, int height, int xOffset, int yOffset)
 
 若自行支持长按，仍必须保证它能被输入字符串等价重放。
 
-## 十二、保存与加载
+#### 保存与加载
 
 系统必须保存完整世界状态，并在下一次启动后精确恢复。
 
@@ -507,7 +511,7 @@ TERenderer.initialize(int width, int height, int xOffset, int yOffset)
 
 基础规格中，`:Q` 保存后立即终止，所以一个合法输入字符串中的 `:Q` 后不应再有其他字符。继续游戏必须重新运行，以 `L` 开头。
 
-## 十三、输入字符串与 Phase 2
+#### 输入字符串与 Phase 2
 
 `interactWithInputString` 必须模拟键盘模式，但：
 
@@ -531,7 +535,7 @@ N543SWWWWAA
 
 返回值必须与真实用户在 `interactWithKeyboard` 中输入同样按键后的世界完全一致。
 
-### 字符串保存与加载
+##### 字符串保存与加载
 
 ```text
 N25SDDWD:Q
@@ -552,7 +556,7 @@ LDDDD
 
 加载刚才存档，再向右四次，返回移动后的世界。
 
-### 必须等价的调用
+##### 必须等价的调用
 
 以下最终返回世界必须完全相同：
 
@@ -595,7 +599,7 @@ N5SDD:QD:QDD:Q
 
 `interactWithInputString` 返回值不应因末尾是否有 `:Q` 而变化。唯一差异是 `:Q` 会产生保存副作用。
 
-## 十四、Ambition Score
+#### Ambition Score
 
 项目中 360 分来自自选功能。功能分两类：
 
@@ -609,7 +613,7 @@ N5SDD:QD:QDD:Q
 
 实现自选功能不能破坏基础要求。例如加入鼠标移动后，仍必须支持 `WASD`。
 
-### 270 分 Primary Features
+##### 270 分 Primary Features
 
 任选：
 
@@ -620,7 +624,7 @@ N5SDD:QD:QDD:Q
 5. **Replay**：视觉重放自新世界创建以来或最近保存中的全部动作，最终状态必须与正常加载相同。
 6. **切换视角**：第一人称、2.5D 等不同视角。
 
-### 90 分 Secondary Features
+##### 90 分 Secondary Features
 
 可选：
 
@@ -640,7 +644,7 @@ N5SDD:QD:QDD:Q
 - 双人同时交互，两个 avatar 和不同控制方案；
 - 撤销移动，包括跨保存加载前的移动；撤销命令仍应加入 replay string，不能简单删除历史字符。
 
-## 十五、基础要求汇总
+## 要求总结
 
 以下清单不能代替完整规格：
 
@@ -662,7 +666,7 @@ N5SDD:QD:QDD:Q
 - [ ] 不使用真实时间驱动任何世界变化；
 - [ ] Ambition 功能共 360 分，至少一个 Primary。
 
-## 十六、额外分：把世界做成游戏
+## 额外分
 
 额外分要求：
 
@@ -694,7 +698,7 @@ N5SDD:QD:QDD:Q
 
 <a id="submission"></a>
 
-## 十七、提交与评分
+## 提交与评分
 
 ### Gradescope
 
@@ -721,7 +725,7 @@ Checkoff Demo：1240 分：
 
 额外分：32 分。
 
-### 选择评分 Commit
+### 选择用于评分的 Commit
 
 提交表单前：
 
@@ -732,7 +736,7 @@ Checkoff Demo：1240 分：
 5. 把 SHA 准确粘贴到表单；
 6. 若 SHA 无效，默认可能评分 `origin/HEAD`，可能导致错误版本或迟交惩罚。
 
-### Checkoff Form
+### Checkoff Script 与表单
 
 表单要求说明：
 
@@ -770,7 +774,7 @@ static File join(String first, String... others) {
 }
 ```
 
-## 十八、自动评分器
+## 自动评分器详情
 
 ### Phase 1 Grader
 
@@ -796,7 +800,7 @@ static File join(String first, String... others) {
 
 提交时记得添加搭档为 group member。
 
-## 十九、Office Hours 求助要求
+## Office Hours
 
 由于项目开放，Staff 难以像小项目一样直接定位错误：
 
@@ -808,7 +812,7 @@ static File join(String first, String... others) {
 - 若没有写测试、没有尝试调试器，Staff 可能不提供调试帮助；
 - Staff 可能只给高层重构建议，而不会在混乱、脆弱代码中逐行找 bug。
 
-## 二十、FAQ
+## FAQ
 
 ### 可以做室外世界或洞穴，不只做房间吗？
 
@@ -868,27 +872,6 @@ hashCode()
 ### 使用 `InputDemo` 后 HUD 不更新
 
 `InputDemo` 只是演示。`KeyboardSource.getNextKey` 是阻塞式：没有按键时不会返回，因此主循环无法刷新鼠标 HUD。需要修改输入架构，使没有键盘输入时也能继续刷新界面。
-
-## 二十一、完成检查清单
-
-- [ ] 与搭档共同维护设计文档；
-- [ ] 没有非 final static 状态；
-- [ ] 没有 `System.exit()`；
-- [ ] `interactWithInputString` 不使用 StdDraw；
-- [ ] 世界全部连通并满足房间/走廊规格；
-- [ ] 同种子同输入完全确定；
-- [ ] 菜单 N/L/Q 大小写不敏感；
-- [ ] 支持最大正 `long` 种子；
-- [ ] `WASD`、墙碰撞和 avatar 交互正常；
-- [ ] HUD 鼠标悬停信息正常；
-- [ ] `:Q` 立即保存退出；
-- [ ] 无存档时 L 安静退出；
-- [ ] 连续输入与多次保存加载结果等价；
-- [ ] 只创建 `.txt` 保存文件；
-- [ ] 文件路径跨平台；
-- [ ] Ambition 共 360 分且含 Primary；
-- [ ] 自动评分 commit 与 checkoff commit 已验证；
-- [ ] 提交了 Gradescope group 和 checkoff form。
 
 ---
 

@@ -1,6 +1,7 @@
 {
-  "source": "/home/everlasting/下载/CS61B_SP21_中文作业Markdown",
-  "source_inventory_sha256": "0894bb19d11ff24d0cf1967096fa53fc3dcf1fe44aa59cd34fd05f075992cb7b",
+  "source": "/home/everlasting/下载/CS61B_SP21_逐字对应中文翻译",
+  "translation_profile": "逐字对应中文翻译",
+  "source_inventory_sha256": "ac114387bf4ebdb8e1914412d303801bffb9b32fdfd757eb11687b119d0b997b",
   "source_document_count": 22,
   "imported_content_count": 20,
   "ignored_documents": [
@@ -8,28 +9,272 @@
     "README_文件清单.md"
   ],
   "source_sha256": {
-    "Homeworks/HW0_Java速成.md": "be5ba3688579cfff90a3b3e7e9c1f202fc07ca1c71ee61e1dded579eafe10dd3",
-    "Homeworks/HW1_已取消.md": "5d4325037b7412dce68a35a91dc986bec791eb03ad79a2b7e6c652db715699e3",
-    "Homeworks/HW2_概念复习.md": "6041032d8ce28ebe9a47692af4028f81c3e6e34aa35519cc27af27e52b3b1a87",
-    "Homeworks/HW3_概念复习.md": "57c20dd2960bd90c7cbe07541eea6cb6b7373b36241b8ee2c7bd2b434054fad5",
-    "Labs/Lab01A_电脑环境配置.md": "7c59af3c60180906c83a6679830922df22a8eb9b8d3855668bb46ac82588a113",
-    "Labs/Lab01B_IntelliJ_Java_Git.md": "647aeb7233bfb8eaf004c22f0ab1b3ec458733e87cb857bad2c792a201402ce4",
-    "Labs/Lab02_JUnit与调试.md": "54fe9a21050e66eef403a0cb56a73796360deb360a26d6105fc963b4e069043f",
-    "Labs/Lab03_计时测试与随机对比测试.md": "aa2a261c698eafc072a0ba2fdef4fd0f5286c0e722bb812899ab873b563b4926",
-    "Labs/Lab04_Git与调试.md": "6b94909d83c7d6baded6af3036100450e5af228f174d66d11d0949230f5dfe1a",
-    "Labs/Lab05_Project1同伴代码审查.md": "1a580725b573f204f7363381fdd28eecd907cbec841e351500a5db1cb9e417a5",
-    "Labs/Lab06_Project2入门.md": "a938dd317c75a21ce0edc3da357e4226c14b413503120a64f5c4f6b1ca878b21",
-    "Labs/Lab07_BSTMap.md": "76c82ea3575d58dbccca6da28560d8078394cc5faf9fc4ad4d94a82f26f50508",
-    "Labs/Lab08_HashMap.md": "53ecf406a983bb862f73ea58042f57a54afdef1a9056fde390ec0c4ca757c1d9",
-    "Labs/Lab12_Project3入门.md": "d8af781c3d4be17cf53548c7d1f8e667c126390ebe65d909735d1cca50284172",
-    "Labs/Lab13_Project3第二阶段交互.md": "39eb08ac209249befc5b7159f1733aa722b4d69d2159a26836873b0f78e74768",
-    "Projects/Project0_2048.md": "7b8d826c71f687b8d043190ccc3ae97eb57a992feed7c4035cbde0b66da52495",
-    "Projects/Project1EC_自动评分器.md": "87321fff5e246cb84905326e618fa0eb2cf7b6f3d3cd7366b8327c84c92580d6",
-    "Projects/Project1_数据结构.md": "035891fe2bf6d035052937030ea0be1a26dfae0f7689c26268d83858d69841f0",
-    "Projects/Project2_Gitlet.md": "5fdabea5d5f6689ebc991cba772746708c55494d9278ae4bde7e253beca3055a",
-    "Projects/Project3_BYOW.md": "79776ad5f054a8d88ffc2b6c10779294304609c80c0dd4e741084fb5b9c282e5",
-    "Projects/Project3_游戏共享.md": "869bfc94a57fbdf8aaf71dc9e68930cf45f21b19d6d381adc1cc2efebad8bf22",
-    "README_文件清单.md": "0894bb19d11ff24d0cf1967096fa53fc3dcf1fe44aa59cd34fd05f075992cb7b"
+    "Homeworks/HW0_Java速成.md": "521f21ee06e4c81bbc2372ab171faa3bdbdadb26c4e77246a9748b580f1678cd",
+    "Homeworks/HW1_已取消.md": "8bf2c9688183f8f8b46310f4aa66382bb7561fe70d91ec31e41d2d6dfeea87f4",
+    "Homeworks/HW2_概念复习.md": "abc034b7e54243ec7960d01985e10707a4fa90b4f07b2a6e6151c6e3f5c534c5",
+    "Homeworks/HW3_概念复习.md": "8d7cb44c289bf90031460ab2ec9011c0e30cea975d644d729d987e751ea8566b",
+    "Labs/Lab01A_配置你的电脑.md": "4f581c806101346699e6e54b8234aec85176ffcbe7ac34449c84696301a0e5fb",
+    "Labs/Lab01B_IntelliJ_Java_Git.md": "133648e26181a612ec47ce0edad45d7cd39eed0aacc93f69750a18ca979b890b",
+    "Labs/Lab02_JUnit测试与调试.md": "183987c0bcb9dd80f6a336b4905514e19e594554087b709cc250b5887659126a",
+    "Labs/Lab03_计时测试与随机比较测试.md": "52fd11d250d96656c76f26b65a79435e7715d8b4223aaf7175e7e3a89cea01a5",
+    "Labs/Lab04_Git与调试.md": "21d0ffe4442d00f1c056d6a4e607a6037e0106a027d3f68eefea8d7ce54c2e9d",
+    "Labs/Lab05_Project1同伴代码审查.md": "ae1438665142bb4fcba28fe76a3899a18489ed094082ab1e9c8ad2dce7354244",
+    "Labs/Lab06_Project2入门.md": "38600683f5584f9c22e07e1c649381e695849486d5298d453ed02cd3692d24a9",
+    "Labs/Lab07_BSTMap.md": "98a03609c7462bcdd6f45a1cdc60782d19a807df093fcc2a88654b9764a168a0",
+    "Labs/Lab08_HashMap.md": "e1d18e9f27d271e678adce206ade198a111fb37109be5c777a7d782dcc53782b",
+    "Labs/Lab12_Project3入门.md": "afd4cf3a67dcbcf10d9029e910aa7dcb59b9c915abf42e2d35c284e2d0e234e9",
+    "Labs/Lab13_Project3第二阶段入门.md": "f87ac3823e7eacb54e660bc5d5aac5c7e3af1fc7cc2d4567cc0508848f6b2941",
+    "Projects/Project0_2048.md": "60743ec13d829d8e82fd3832bdbc7b871d2af50e58e70d1552ada3ff41f59af5",
+    "Projects/Project1EC_自动评分器.md": "1138d868355f20b4245f02f0cff950d6049c1dde2b3f8fa3078e2f172e5a0a99",
+    "Projects/Project1_数据结构.md": "b99be49a7bedbfb263a9fe8d559c480604346be0c89b99839c96af498dc72a27",
+    "Projects/Project2_Gitlet.md": "e3fafda6ea42c556556a99660f8cef0ef7efffaa7145b283a5233f9f4f3b4f36",
+    "Projects/Project3_BYOW.md": "2bf86b6fb6130cb95e0d6d238654d5c93d56e9a97a6dd6fff7fdb4fde4f58cf8",
+    "Projects/Project3_游戏共享.md": "09ad98fcec50300831870e91ca76b7336bd1f2725091100bcfd5aec72b15340e",
+    "README_文件清单.md": "ac114387bf4ebdb8e1914412d303801bffb9b32fdfd757eb11687b119d0b997b"
+  },
+  "localized_images": {
+    "count": 47,
+    "items": {
+      "https://sp21.datastructur.es/materials/lab/lab1/img/github_repo_and_branch_selection.png": {
+        "path": "assets/coursework/424292970faf-github_repo_and_branch_selection.png",
+        "sha256": "e524b300c54e7db96908d65d23a088a072c2d86f85258b41a4b2b62c13759e98",
+        "bytes": 75646
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1/img/intellij_start_menu.png": {
+        "path": "assets/coursework/e66e7290cf4f-intellij_start_menu.png",
+        "sha256": "ea2c6b84cda8a72e879a84c322b22ba376098ff06b03e33792f6042f2bb9614e",
+        "bytes": 117380
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1/img/main_screen_when_done_lab1.png": {
+        "path": "assets/coursework/ae0a56ec69ff-main_screen_when_done_lab1.png",
+        "sha256": "8dc8d18b27ecff05ee14396946ff29ed44c8258c5df5696309ec8cabc2fffdb0",
+        "bytes": 705863
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1/img/main_screen_when_done_lab1_HelloNumbers_open.png": {
+        "path": "assets/coursework/7f5a4ca20f39-main_screen_when_done_lab1_HelloNumbers_open.png",
+        "sha256": "ee14da282976584f956f9e3e0974d0e57632244cc62dc1f95e7569aa9fd0dfe4",
+        "bytes": 741362
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1/img/main_screen_when_done_lab1_HelloNumbers_run_run.png": {
+        "path": "assets/coursework/1026cb90dd7d-main_screen_when_done_lab1_HelloNumbers_run_run.png",
+        "sha256": "e4b998fc6a0e7c50d081f1fd5d838b27615e7bf2ca689846e02750b1ef343245",
+        "bytes": 413517
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1/img/main_screen_when_done_lab1_HelloNumbers_run_run_after_click.png": {
+        "path": "assets/coursework/0ddf7321a5c6-main_screen_when_done_lab1_HelloNumbers_run_run_after_click.png",
+        "sha256": "56dfbd952ca054bdbde843ba3c73153dd3c3fc0d2249777b23415e83b5b152dc",
+        "bytes": 323977
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1/img4/windows_about_to_run_checklabconfig.png": {
+        "path": "assets/coursework/3177f6d443ae-windows_about_to_run_checklabconfig.png",
+        "sha256": "a11ae776782223858547e71a8389149bd445710729f6835c690bfed35309b1d2",
+        "bytes": 524104
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1/img4/windows_check_lab_config_option.png": {
+        "path": "assets/coursework/148c74f05d2d-windows_check_lab_config_option.png",
+        "sha256": "3c2f4aa152bc993a97f9bfbe6a9740c9f5f01b9b4791218cc0d24c9b7930bf33",
+        "bytes": 514274
+      },
+      "https://sp21.datastructur.es/materials/lab/lab13/img/image.png": {
+        "path": "assets/coursework/59f38de5d072-image.png",
+        "sha256": "671fb185bc50f15cd4593e94bb8be34c5798d027d7c9991263ff8312463951fa",
+        "bytes": 56726
+      },
+      "https://sp21.datastructur.es/materials/lab/lab13/img/memory-game-example.gif": {
+        "path": "assets/coursework/817e828aaa56-memory-game-example.gif",
+        "sha256": "d48380e606637e8798fed5d7ac8f68eb334a05ea0812ae61572e4c2c755680e8",
+        "bytes": 2276162
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1setup/img/hello_world.png": {
+        "path": "assets/coursework/feeb486c088e-hello_world.png",
+        "sha256": "f87114510e6a56c8a26c3aa20b88e9debdcd137e7c10eecba166791a557d35b3",
+        "bytes": 94364
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1setup/img2/plugin_setup1.png": {
+        "path": "assets/coursework/ca1375bcd3f1-plugin_setup1.png",
+        "sha256": "5fa27de09313d314f3755a937429f2c523401d30edd85cbb6c9dedbbeb93bfdd",
+        "bytes": 100639
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1setup/img2/plugin_setup2.png": {
+        "path": "assets/coursework/73fbd695f7e3-plugin_setup2.png",
+        "sha256": "d3caee8b47f033011b36d53e88be42f8c253ab35ca47873d5fa1f0399210d74a",
+        "bytes": 154434
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1setup/img2/plugin_setup3.png": {
+        "path": "assets/coursework/d8ca628a8231-plugin_setup3.png",
+        "sha256": "9cd9ca01d5077964ac8b85934ed179612551fee9bec21ebbe4ffd43f567ae238",
+        "bytes": 167372
+      },
+      "https://sp21.datastructur.es/materials/lab/lab1setup/img4/path.png": {
+        "path": "assets/coursework/77b22d0f7282-path.png",
+        "sha256": "092bd05b20c9ab3913fee30ae9ef5801ffe94f6ab5f0ae28d864816c2e476a04",
+        "bytes": 29265
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img/default_renderer.png": {
+        "path": "assets/coursework/ff3e948349fe-default_renderer.png",
+        "sha256": "446f0b129b6246948565ec865e5b10908529a676f4fc7eeb0ebeab6fc6b1fcd2",
+        "bytes": 32530
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img/lab3_run.png": {
+        "path": "assets/coursework/e3d0cb27a620-lab3_run.png",
+        "sha256": "dfc08712919adce98751ba90a6955cd90b8b232c446299540c1e3274921136f7",
+        "bytes": 13746
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img/lab3_run_menu.png": {
+        "path": "assets/coursework/20840d2e6a42-lab3_run_menu.png",
+        "sha256": "a9bc8b1406f44107446a9c4f404d5c77e4445d8240292ee157bfcb95cec040a9",
+        "bytes": 26188
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img2/breakpoint.png": {
+        "path": "assets/coursework/a0faa0debe02-breakpoint.png",
+        "sha256": "cae7a8241a3e164138058d87d51a15b87ac008fa54cb9e6f4e19a5e23dc576c5",
+        "bytes": 461040
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img2/debug_button.png": {
+        "path": "assets/coursework/28c10098be02-debug_button.png",
+        "sha256": "3ebe6c1566819f5ca9fc9238b3d90f3a1e4f689509bc6644413757e571cb48e2",
+        "bytes": 28951
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img2/debuggerPickAFunction.png": {
+        "path": "assets/coursework/f7dba6bc793f-debuggerPickAFunction.png",
+        "sha256": "1712d886cadf92df00a9d6bf9b8f804c5c0de19d0d689c6dbc7da2fa07a0585a",
+        "bytes": 63746
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img2/folder_structure.png": {
+        "path": "assets/coursework/4f12c26bda85-folder_structure.png",
+        "sha256": "6186121effe2e21bd71a15ca60379ae6a3e811c0a52f44c1c917a7b0ecb0bf24",
+        "bytes": 109337
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img2/how-to-run-a-single-test.png": {
+        "path": "assets/coursework/e0e9ff68b04d-how-to-run-a-single-test.png",
+        "sha256": "f5219c3c120937db7d429aeacc42d3294a489e426111630930ed8010a1b246d6",
+        "bytes": 429372
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img2/run_button.png": {
+        "path": "assets/coursework/abc142b7bdab-run_button.png",
+        "sha256": "aea4a420ae419d976e0a543c1e7451196bc0c8503b323dcdd39052969c416500",
+        "bytes": 30617
+      },
+      "https://sp21.datastructur.es/materials/lab/lab2/img2/step_into.png": {
+        "path": "assets/coursework/9914ad1934d8-step_into.png",
+        "sha256": "5e315387da7e1ab1c52b10ee769b03e1e019a4344e59815b1dcb8272beef8cd8",
+        "bytes": 202
+      },
+      "https://sp21.datastructur.es/materials/lab/lab3/img/conditional_breakpoint.png": {
+        "path": "assets/coursework/deda8b86fe36-conditional_breakpoint.png",
+        "sha256": "25827c9478b67eff45985b764d8ed4f1e9c3cf66cc9a2df38ffd82d81f34f1a1",
+        "bytes": 10640
+      },
+      "https://sp21.datastructur.es/materials/lab/lab3/img/exception_breakpoint_1.png": {
+        "path": "assets/coursework/ab1bb5215644-exception_breakpoint_1.png",
+        "sha256": "bf07c3e57948880b887117ed16f7e367c96f94251ceb1bfd4f874e1b7e2436a3",
+        "bytes": 45150,
+        "retrieved_from": "https://sp21.datastructur.es/materials/lab/lab3/img/breakpoints.png"
+      },
+      "https://sp21.datastructur.es/materials/lab/lab3/img/exception_breakpoint_2.png": {
+        "path": "assets/coursework/edda3a37aafd-exception_breakpoint_2.png",
+        "sha256": "2f4e4a33cf459a9903cf3fa8f5c15abb02c9f4ae5fa1ded67e87a2640dab9e8c",
+        "bytes": 69611,
+        "retrieved_from": "https://sp21.datastructur.es/materials/lab/lab3/img/breakpoints_filled_in.png"
+      },
+      "https://sp21.datastructur.es/materials/lab/lab3/img/resume_button.png": {
+        "path": "assets/coursework/c4a7e0af85d0-resume_button.png",
+        "sha256": "faacc6f6af687eca9ad95f2ddeb711097de48288184b586db971817d5fcab6f2",
+        "bytes": 33194
+      },
+      "https://sp21.datastructur.es/materials/lab/lab8/img/ht-buckets.png": {
+        "path": "assets/coursework/9ca265a119da-ht-buckets.png",
+        "sha256": "ae6cee1bf4867687c3e6a028d2def6e2160e52cff390b36bc67100da75a4c32f",
+        "bytes": 92535
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/comparison.png": {
+        "path": "assets/coursework/f104bd6bdb2c-comparison.png",
+        "sha256": "f94108e80f64297d1cbe52d57d6f0f90645a64202ec83d1a967cb907db97c730",
+        "bytes": 38711
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/example-2048.gif": {
+        "path": "assets/coursework/28aaf1f8c736-example-2048.gif",
+        "sha256": "b85610877d06f7f878d2196854d5b017a9d06ce3580a4e162002c10707b5973c",
+        "bytes": 3039387
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/intellij-error.png": {
+        "path": "assets/coursework/886b9446d10d-intellij-error.png",
+        "sha256": "e6e7468d5ab771c4879cd743f9be16e71333342793e8cb980084833806c82f9c",
+        "bytes": 53226
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/intellij-open.png": {
+        "path": "assets/coursework/81161dae4a08-intellij-open.png",
+        "sha256": "b81ce037563fb5f513c36cfa04f2ff9bf3d09378f9410ca2960060a5a7893955",
+        "bytes": 128490
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/intellij-pre-open.png": {
+        "path": "assets/coursework/20022dee9862-intellij-pre-open.png",
+        "sha256": "c348210744b0b0cfa2a9cd973ba7a174a88bf0fc078e18b0c901da03c8f59005",
+        "bytes": 108149
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/intellij-setup.gif": {
+        "path": "assets/coursework/7e36c59cbafd-intellij-setup.gif",
+        "sha256": "e687faa9db925dd3ef4cc6870af2fd8a6ec2e16545a85caf0fcc32ab474fdd28",
+        "bytes": 8719999
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/invalidate-caches.png": {
+        "path": "assets/coursework/63fe673b576c-invalidate-caches.png",
+        "sha256": "4f5e02c8405b96a9e227a0d4cb9e5a7c07f43bd9106613b8c9964ab1d8267324",
+        "bytes": 224682
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/java15.png": {
+        "path": "assets/coursework/7b9cd3b85542-java15.png",
+        "sha256": "6ec08a5535f13393d37d86614fa5e388a21ca7914e14764854bc242b82fc93c5",
+        "bytes": 196117
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/list-files.png": {
+        "path": "assets/coursework/1dd92ccfd0b8-list-files.png",
+        "sha256": "a3cc0af77ec5615077f22d82b52a34ffeccf9ab34ac97a6374177f1837227234",
+        "bytes": 28957
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/opening-project-structure.png": {
+        "path": "assets/coursework/fefe3f9d8a78-opening-project-structure.png",
+        "sha256": "49cd59648ffce79dc70260834ee7b88d51b524047034f76a55452b0c37ae695c",
+        "bytes": 190911
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/run-main.png": {
+        "path": "assets/coursework/3f7f193ca2a6-run-main.png",
+        "sha256": "0c425796a59bca7be42f4e7ff1eb0a80518db9b7277cecda8dfaf14feeebc992",
+        "bytes": 146703
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/test-completely-empty.png": {
+        "path": "assets/coursework/d8b514a88d1a-test-completely-empty.png",
+        "sha256": "4be6fa9e24bce3f7cb0acd5a57b6e1fa4a49274a2535a2d27abceefad5f2e97c",
+        "bytes": 72810
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/test-empty-space-all-fail.png": {
+        "path": "assets/coursework/14d71c23ddba-test-empty-space-all-fail.png",
+        "sha256": "546700313b2f3df4af6bd5223d64507f2b8a709f9ffa17a3e4d7c6c1b98fcc7d",
+        "bytes": 119190
+      },
+      "https://sp21.datastructur.es/materials/proj/proj0/img/test-up-error-msg.png": {
+        "path": "assets/coursework/fcab3d7aee38-test-up-error-msg.png",
+        "sha256": "381dd9314fc30123ede328d8297e88caebf182b1af489da5606cfcb2f1c03ee3",
+        "bytes": 84414
+      },
+      "https://sp21.datastructur.es/materials/proj/proj1/img/java_visualizer.png": {
+        "path": "assets/coursework/e7065a8b9dbe-java_visualizer.png",
+        "sha256": "7afa0b98034577c703378ebfebf305b879dab88f3a9a7b5480e59be25e5420cc",
+        "bytes": 15500,
+        "retrieved_from": "https://sp21.datastructur.es/materials/proj/proj1/java_visualizer.png"
+      },
+      "https://sp21.datastructur.es/materials/proj/proj1/img/karplus-strong.png": {
+        "path": "assets/coursework/865a7fa5ac91-karplus-strong.png",
+        "sha256": "5c4d63743f8d5e4859309b477c0e21b68e44fc908c8771cc484b5a7f7c8515fb",
+        "bytes": 16180,
+        "retrieved_from": "https://sp21.datastructur.es/materials/proj/proj1/karplus-strong.png"
+      },
+      "https://sp21.datastructur.es/materials/proj/proj3/img/ngrok.png": {
+        "path": "assets/coursework/875d5efe0663-ngrok.png",
+        "sha256": "8ab47ec5b07ffb08621b5150df568bf4b41a34633548b8e26a02b362108bc45e",
+        "bytes": 215600
+      }
+    }
   },
   "calendar_sources": {
     "homepage": {

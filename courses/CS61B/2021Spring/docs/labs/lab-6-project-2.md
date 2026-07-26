@@ -3,13 +3,13 @@ title: "Lab 6：Project 2 入门"
 description: "CS61B Spring 2021 Lab 6：Project 2 入门中文学习资料。"
 ---
 
-# Lab 6：Project 2 入门——持久化、文件与序列化
+# Lab 6：Project 2 入门
 
 > 原始页面：<https://sp21.datastructur.es/materials/lab/lab6/lab6>
 >
-> 本文件为中文翻译。代码、命令、类名、方法名和程序要求保持原样。
+> 本文严格按照原页面的标题、段落、列表、代码块、命令、测试和调试步骤顺序翻译。代码、命令、类名、方法名、程序输出与测试语法保持原样。
 
-## 学习目标
+## 简介
 
 本实验介绍 Project 2 Gitlet 所依赖的核心工程知识：
 
@@ -29,7 +29,7 @@ description: "CS61B Spring 2021 Lab 6：Project 2 入门中文学习资料。"
 git pull skeleton master
 ```
 
-## 一、持久化的概念
+## 持久化（概念）
 
 此前课程中的程序只在运行期间保存状态。程序一结束，实例变量和静态变量都会消失。例如 Project 0 的 2048 无法在退出后重新加载之前的进度。
 
@@ -51,7 +51,7 @@ Git 仍然知道哪些文件被加入暂存区。即使关机一年，这些信�
 
 > Java 的静态变量不会跨进程保存。程序结束后，实例变量和静态变量全部丢失。要跨运行保留数据，必须将其写到文件系统中。
 
-## 二、Java 的编译与命令行运行
+## Java 与编译
 
 过去你可能一直点击 IntelliJ 的绿色运行按钮。Java 也可以直接从终端编译和运行。
 
@@ -168,7 +168,7 @@ args: [story, this is a single argument]
 
 实验正式实现时，要删除这条调试输出。
 
-## 三、使用 Make 编译和测试
+## Make
 
 Capers 和 Gitlet 都具有持久状态。一次测试往往需要：
 
@@ -209,9 +209,9 @@ make clean
 
 如果出现 `python3: command not found` 或权限错误，请查看文末 FAQ。
 
-## 四、Java 中的文件与目录
+## Java 中的文件与目录
 
-### 1. 当前工作目录（CWD）
+### 当前工作目录
 
 Java 程序的当前工作目录，是你**从哪个目录启动程序**。程序中可通过：
 
@@ -263,7 +263,7 @@ Run → Edit Configurations → Working Directory
 pwd
 ```
 
-### 2. 绝对路径与相对路径
+### 绝对路径与相对路径
 
 - **绝对路径**：相对于文件系统根目录的位置。
   - Windows：`C:/Users/Michelle/example/Example.java`
@@ -276,7 +276,9 @@ pwd
 
 本实验中通常应使用相对路径，使所有生成内容位于 `lab6` 的工作目录中，而不是写到计算机上的随机位置。
 
-### 3. `File` 对象
+### Java 中的文件与目录操作
+
+#### 文件
 
 Java 的 `File` 类可表示文件或目录。
 
@@ -304,7 +306,7 @@ f.exists();
 Utils.writeContents(f, "Hello World");
 ```
 
-### 4. 目录
+#### 目录
 
 ```java
 File d = new File("dummy");
@@ -315,7 +317,11 @@ d.mkdir();
 
 请重点熟悉 `Utils.java` 中的读写、连接路径、序列化辅助方法。
 
-## 五、Serializable 与对象持久化
+#### 总结
+
+Java 中还有许多操作文件的方法。你可以阅读 `File` 的 Javadocs 并在需要时搜索；本 Lab 和 Gitlet 应优先使用课程提供的 `Utils.java`。
+
+## Serializable
 
 如果要保存一个复杂对象，可以手工把它变成字符串，再自己解析回来，但这种做法很繁琐。
 
@@ -376,7 +382,7 @@ writeObject(outFile, m);
 m = readObject(inFile, Model.class);
 ```
 
-## 六、练习：Canine Capers
+## 练习：Canine Capers
 
 你要实现一个使用文件操作和序列化的小程序。
 
@@ -389,7 +395,7 @@ m = readObject(inFile, Model.class);
 
 本实验不测试非法输入和错误情况；Gitlet 中则必须处理。
 
-### 1. 支持的命令
+### Main
 
 #### `story [text]`
 
@@ -453,7 +459,18 @@ Woof! My name is Qitmir and I am a Saluki! I am 4 years old! Woof!
 Happy birthday! Woof! Woof!
 ```
 
-### 2. 持久化目录
+### 有用的 Utils 函数
+
+以下函数是一个起点；你可能还需要其他函数，也可能不需要全部函数：
+
+- `writeContents`：把字符串或字节数组写入文件。
+- `readContentsAsString`：把文件读为字符串。
+- `readContents`：把文件读为字节数组。
+- `writeObject`：把可序列化对象写入文件。
+- `readObject`：从文件读取可序列化对象。
+- `join`：安全地把多个路径部分组合为 `File`，不要用字符串拼接创建路径。
+
+### 持久化目录
 
 所有持久数据都应放在当前工作目录下的 `.capers` 目录。点号前缀使其默认隐藏，用户不需要知道内部实现细节。
 
@@ -475,7 +492,7 @@ rm -rf .capers
 
 注意不要误删源代码目录 `capers`。
 
-### 3. 推荐实现顺序
+### 建议的完成顺序
 
 1. `setUpPersistence`：如果需要的目录和文件不存在，就创建它们；
 2. `writeStory`：读取旧故事、追加新文本，再覆盖写回完整内容；
@@ -485,7 +502,11 @@ rm -rf .capers
 6. `haveBirthday`：修改年龄后必须重新保存；
 7. `Main.main`：解析命令行参数并分派命令。
 
-## 七、测试
+### 用法
+
+从 `lab6` 目录运行 `make`，再使用 `java capers.Main [args]` 执行命令。`story` 的文本包含空格时应使用引号。
+
+## 测试
 
 除了 `make check`，还应手工测试：
 
@@ -524,7 +545,7 @@ World
 
 这类测试称为**集成测试**：一次测试会跨多个类和多次程序运行，不像单元测试只隔离一个小组件。
 
-## 八、提交
+## 提交
 
 通过全部 `make check` 后，你应修改了：
 
@@ -541,7 +562,7 @@ git push origin master
 
 然后在 Gradescope 提交。本实验没有风格检查。
 
-## 九、强制结尾：远程调试
+## 强制结尾：调试
 
 完成并提交后，仍应做这一节。它会教你如何调试 Capers 和 Gitlet 的多次进程执行。
 
@@ -594,15 +615,17 @@ test02-two-part-story_0
 
 Gitlet 使用完全相同的调试方式。
 
-## 十、提示、FAQ 与常见误区
+## 提示、FAQ 与常见误区
 
-### 实现提示
+#### 提示
 
 - `setUpPersistence`：确保所需目录/文件不存在时会被创建；
 - `writeStory`：使用 `readContentsAsString` 和 `writeContents`。仅使用 `writeContents` 会覆盖旧故事，不能直接“追加”；
 - `saveDog`：使用 `writeObject`，目标 `File` 必须表示文件而不是目录；
 - `fromFile`：使用 `readObject`；
 - 修改对象后若要求“持久化”，必须再次把修改后的对象写回文件。
+
+#### FAQ 与常见误区
 
 ### Python 命令差异
 
@@ -629,6 +652,11 @@ make check PYTHON=py
 - `Utils.join(d, s)` 只是创建表示 `d` 下 `s` 路径的 `File` 对象，不会创建实际文件；
 - `writeObject(file, object)` 的第一个参数必须是文件路径；
 - “持久地修改”意味着不仅修改内存中的对象，还必须把修改写回文件系统。
+
+
+## 致谢
+
+Capers 最初由 Sean Dooher 于 2019 年秋季编写。规格与 Lab 改编由 Michelle Hwang 于 2020 年春季完成，之后由 Omar Khan 于 2021 年春季继续改编。
 
 ---
 
