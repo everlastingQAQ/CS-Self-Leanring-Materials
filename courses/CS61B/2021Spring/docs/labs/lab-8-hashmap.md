@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 8：HashMap中文学习资料。"
 
 # Lab 8：HashMap
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab8/lab8
->
-> 按原页面结构逐段翻译；代码、类型签名、文件名和复杂度术语保持原样。
-
 - [介绍](#介绍)
 - [MyHashMap](#myhashmap)
   - [概览](#概览)
@@ -171,4 +167,4 @@ public MyHashMap(int initialSize, double loadFactor);
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab8/lab8){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab8/lab8](https://sp21.datastructur.es/materials/lab/lab8/lab8)

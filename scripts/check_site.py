@@ -97,6 +97,32 @@ def main() -> None:
         if len(content_files) != expected_count:
             errors.append(f"expected {expected_count} {group} sources, got {len(content_files)}")
 
+    coursework_files = sorted(
+        path
+        for group in ("labs", "homeworks", "projects")
+        for path in (DOCS_ROOT / group).glob("*.md")
+        if path.name != "index.md"
+    )
+    coursework_footer = re.compile(
+        r"\n---\n\n原始页面：\[(https?://[^\]]+)\]\(\1\)\n?\Z"
+    )
+    for coursework_file in coursework_files:
+        source = coursework_file.read_text(encoding="utf-8")
+        introductory_content = source.split("\n## ", 1)[0]
+        if re.search(r"^>\s*(?:原文|原始页面|原页面|原文件)[：:]", introductory_content, re.MULTILINE):
+            errors.append(f"coursework source link remains at the top of {coursework_file.name}")
+        if any(
+            line.startswith(">")
+            and "翻译" in line
+            and ("原页面" in line or "原 PDF" in line or "原PDF" in line)
+            for line in introductory_content.splitlines()
+        ):
+            errors.append(f"coursework translation note remains at the top of {coursework_file.name}")
+        if source.count("原始页面：[") != 1 or not coursework_footer.search(source):
+            errors.append(f"coursework source link is not the only final footer in {coursework_file.name}")
+        if "原始来源：" in source or "中文整理：everlasting" in source:
+            errors.append(f"legacy coursework attribution remains in {coursework_file.name}")
+
     expected_new_coursework = (
         DOCS_ROOT / "projects" / "project-1ec-autograder.md",
         DOCS_ROOT / "projects" / "project-3-game-sharing.md",

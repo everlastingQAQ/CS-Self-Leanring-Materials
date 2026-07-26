@@ -6,9 +6,6 @@ description: "CS61B Spring 2021 Project 3：游戏共享中文学习资料。"
 # Project 3：游戏共享
 
 > 作者：Boren Tsai<br>
-> 原始页面：<https://sp21.datastructur.es/materials/proj/proj3/proj3GameSharing>
->
-> 本文件按照原页面的标题、段落、编号列表、代码块及示例顺序翻译。类名、方法名、命令、程序参数、IP 地址和端口示例保持原样。
 
 我们为 Project 3：BYOW 添加了一项功能，允许任意两名学生远程玩对方的游戏。为新冠安全欢呼吧。
 
@@ -173,4 +170,4 @@ tcp://2.tcp.ngrok.io:17993 -> localhost:4005
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/proj/proj3/proj3GameSharing){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/proj/proj3/proj3GameSharing](https://sp21.datastructur.es/materials/proj/proj3/proj3GameSharing)

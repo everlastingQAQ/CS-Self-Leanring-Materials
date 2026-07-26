@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 12：Project 3 入门中文学习资料。"
 
 # Lab 12：Project 3 入门
 
-> 原始页面：<https://sp21.datastructur.es/materials/lab/lab12/lab12>
->
-> 本文严格按照原页面的标题层级、段落顺序、列表、代码和示例翻译。代码、类名、方法名和文件名保持原样。
-
 > **重要：**在 IntelliJ 中，应当在 `proj3` 目录这一层打开项目，而不是只打开 `lab12` 目录。否则 package 配置会出现问题。
 
 ## 目录
@@ -201,4 +197,4 @@ project3prep.md
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab12/lab12){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab12/lab12](https://sp21.datastructur.es/materials/lab/lab12/lab12)

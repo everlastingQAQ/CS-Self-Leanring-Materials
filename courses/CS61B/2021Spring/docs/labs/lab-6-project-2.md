@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 6：Project 2 入门中文学习资料。"
 
 # Lab 6：Project 2 入门
 
-> 原始页面：<https://sp21.datastructur.es/materials/lab/lab6/lab6>
->
-> 本文严格按照原页面的标题、段落、列表、代码块、命令、测试和调试步骤顺序翻译。代码、命令、类名、方法名、程序输出与测试语法保持原样。
-
 ## 简介
 
 本实验介绍 Project 2 Gitlet 所依赖的核心工程知识：
@@ -653,11 +649,10 @@ make check PYTHON=py
 - `writeObject(file, object)` 的第一个参数必须是文件路径；
 - “持久地修改”意味着不仅修改内存中的对象，还必须把修改写回文件系统。
 
-
 ## 致谢
 
 Capers 最初由 Sean Dooher 于 2019 年秋季编写。规格与 Lab 改编由 Michelle Hwang 于 2020 年春季完成，之后由 Omar Khan 于 2021 年春季继续改编。
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab6/lab6){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab6/lab6](https://sp21.datastructur.es/materials/lab/lab6/lab6)

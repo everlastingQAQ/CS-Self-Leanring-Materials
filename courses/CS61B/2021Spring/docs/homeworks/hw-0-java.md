@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 HW 0：Java 速成中文学习资料。"
 
 # HW 0：Java 速成教程
 
-> 原始页面：<https://sp21.datastructur.es/materials/hw/hw0/hw0>
->
-> 本作业为可选练习，不要求提交。本文按照原页面的标题、段落、列表、练习、代码块和链接顺序翻译；代码、类名、方法名、文件名和程序输出保持原样。
-
 ## 作业目标
 
 本作业快速介绍 Java 的基础语法。它特别适合以前没有用过 Java、但已经学过至少一学期其他编程语言的同学。
@@ -610,4 +606,4 @@ public class EnhancedForBreakDemo {
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/hw/hw0/hw0){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/hw/hw0/hw0](https://sp21.datastructur.es/materials/hw/hw0/hw0)

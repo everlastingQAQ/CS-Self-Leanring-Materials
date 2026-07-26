@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 1：IntelliJ、Java 与 Git中文学习资�
 
 # Lab 1：IntelliJ、Java、Git
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab1/lab1
->
-> 本文件严格按照原页面的标题层级、段落顺序、列表、代码、链接和图片位置翻译。命令、代码、文件名、仓库名、类名和方法名保持原样。
-
 - [开始之前](#开始之前)
 - [GitHub 与 Beacon](#github-与-beacon)
   - [关于你的仓库的更多细节](#关于你的仓库的更多细节)
@@ -438,4 +434,4 @@ git push
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab1/lab1){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab1/lab1](https://sp21.datastructur.es/materials/lab/lab1/lab1)

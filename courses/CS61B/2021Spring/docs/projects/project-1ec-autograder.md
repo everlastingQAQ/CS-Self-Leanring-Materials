@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Project 1 EC：自动评分器中文学习资料
 
 # Project 1 额外加分：自动评分
 
-> 原始页面：<https://sp21.datastructur.es/materials/proj/proj1/proj1ec>
->
-> 本文件依照原页面的标题、段落、列表、代码示例和 FAQ 顺序翻译。代码、类名、方法名以及失败序列格式保持原样。
-
 ## 介绍
 
 这个项目是可选项目，总共价值 32 分额外加分。在这个项目中，你将为 Project 1 的数据结构部分构建一个基础自动评分器。该项目可能颇具挑战，并且属于额外加分内容，因此在 Office Hours 和 Ed 上会被安排为最低帮助优先级。
@@ -133,4 +129,4 @@ removeLast(): 4
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/proj/proj1/proj1ec){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/proj/proj1/proj1ec](https://sp21.datastructur.es/materials/proj/proj1/proj1ec)

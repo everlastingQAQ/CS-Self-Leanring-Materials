@@ -6,9 +6,6 @@ description: "CS61B Spring 2021 Project 1：数据结构中文学习资料。"
 # Project 1：数据结构
 
 > 截止日期：2021 年 2 月 16 日<br>
-> 原始页面：<https://sp21.datastructur.es/materials/proj/proj1/proj1>
->
-> 翻译说明：本文件按照原页面的标题层级、段落顺序、列表顺序、代码块、公式、图片位置和 FAQ 顺序逐项翻译。类名、方法名、命令、文件名、代码、测试名及需要程序精确输出的文字保持原样。
 
 本项目的截止日期是 02/16，不过为了帮助你按计划推进，我们在 02/05 设置了一个额外加分检查点。该检查点是项目自动评分器的一个较小版本。更详细的信息会在本规格后面给出。
 
@@ -470,4 +467,4 @@ git push
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/proj/proj1/proj1){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/proj/proj1/proj1](https://sp21.datastructur.es/materials/proj/proj1/proj1)

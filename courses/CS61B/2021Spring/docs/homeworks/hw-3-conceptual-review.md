@@ -5,10 +5,8 @@ description: "CS61B Spring 2021 HW 3：概念复习中文学习资料。"
 
 # Homework 3：概念复习
 
-> 原文：https://sp21.datastructur.es/materials/hw/hw3/hw3.pdf<br>
 > 日期：2021 年 5 月 5 日<br>
 > 提交方式：本作业在 Gradescope 中作为 Quiz 评分，请在 Gradescope 输入最终答案。<br>
-> 说明：正文按原 PDF 页序和题号逐项翻译；代码、方法名、顶点名和数学符号保持原样。
 
 ## 1. 有趣的堆
 
@@ -336,4 +334,4 @@ AS BS IS AI AE BI BC CD CI FI EF FG DG GH DH
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/hw/hw3/hw3.pdf<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/hw/hw3/hw3.pdf](https://sp21.datastructur.es/materials/hw/hw3/hw3.pdf)

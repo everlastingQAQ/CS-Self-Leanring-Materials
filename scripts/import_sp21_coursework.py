@@ -224,7 +224,7 @@ def validate_source(source: Path) -> dict:
 
 def source_url(text: str) -> str:
     match = re.search(
-        r"(?:原文|原始页面|原页面|原文件)[：:]\s*(?:<|`)?(https?://[^\s>`]+)",
+        r"(?:原文|原始页面|原页面|原文件)[：:]\s*(?:<|`)?(https?://[^\s>`)<]+)",
         text,
     )
     return match.group(1) if match else ORIGINAL_HOME
@@ -243,6 +243,25 @@ def normalize_markdown(text: str) -> str:
             line = line.rstrip()
         normalized.append(line)
     return "\n".join(normalized)
+
+
+def remove_introductory_source_note(text: str) -> str:
+    lines = text.splitlines()
+    first_section = next(
+        (index for index, line in enumerate(lines) if line.startswith("## ")),
+        len(lines),
+    )
+    filtered: list[str] = []
+    for index, line in enumerate(lines):
+        quote = line[1:].strip() if line.startswith(">") else ""
+        remove = index < first_section and (
+            re.match(r"^(?:原文|原始页面|原页面|原文件)[：:]", quote) is not None
+            or ("翻译" in quote and ("原页面" in quote or "原 PDF" in quote or "原PDF" in quote))
+            or line == ">"
+        )
+        if not remove:
+            filtered.append(line)
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(filtered)).strip()
 
 
 def vendor_images(
@@ -390,7 +409,9 @@ def import_markdown(
         destination.mkdir(parents=True)
 
     for folder, filename, group, slug, title in ITEMS:
-        body = normalize_markdown(source_texts[(folder, filename)])
+        raw_body = source_texts[(folder, filename)]
+        original_url = source_url(raw_body)
+        body = remove_introductory_source_note(normalize_markdown(raw_body))
         body = IMAGE_RE.sub(
             lambda match: (
                 f"![{match.group(1)}]({image_replacements[match.group(2)]}"
@@ -410,10 +431,7 @@ def import_markdown(
             f"description: {json.dumps(description, ensure_ascii=False)}\n"
             "---\n\n"
             f"{body}\n\n---\n\n"
-            f"原始来源：[CS61B Spring 2021]({source_url(body)}){{ target=\"_blank\" rel=\"noopener\" }} · "
-            "中文整理：everlasting · "
-            "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans)"
-            "{ target=\"_blank\" rel=\"license noopener\" }\n"
+            f"原始页面：[{original_url}]({original_url})\n"
         )
         (DOCS / group / f"{slug}.md").write_text(output, encoding="utf-8")
         grouped[group].append((title, slug))

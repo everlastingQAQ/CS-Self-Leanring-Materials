@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 7：BSTMap中文学习资料。"
 
 # Lab 7：BSTMap
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab7/lab7
->
-> 按原页面结构逐段翻译；代码、类型签名、复杂度符号和文件名保持原样。
-
 - [介绍](#介绍)
 - [BSTMap](#bstmap)
 - [所以……它到底有多快？](#所以它到底有多快)
@@ -125,4 +121,4 @@ public Key mystery(BSTMap b, int z) {
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab7/lab7){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab7/lab7](https://sp21.datastructur.es/materials/lab/lab7/lab7)

@@ -9,9 +9,6 @@ description: "CS61B Spring 2021 Project 3：CS61BYoW中文学习资料。"
 > Phase 1 世界生成截止：2021 年 4 月 16 日 23:59<br>
 > Phase 2 交互截止：2021 年 4 月 27 日 23:59<br>
 > 额外分展示截止：2021 年 4 月 30 日<br>
-> 原始页面：<https://sp21.datastructur.es/materials/proj/proj3/proj3>
->
-> 本文严格按照原页面的标题、段落、列表、代码块、输入示例、评分说明和 FAQ 顺序翻译。类名、方法签名、按键、输入字符串、代码、API 与自动评分协议保持英文原样。
 
 ## 介绍
 
@@ -875,4 +872,4 @@ hashCode()
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/proj/proj3/proj3){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/proj/proj3/proj3](https://sp21.datastructur.es/materials/proj/proj3/proj3)

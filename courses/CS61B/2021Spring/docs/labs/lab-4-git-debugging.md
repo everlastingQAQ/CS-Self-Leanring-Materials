@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 4：Git 与调试中文学习资料。"
 
 # Lab 4：Git 与调试
 
-> 原始页面：<https://sp21.datastructur.es/materials/lab/lab4/lab4>
->
-> 本文严格按照原页面的标题层级、段落顺序、列表、命令、代码和终端输出翻译。Git 命令、提交哈希示例、代码与程序输出保持原样。
-
 ## 目录
 
 - [Lab 前准备](#lab-前准备)
@@ -291,4 +287,4 @@ but actually it's printing out 128.
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab4/lab4){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab4/lab4](https://sp21.datastructur.es/materials/lab/lab4/lab4)

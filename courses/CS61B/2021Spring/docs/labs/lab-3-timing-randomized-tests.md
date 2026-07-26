@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 3：计时与随机测试中文学习资料�
 
 # Lab 3：计时测试与随机比较测试
 
-> 原始页面：<https://sp21.datastructur.es/materials/lab/lab3/lab3>
->
-> 本文严格按照原页面的标题层级、段落顺序、列表、代码、程序输出和图片位置翻译。代码与标识符保持原样。
-
 ## 目录
 
 - [简介](#简介)
@@ -322,4 +318,4 @@ Visualizer 窗口中包含许多关于具体问题的线索。这是一个棘手
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab3/lab3){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab3/lab3](https://sp21.datastructur.es/materials/lab/lab3/lab3)

@@ -7,9 +7,6 @@ description: "CS61B Spring 2021 Project 2：Gitlet中文学习资料。"
 
 > 完整评分器截止：2021 年 4 月 2 日 23:59<br>
 > Snaps 截止：2021 年 4 月 9 日 23:59<br>
-> 原始页面：<https://sp21.datastructur.es/materials/proj/proj2/proj2>
->
-> 本文严格按照原页面的标题、段落、列表、代码块、命令顺序和提示顺序翻译。命令名、参数、文件名、类名、API、必须精确匹配的输出与错误消息保持英文原样。
 
 ## 关于本规格的说明
 
@@ -1549,4 +1546,4 @@ Gitlet 项目的构想和规格受到真实 Git 的设计以及历年 CS 61B 课
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/proj/proj2/proj2){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/proj/proj2/proj2](https://sp21.datastructur.es/materials/proj/proj2/proj2)

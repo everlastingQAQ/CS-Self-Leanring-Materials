@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Project 0：2048中文学习资料。"
 
 # Project 0：2048
 
-> 原始页面：<https://sp21.datastructur.es/materials/proj/proj0/proj0>
->
-> 本文严格按照原页面的标题层级、段落顺序、列表、代码、棋盘示例、图片位置和评分说明翻译。代码、类名、方法签名、测试名、Git 命令和程序输出保持原样。
-
 ## 截止时间：2021 年 1 月 29 日
 
 ## 简介
@@ -498,4 +494,4 @@ git push
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/proj/proj0/proj0){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/proj/proj0/proj0](https://sp21.datastructur.es/materials/proj/proj0/proj0)

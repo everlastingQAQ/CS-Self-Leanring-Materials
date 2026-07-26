@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 13：Project 3 交互中文学习资料。"
 
 # Lab 13：Project 3 第二阶段入门
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab13/lab13
->
-> 按原页面结构逐段翻译；代码、方法名、API 名称和字符串字面量保持原样。
-
 - [介绍](#介绍)
 - [记忆游戏](#记忆游戏)
 - [`generateRandomString`](#generaterandomstring)
@@ -135,4 +131,4 @@ description: "CS61B Spring 2021 Lab 13：Project 3 交互中文学习资料。"
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab13/lab13){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab13/lab13](https://sp21.datastructur.es/materials/lab/lab13/lab13)

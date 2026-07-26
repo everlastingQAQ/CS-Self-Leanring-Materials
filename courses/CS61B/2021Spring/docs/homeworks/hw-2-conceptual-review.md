@@ -5,9 +5,7 @@ description: "CS61B Spring 2021 HW 2：概念复习中文学习资料。"
 
 # Homework 2：概念复习
 
-> 原文：https://sp21.datastructur.es/materials/hw/hw2/hw2.pdf<br>
 > 日期：2021 年 3 月 15 日<br>
-> 说明：正文按原页面/原 PDF 的题目顺序逐段翻译；代码、方法名与数学符号保持原样。
 
 ## 1. 渐近分析热身
 
@@ -172,4 +170,4 @@ blob, zenzizenzizenzic, yap
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/hw/hw2/hw2.pdf<br){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/hw/hw2/hw2.pdf](https://sp21.datastructur.es/materials/hw/hw2/hw2.pdf)

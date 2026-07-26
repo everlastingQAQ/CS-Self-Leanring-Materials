@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 1 Setup：配置计算机中文学习资料�
 
 # Lab 1 配置：配置你的电脑
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab1setup/lab1setup
->
-> 翻译原则：严格按照原页面的标题层级、段落顺序、列表、代码和图片位置翻译；命令、代码、文件名、类名、方法名及产品名称保持原样。
-
 - [A. 安装文本编辑器（可选）](#a-安装文本编辑器可选)
 - [B. 配置你的电脑](#b-配置你的电脑)
 - [C. 学习使用终端（可选）](#c-学习使用终端可选)
@@ -239,4 +235,4 @@ description: "CS61B Spring 2021 Lab 1 Setup：配置计算机中文学习资料�
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab1setup/lab1setup){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab1setup/lab1setup](https://sp21.datastructur.es/materials/lab/lab1setup/lab1setup)

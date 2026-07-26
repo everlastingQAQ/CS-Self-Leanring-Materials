@@ -5,10 +5,6 @@ description: "CS61B Spring 2021 Lab 5：同伴代码审查中文学习资料。"
 
 # Lab 5：Project 1 同伴代码审查
 
-> 原文：https://sp21.datastructur.es/materials/lab/lab5/lab5
->
-> 严格按照原页面的标题层级、段落顺序和编号翻译；代码标识符保持原样。
-
 - [介绍](#介绍)
   - [LinkedListDeque 概览](#linkedlistdeque-概览)
   - [LinkedListDeque 同伴审查](#linkedlistdeque-同伴审查)
@@ -57,4 +53,4 @@ description: "CS61B Spring 2021 Lab 5：同伴代码审查中文学习资料。"
 
 ---
 
-原始来源：[CS61B Spring 2021](https://sp21.datastructur.es/materials/lab/lab5/lab5){ target="_blank" rel="noopener" } · 中文整理：everlasting · [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans){ target="_blank" rel="license noopener" }
+原始页面：[https://sp21.datastructur.es/materials/lab/lab5/lab5](https://sp21.datastructur.es/materials/lab/lab5/lab5)
