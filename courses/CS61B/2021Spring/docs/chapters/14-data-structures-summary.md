@@ -1,9 +1,5 @@
 # 第 14 章 数据结构总结
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -50,3 +46,9 @@
 - 拉链哈希表由“桶数组”组成；每个桶又可以使用 `ArrayList`、动态数组、链表或 BST。
 
 因此，我们常常用一个 ADT 来构建另一个 ADT。每一层抽象只规定自己关心的行为，并把更底层的实现细节隐藏起来。这种分层让程序更容易替换实现、比较权衡和控制复杂度。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

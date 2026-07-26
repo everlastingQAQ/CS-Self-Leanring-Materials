@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import concurrent.futures
 import hashlib
 import json
@@ -59,6 +60,19 @@ CHAPTERS = [
 
 IMAGE_RE = re.compile(r"!\[([^\]]*)\]\((https?://[^)\s]+)(?:\s+([\"'][^\"']*[\"']))?\)")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+)$")
+ATTRIBUTION_RE = re.compile(
+    r"(?:\n---\n\n)?"
+    r"^> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。(?:[ \t]{2}|<br>)?\n"
+    r"^> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。(?:[ \t]{2}|<br>)?\n"
+    r"^> 原始网站：https://joshhug\.gitbooks\.io/hug61b/content/?\n?",
+    re.MULTILINE,
+)
+ATTRIBUTION_FOOTER = (
+    "---\n\n"
+    "> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>\n"
+    "> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>\n"
+    "> 原始网站：https://joshhug.gitbooks.io/hug61b/content/"
+)
 
 
 def normalize_course_text(text: str) -> str:
@@ -94,6 +108,13 @@ def normalize_course_text(text: str) -> str:
         normalized.append(f"{'#' * level} {title}")
 
     return "\n".join(normalized) + "\n"
+
+
+def move_attribution_to_bottom(text: str) -> str:
+    """Keep one course attribution block at the very end of a chapter."""
+    body = ATTRIBUTION_RE.sub("", text)
+    body = re.sub(r"\A(#[^\n]+\n)\n+", r"\1\n", body).rstrip()
+    return f"{body}\n\n{ATTRIBUTION_FOOTER}\n"
 
 
 def fetch(url: str, attempts: int = 4) -> tuple[bytes, str]:
@@ -211,6 +232,31 @@ def vendor_mathjax() -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--attribution-only",
+        action="store_true",
+        help="move the attribution in existing generated chapters without downloading assets",
+    )
+    args = parser.parse_args()
+
+    if args.attribution_only:
+        missing = [
+            str(CHAPTERS_ROOT / destination)
+            for _, destination in CHAPTERS
+            if not (CHAPTERS_ROOT / destination).is_file()
+        ]
+        if missing:
+            raise SystemExit("Missing generated chapter files:\n" + "\n".join(missing))
+        for _, destination in CHAPTERS:
+            chapter = CHAPTERS_ROOT / destination
+            chapter.write_text(
+                move_attribution_to_bottom(chapter.read_text(encoding="utf-8")),
+                encoding="utf-8",
+            )
+        print(f"Moved attribution to the bottom of {len(CHAPTERS)} generated chapters.")
+        return
+
     missing = [str(SOURCE_ROOT / source) for source, _ in CHAPTERS if not (SOURCE_ROOT / source).is_file()]
     if missing:
         raise SystemExit("Missing source files:\n" + "\n".join(missing))
@@ -233,7 +279,7 @@ def main() -> None:
             title_suffix = f" {title}" if title else ""
             return f"![{alt}]({replacements[url]}{title_suffix})"
 
-        rendered = IMAGE_RE.sub(replace_image, text)
+        rendered = move_attribution_to_bottom(IMAGE_RE.sub(replace_image, text))
         (CHAPTERS_ROOT / destination).write_text(rendered, encoding="utf-8")
 
     summary = {

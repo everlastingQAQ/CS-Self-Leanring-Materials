@@ -1,9 +1,5 @@
 # 第 15 章 Trie 字典树
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -283,3 +279,9 @@ keysWithPrefix(prefix):
 | 可扩容拉链哈希表 | 可哈希 | 平均 $\Theta(1)$，依赖均匀分布 | 摊还平均 $\Theta(1)$ |
 | 直接索引数组 | 有限字符范围 | $\Theta(1)$ | $\Theta(1)$ |
 | Trie | 字符串 | $\Theta(L)$ | $\Theta(L)$ |
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

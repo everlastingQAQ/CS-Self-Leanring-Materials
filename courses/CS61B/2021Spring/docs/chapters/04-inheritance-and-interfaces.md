@@ -1,9 +1,5 @@
 # 第 4 章 继承与接口
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -1185,3 +1181,9 @@ import ug.joshh.animal.Dog;
 导入后，就可以直接使用简短的类名 `Dog`。
 
 这里只是对包的简要预览，课程后续还会继续讨论。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

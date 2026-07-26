@@ -1,9 +1,5 @@
 # 第 21 章 归约与分解
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -337,3 +333,9 @@ $$O(V+E)$$
 这些不一定都是严格意义上的“归约”，因为往往不是只把另一个完整算法当作黑盒。更合适的词是**分解（decomposition）**：把复杂任务拆成较小、边界清晰的部分，并用抽象隐藏底层细节。
 
 归约、分解与抽象共同构成计算机科学解决问题的核心方式。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

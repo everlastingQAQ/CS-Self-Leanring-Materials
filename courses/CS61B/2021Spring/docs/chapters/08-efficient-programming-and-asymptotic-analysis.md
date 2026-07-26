@@ -1,9 +1,5 @@
 # 第 8 章 高效编程与渐近分析
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -990,3 +986,9 @@ public void addLast(int x) {
 - 日常交流常把“大 O”用在本应说“大 Theta”的地方；
 - 摊还分析证明一系列操作的平均成本；
 - 若选择固定 `aᵢ`，并能保证势能 `Φᵢ` 永不为负，则摊还成本是实际累计成本的上界。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

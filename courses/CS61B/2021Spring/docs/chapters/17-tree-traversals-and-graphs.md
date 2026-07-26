@@ -1,9 +1,5 @@
 # 第 17 章 树遍历与图
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -326,3 +322,9 @@ boolean connected(Graph G, int s, int t, boolean[] marked) {
 它会先沿某条“家族血统”不断深入，再访问当前顶点的第二个邻居。
 
 DFS 可以用递归实现，也可以显式使用栈。下一章将介绍相反的策略：先访问所有邻居，再访问距离更远的顶点，即广度优先搜索。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

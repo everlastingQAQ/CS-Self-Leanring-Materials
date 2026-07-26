@@ -1,9 +1,5 @@
 # 第 3 章 测试
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -665,3 +661,9 @@ TDD 是一种先写测试、再写代码的开发流程。步骤如下：
 ### 接下来做什么
 
 * [项目 1B](https://sp19.datastructur.es/materials/proj/proj1b/proj1b)
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

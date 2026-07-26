@@ -1,9 +1,5 @@
 # 第 7 章 包与访问控制
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -221,3 +217,9 @@ class Client {
 
 - `b.get(0);` 会出错。`b` 的静态类型是 `BlackHole`，而该接口没有声明 `get`。即使我们知道它运行时指向 `HasHair`，编译器仍按静态类型检查。
 - `HasHair hb = (HasHair) b;` 也会出错。`HasHair` 没有声明为 `public`，因此它是包私有类。位于 `universe` 包外的 `Client` 连这个类名都无权访问，所以不能进行该类型转换。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

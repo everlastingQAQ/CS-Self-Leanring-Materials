@@ -1,9 +1,5 @@
 # 第 11 章 平衡树
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -333,3 +329,9 @@ private Node put(Node h, Key key, Value val) {
 - Java 的 [`TreeMap`](https://github.com/AdoptOpenJDK/openjdk-jdk11/blob/999dbd4192d0f819cb5224f26e9e7fa75ca6f289/src/java.base/share/classes/java/util/TreeMap.java) 使用红黑树，但不是左倾版本；
 - LLRB 对应 2-3 树，一般红黑树可对应 2-3-4 树；
 - 实现比普通 BST 复杂，但提供稳定的 `Θ(log N)` 性能。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

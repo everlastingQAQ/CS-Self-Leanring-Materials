@@ -1,9 +1,5 @@
 # 第 20 章 最小生成树
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -131,3 +127,9 @@ $$O(E\alpha(V))$$
 - Prim 更像“从一个点长出一棵树”，适合邻接表和稠密局部探索。
 - Kruskal 更像“从轻边开始合并森林”，实现直观，天然结合并查集。
 - 两者都通过割性质保证正确。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

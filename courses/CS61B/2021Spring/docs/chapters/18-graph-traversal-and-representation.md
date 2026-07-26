@@ -1,9 +1,5 @@
 # 第 18 章 图遍历与表示
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -155,3 +151,9 @@ $$O(V+E)$$
 $$O(V^2)$$
 
 课程[表示法效率表](https://docs.google.com/presentation/d/143WntPl7CG5Po3utVK0jYSA0Jd6XKppT5h1juWEWhUU/edit#slide=id.g54593997ea_0_422)总结了不同操作的权衡。不要只背结论，应理解每个复杂度来自实际访问了多少数组位置、邻居或边。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

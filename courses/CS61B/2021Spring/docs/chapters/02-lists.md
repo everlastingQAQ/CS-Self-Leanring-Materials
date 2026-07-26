@@ -1,9 +1,5 @@
 # 第 2 章 列表
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -1441,3 +1437,9 @@ Glorp[] items = (Glorp []) new Object[8];
 * [讨论课 3](http://sp19.datastructur.es/materials/discussion/disc03.pdf)
 * [实验 2](http://sp19.datastructur.es/materials/lab/lab2/lab2)
 * [项目 1A](http://sp19.datastructur.es/materials/proj/proj1a/proj1a)
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

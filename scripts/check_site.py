@@ -105,6 +105,24 @@ def main() -> None:
     if (DOCS_ROOT / "homeworks" / "hw-1-cancelled.md").exists():
         errors.append("HW 1 must not be published")
 
+    attribution_lines = (
+        "原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。",
+        "中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。",
+        "原始网站：https://joshhug.gitbooks.io/hug61b/content/",
+    )
+    for chapter_file in chapter_files:
+        source = chapter_file.read_text(encoding="utf-8")
+        for line in attribution_lines:
+            if source.count(line) != 1:
+                errors.append(f"chapter attribution must occur once in {chapter_file.name}: {line}")
+        footer_start = source.rfind("\n---\n\n> 原作：Josh Hug")
+        if (
+            footer_start < 0
+            or any(line in source[:footer_start] for line in attribution_lines)
+            or not source.rstrip().endswith(attribution_lines[-1])
+        ):
+            errors.append(f"chapter attribution is not confined to the bottom of {chapter_file.name}")
+
     for markdown in DOCS_ROOT.rglob("*.md"):
         text = markdown.read_text(encoding="utf-8")
         if REMOTE_IMAGE_RE.search(text):
@@ -153,6 +171,22 @@ def main() -> None:
         parser = PageParser()
         parser.feed(html_file.read_text(encoding="utf-8"))
         pages[html_file.resolve()] = parser
+
+    rendered_attribution = re.compile(
+        r"<blockquote>\s*<p>原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。"
+        r".*?原始网站：https://joshhug\.gitbooks\.io/hug61b/content/</p>\s*"
+        r"</blockquote>\s*</article>",
+        re.DOTALL,
+    )
+    for chapter_file in chapter_files:
+        rendered_chapter = COURSE_SITE / "chapters" / chapter_file.stem / "index.html"
+        if not rendered_chapter.is_file():
+            continue
+        rendered_html = rendered_chapter.read_text(encoding="utf-8")
+        if len(rendered_attribution.findall(rendered_html)) != 1:
+            errors.append(
+                f"rendered chapter attribution is not the final article block in {chapter_file.name}"
+            )
 
     if len(pages) != EXPECTED_HTML_PAGES:
         errors.append(f"expected {EXPECTED_HTML_PAGES} generated HTML pages, got {len(pages)}")

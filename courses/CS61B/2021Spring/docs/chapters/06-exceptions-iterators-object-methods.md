@@ -1,9 +1,5 @@
 # 第 6 章 异常、迭代器与 Object 方法
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -1214,3 +1210,9 @@ for (String s : am) {
 - `Iterator` 表示执行遍历的对象，要求 `hasNext()` 与 `next()`。
 
 把二者组合起来，就能让自己的类支持简洁的增强 `for` 循环。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

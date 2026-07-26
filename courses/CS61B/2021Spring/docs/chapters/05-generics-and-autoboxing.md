@@ -1,9 +1,5 @@
 # 第 5 章 泛型与自动装箱
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -462,3 +458,9 @@ K maxKey(Map61B<K, V> map) {
 - 基本类型之间的提升或拓宽转换；
 - 在返回类型前声明方法自己的泛型参数；
 - 在泛型方法中使用类型上界，例如 `K extends Comparable<K>`。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

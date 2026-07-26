@@ -1,9 +1,5 @@
 # 第 1 章 Java 入门
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -607,3 +603,9 @@ these
 
 * [项目 0](http://sp19.datastructur.es/materials/proj/proj0/proj0)
 * [讨论课 2](http://sp19.datastructur.es/materials/discussion/disc02.pdf)
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

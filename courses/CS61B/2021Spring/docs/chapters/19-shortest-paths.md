@@ -1,9 +1,5 @@
 # 第 19 章 最短路径
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -256,3 +252,9 @@ $$h(v)=0$$
 则 A* 的优先级退化为 `g(v)`，它就是 Dijkstra 算法。
 
 启发式越准确，A* 往往探索越少的顶点；但计算启发式本身也有成本。实际设计需要在“估计质量”与“计算开销”之间权衡。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

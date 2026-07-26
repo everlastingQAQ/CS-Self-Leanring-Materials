@@ -1,9 +1,5 @@
 # 第 9 章 并查集
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -316,3 +312,9 @@ public class QuickUnionDS implements DisjointSets {
 | 加权 Quick Union + 路径压缩 | 摊还 `O(α(N))` | 摊还 `O(α(N))` |
 
 `α(N)` 在长期表现上近似常数。具体实现同样属于[实验 6](https://sp19.datastructur.es/materials/lab/lab6/lab6)。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

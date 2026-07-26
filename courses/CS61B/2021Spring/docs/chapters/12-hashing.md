@@ -1,9 +1,5 @@
 # 第 12 章 哈希
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -373,3 +369,9 @@ $$\Theta(N/M)=\Theta(1)$$
 在合理假设下，哈希表的插入和查询可达到摊还 $\Theta(1)$。
 
 下一步可完成课程作业 [HW3](https://sp19.datastructur.es/materials/hw/hw3/hw3)。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

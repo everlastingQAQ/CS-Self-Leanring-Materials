@@ -1,9 +1,5 @@
 # 第 13 章 堆与优先队列
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -270,3 +266,9 @@ public void swim(int k) {
 常见答案是让元素实现 `Comparable`，或在构造优先队列时传入 `Comparator`。最大堆则反转比较关系即可。
 
 **练习 13.3.1：**完整回答以上三个问题。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/

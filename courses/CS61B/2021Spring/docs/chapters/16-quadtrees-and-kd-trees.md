@@ -1,9 +1,5 @@
 # 第 16 章 四叉树与 K-D 树
 
-> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。  
-> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。  
-> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
-
 ---
 
 
@@ -160,3 +156,9 @@ K-D 树把分层空间划分推广到 $K$ 个维度。它不会在一层同时�
 - K-D 树逐层轮换维度，容易扩展到任意维度。
 - 范围查询和最近邻搜索都依赖空间下界进行剪枝。
 - 实际性能高度依赖树是否平衡以及数据的空间分布。
+
+---
+
+> 原作：Josh Hug，UC Berkeley CS61B Spring 2021 配套读本。<br>
+> 中文翻译版，仅供非商业学习；采用 CC BY-NC-SA 4.0 许可。<br>
+> 原始网站：https://joshhug.gitbooks.io/hug61b/content/
