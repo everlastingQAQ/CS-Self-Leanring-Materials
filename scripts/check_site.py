@@ -112,6 +112,8 @@ def main() -> None:
     )
     for chapter_file in chapter_files:
         source = chapter_file.read_text(encoding="utf-8")
+        if re.search(r"\A#[^\n]+\n\n---\n(?:[ \t]*\n)+---\n", source):
+            errors.append(f"duplicate separator below the title in {chapter_file.name}")
         for line in attribution_lines:
             if source.count(line) != 1:
                 errors.append(f"chapter attribution must occur once in {chapter_file.name}: {line}")
@@ -221,6 +223,9 @@ def main() -> None:
             'http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"',
             'site-version.json',
             '_docs_release',
+            'window.setInterval(checkForUpdate, 30_000)',
+            'window.addEventListener("focus", checkForUpdate)',
+            'document.addEventListener("visibilitychange", checkForUpdate)',
         ):
             if release and marker not in html_text:
                 errors.append(f"cache refresh marker missing in {html_file.relative_to(SITE_ROOT)}: {marker}")

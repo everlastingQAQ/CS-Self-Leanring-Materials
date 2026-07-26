@@ -2,10 +2,6 @@
 
 ---
 
-
-
----
-
 ## 6.1 `List`、`Set` 与 `ArraySet`
 
 本节将学习怎样使用 Java 内置的 `List` 和 `Set` 数据结构，并亲手构建一个 `ArraySet`。

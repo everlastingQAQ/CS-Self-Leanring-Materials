@@ -8,32 +8,68 @@
     const loadedRelease = marker && marker.content;
     if (!loadedRelease || !/^[0-9a-f]{16}$/.test(loadedRelease)) return;
 
-    const versionUrl = new URL("/site-version.json", window.location.origin);
-    versionUrl.searchParams.set("cache", Date.now().toString(36));
+    let checking = false;
+    let reloading = false;
 
-    fetch(versionUrl, { cache: "no-store", credentials: "same-origin" })
-      .then((response) => {
-        if (!response.ok) throw new Error("site version request failed");
-        return response.json();
-      })
-      .then(({ version: currentRelease }) => {
-        if (!currentRelease || currentRelease === loadedRelease) {
-          const currentUrl = new URL(window.location.href);
-          if (currentUrl.searchParams.has("_docs_release")) {
-            currentUrl.searchParams.delete("_docs_release");
-            window.history.replaceState(null, "", currentUrl.href);
-          }
-          return;
+    const removeRefreshParameters = () => {
+      const currentUrl = new URL(window.location.href);
+      let changed = false;
+      for (const parameter of ["_docs_release", "_docs_cache"]) {
+        if (currentUrl.searchParams.has(parameter)) {
+          currentUrl.searchParams.delete(parameter);
+          changed = true;
         }
+      }
+      if (changed) window.history.replaceState(null, "", currentUrl.href);
+    };
 
-        const reloadKey = `docs-release:${loadedRelease}:${currentRelease}`;
-        if (window.sessionStorage.getItem(reloadKey)) return;
-        window.sessionStorage.setItem(reloadKey, "1");
+    const checkForUpdate = () => {
+      if (checking || reloading || document.visibilityState === "hidden") return;
+      checking = true;
 
-        const freshUrl = new URL(window.location.href);
-        freshUrl.searchParams.set("_docs_release", currentRelease);
-        window.location.replace(freshUrl.href);
-      })
-      .catch(() => {});
+      const versionUrl = new URL("/site-version.json", window.location.origin);
+      versionUrl.searchParams.set("cache", `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`);
+
+      fetch(versionUrl, { cache: "no-store", credentials: "same-origin" })
+        .then((response) => {
+          if (!response.ok) throw new Error("site version request failed");
+          return response.json();
+        })
+        .then(({ version: currentRelease }) => {
+          if (!/^[0-9a-f]{16}$/.test(currentRelease || "")) return;
+          if (currentRelease === loadedRelease) {
+            removeRefreshParameters();
+            return;
+          }
+
+          const freshUrl = new URL(window.location.href);
+          freshUrl.searchParams.set("_docs_release", currentRelease);
+          freshUrl.searchParams.set("_docs_cache", Date.now().toString(36));
+
+          return fetch(freshUrl, { cache: "no-store", credentials: "same-origin" })
+            .then((response) => {
+              if (!response.ok) throw new Error("fresh page request failed");
+              return response.text();
+            })
+            .then((html) => {
+              const releaseMatch = html.match(
+                /<meta name="site-release" content="([0-9a-f]{16})">/
+              );
+              if (!releaseMatch || releaseMatch[1] !== currentRelease) return;
+              reloading = true;
+              window.location.replace(freshUrl.href);
+            });
+        })
+        .catch(() => {})
+        .finally(() => {
+          checking = false;
+        });
+    };
+
+    checkForUpdate();
+    window.setInterval(checkForUpdate, 30_000);
+    window.addEventListener("focus", checkForUpdate);
+    window.addEventListener("pageshow", checkForUpdate);
+    document.addEventListener("visibilitychange", checkForUpdate);
   })();
 </script>

@@ -114,6 +114,12 @@ def move_attribution_to_bottom(text: str) -> str:
     """Keep one course attribution block at the very end of a chapter."""
     body = ATTRIBUTION_RE.sub("", text)
     body = re.sub(r"\A(#[^\n]+\n)\n+", r"\1\n", body).rstrip()
+    body = re.sub(
+        r"\A(#[^\n]+\n\n---\n)(?:[ \t]*\n)+---\n",
+        r"\1",
+        body,
+        count=1,
+    )
     return f"{body}\n\n{ATTRIBUTION_FOOTER}\n"
 
 
