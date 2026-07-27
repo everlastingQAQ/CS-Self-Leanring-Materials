@@ -245,6 +245,9 @@ def main() -> None:
     required = [
         SITE_ROOT / "index.html",
         SITE_ROOT / "404.html",
+        SITE_ROOT / "favicon.svg",
+        SITE_ROOT / "favicon.png",
+        SITE_ROOT / "favicon.ico",
         SITE_ROOT / "robots.txt",
         SITE_ROOT / "sitemap.xml",
         SITE_ROOT / "site-version.json",
@@ -337,6 +340,16 @@ def main() -> None:
     for html_file in normal_pages:
         html_text = html_file.read_text(encoding="utf-8")
         parser = pages[html_file]
+        favicon_links = [
+            link.get("href")
+            for link in parser.link_elements
+            if "icon" in (link.get("rel") or "").lower().split()
+        ]
+        if favicon_links != ["/favicon.png"]:
+            errors.append(
+                f"page does not use the root site favicon in {html_file.relative_to(SITE_ROOT)}: "
+                f"{favicon_links}"
+            )
         if ICP_NUMBER not in html_text or ICP_URL not in html_text:
             errors.append(f"ICP registration is missing in {html_file.relative_to(SITE_ROOT)}")
         if html_file != (COURSE_SITE / "course" / "index.html").resolve() and not re.search(
@@ -460,6 +473,17 @@ def main() -> None:
         errors.append("portal still contains the previous site name")
     if 'id="课程"' not in portal_html:
         errors.append("portal does not contain the 课程 section")
+
+    favicon_png = SITE_ROOT / "favicon.png"
+    if favicon_png.is_file():
+        data = favicon_png.read_bytes()
+        if len(data) < 24 or data[:8] != b"\x89PNG\r\n\x1a\n":
+            errors.append("favicon.png is not a valid PNG file")
+        else:
+            width = int.from_bytes(data[16:20], "big")
+            height = int.from_bytes(data[20:24], "big")
+            if width != height or width < 48:
+                errors.append(f"favicon.png must be square and at least 48px, got {width}x{height}")
     website_schemas = re.findall(
         r'<script\s+type="application/ld\+json">\s*(.*?)\s*</script>',
         portal_html,

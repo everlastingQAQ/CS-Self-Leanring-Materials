@@ -290,6 +290,15 @@ shared/overrides/main.html
 shared/overrides/partials/cache-refresh.html
 ```
 
+Google、Bing 搜索结果和浏览器统一使用根路径 `/favicon.png`，同时保留 `/favicon.ico` 兼容回退。矢量源文件位于 `portal/docs/favicon.svg`，修改后重新生成 96×96 PNG 和传统 ICO：
+
+```bash
+rsvg-convert -w 96 -h 96 -o portal/docs/favicon.png portal/docs/favicon.svg
+magick portal/docs/favicon.svg -background none -define icon:auto-resize=48,32,16 portal/docs/favicon.ico
+```
+
+两套 `mkdocs.yml` 和独立课程主页必须继续统一指向 `/favicon.png`，不要为课程子目录设置不同图标；搜索引擎对同一主机名只采用一个 favicon。
+
 修改 CSS 或 JavaScript 后仍应运行完整构建。构建阶段会自动添加 `sitev` 内容版本参数，不需要手工改查询参数来清缓存。
 
 ## 缓存更新机制
