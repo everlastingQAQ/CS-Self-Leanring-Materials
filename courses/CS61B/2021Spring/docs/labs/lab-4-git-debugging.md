@@ -42,12 +42,12 @@ git push origin master
 
 这一部分需要观看一系列讲解 Git 主要概念的视频，然后亲手练习使用 Git。请观看下面全部六个视频。众所周知，Itai 说话比较慢，所以需要时可以随意提高播放速度！
 
-- [Git Intro - Part 1](https://www.youtube.com/)
-- [Git Intro - Part 2](https://www.youtube.com/)
-- [Git Intro - Part 3](https://www.youtube.com/)
-- [Git Intro - Part 4](https://www.youtube.com/)
-- [Git Intro - Part 5](https://www.youtube.com/)
-- [Git Intro - Part 6](https://www.youtube.com/)
+- [Git Intro - Part 1](https://www.youtube.com/watch?v=yWBzCAY_5UI)
+- [Git Intro - Part 2](https://www.youtube.com/watch?v=CnMpARAOhFg)
+- [Git Intro - Part 3](https://www.youtube.com/watch?v=t0tzTcZESWk)
+- [Git Intro - Part 4](https://www.youtube.com/watch?v=ca1oCEMQGRQ)
+- [Git Intro - Part 5](https://www.youtube.com/watch?v=dZbj9gjjYv8)
+- [Git Intro - Part 6](https://www.youtube.com/watch?v=r0oHi0vXhLE)
 
 具体来说，看完视频后，你应当理解以下概念：
 
