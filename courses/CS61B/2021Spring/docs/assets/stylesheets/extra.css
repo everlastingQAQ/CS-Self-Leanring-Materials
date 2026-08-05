@@ -70,11 +70,33 @@
   text-align: center;
 }
 
-.site-registration {
-  display: block;
-  margin-top: 0.2rem;
+.site-registrations {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem 0.8rem;
+  margin-top: 0.3rem;
   font-size: 0.55rem;
   line-height: 1.4;
+}
+
+.site-registration {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.site-registration:hover {
+  color: var(--md-accent-fg-color);
+}
+
+.site-registration--public-security img {
+  width: 0.8rem;
+  height: 0.8rem;
+  object-fit: contain;
 }
 
 @media screen and (max-width: 44.984375em) {

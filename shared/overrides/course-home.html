@@ -44,7 +44,13 @@
       {{ page.content }}
     </div>
     <footer class="course-site-footer">
-      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2026035887号</a>
+      <div class="course-site-registrations" aria-label="网站备案信息">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2026035887号</a>
+        <a class="course-site-public-security" href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42010402001794" target="_blank" rel="noopener noreferrer">
+          <img src="{{ 'assets/images/gongan-beian.png' | url }}" alt="" width="16" height="16" loading="lazy">
+          <span>鄂公网安备42010402001794号</span>
+        </a>
+      </div>
     </footer>
   </body>
 </html>

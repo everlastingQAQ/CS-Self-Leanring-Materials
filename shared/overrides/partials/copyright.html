@@ -10,11 +10,19 @@
       Material for MkDocs
     </a>
   {% endif %}
-  {% if config.extra.registration %}
-    <div class="site-registration">
-      <a href="{{ config.extra.registration.url }}" target="_blank" rel="noopener noreferrer">
-        {{ config.extra.registration.number }}
-      </a>
+  {% if config.extra.registration or config.extra.public_security_registration %}
+    <div class="site-registrations" aria-label="网站备案信息">
+      {% if config.extra.registration %}
+        <a class="site-registration" href="{{ config.extra.registration.url }}" target="_blank" rel="noopener noreferrer">
+          {{ config.extra.registration.number }}
+        </a>
+      {% endif %}
+      {% if config.extra.public_security_registration %}
+        <a class="site-registration site-registration--public-security" href="{{ config.extra.public_security_registration.url }}" target="_blank" rel="noopener noreferrer">
+          <img src="{{ 'assets/images/gongan-beian.png' | url }}" alt="" width="16" height="16" loading="lazy">
+          <span>{{ config.extra.public_security_registration.number }}</span>
+        </a>
+      {% endif %}
     </div>
   {% endif %}
 </div>
