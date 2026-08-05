@@ -30,6 +30,9 @@ PAGES_RECOMMENDED_MAX_BYTES = 1_000_000_000
 SITE_URL = "https://docs.everlasting.xin/"
 ICP_NUMBER = "鄂ICP备2026035887号"
 ICP_URL = "https://beian.miit.gov.cn/"
+PUBLIC_SECURITY_NUMBER = "鄂公网安备42010402001794号"
+PUBLIC_SECURITY_URL = "https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42010402001794"
+PUBLIC_SECURITY_ICON = "assets/images/gongan-beian.png"
 
 
 class PageParser(HTMLParser):
@@ -354,13 +357,17 @@ def main() -> None:
             errors.append(f"ICP registration is missing in {html_file.relative_to(SITE_ROOT)}")
         if html_file != (COURSE_SITE / "course" / "index.html").resolve() and not re.search(
             r"Made with\s*<a[^>]*>\s*Material for MkDocs\s*</a>.*?"
-            r'<div class="site-registration">.*?' + re.escape(ICP_NUMBER),
+            r'<div class="site-registrations"[^>]*>.*?' + re.escape(ICP_NUMBER),
             html_text,
             re.DOTALL,
         ):
             errors.append(
                 f"ICP registration is not below the Material credit in {html_file.relative_to(SITE_ROOT)}"
             )
+        if PUBLIC_SECURITY_NUMBER not in html_text or PUBLIC_SECURITY_URL not in html_text:
+            errors.append(f"public security registration is missing in {html_file.relative_to(SITE_ROOT)}")
+        if PUBLIC_SECURITY_ICON not in html_text:
+            errors.append(f"public security registration icon is missing in {html_file.relative_to(SITE_ROOT)}")
         if any(
             (meta.get("name") or "").lower() == "robots"
             and "noindex" in (meta.get("content") or "").lower()
@@ -571,6 +578,10 @@ def main() -> None:
             errors.append("course homepage still contains the incorrect long-list calendar")
         if ICP_NUMBER not in original_style_html or ICP_URL not in original_style_html:
             errors.append("original-style course homepage is missing the ICP registration")
+        if PUBLIC_SECURITY_NUMBER not in original_style_html or PUBLIC_SECURITY_URL not in original_style_html:
+            errors.append("original-style course homepage is missing the public security registration")
+        if PUBLIC_SECURITY_ICON not in original_style_html:
+            errors.append("original-style course homepage is missing the public security registration icon")
         for extra_copy in ("中文归档说明", "下列内容由两份公开 ICS", "会议链接按原记录保留"):
             if extra_copy in original_style_html:
                 errors.append(f"course homepage contains non-original explanatory copy: {extra_copy}")

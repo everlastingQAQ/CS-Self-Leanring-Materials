@@ -38,7 +38,7 @@ markdown_extensions:
   - md_in_html
 
 extra_css:
-  - assets/stylesheets/extra.css?v=20260726-4
+  - assets/stylesheets/extra.css?v=20260805-1
 
 copyright: 中文整理：everlasting
 
@@ -46,3 +46,6 @@ extra:
   registration:
     number: 鄂ICP备2026035887号
     url: https://beian.miit.gov.cn/
+  public_security_registration:
+    number: 鄂公网安备42010402001794号
+    url: https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42010402001794
