@@ -1,60 +1,65 @@
+---
+title: "Project 2：Gitlet"
+description: "CS61B Spring 2021 Project 2：Gitlet中文学习资料。"
+---
+
 # Project 2：Gitlet
 
 **课程导航：** [主页](https://sp21.datastructur.es/index.html) · [课程信息](https://sp21.datastructur.es/about.html) · [课程团队](https://sp21.datastructur.es/staff.html) · [资源](https://sp21.datastructur.es/resources.html) · [考试](https://sp21.datastructur.es/exams.html) · [Beacon](http://beacon.datastructur.es/) · [Ed](https://edstem.org/us/courses/3735/discussion/) · [答疑队列](https://oh.datastructur.es)
 
-## 目录
+## 目录 {#目录}
 
 - [Project 2：Gitlet](#project-2gitlet)
-  - [目录](#目录)
-  - [关于本说明文档的一点说明](#关于本说明文档的一点说明)
-  - [Gitlet 概览](#gitlet-概览)
-  - [内部结构](#内部结构)
-  - [行为的详细规范](#行为的详细规范)
-    - [总体规范](#总体规范)
-  - [命令](#命令)
-    - [`init`](#init)
-    - [`add`](#add)
-    - [`commit`](#commit)
-    - [`rm`](#rm)
-    - [`log`](#log)
-    - [`global-log`](#global-log)
-    - [`find`](#find)
-    - [`status`](#status)
-    - [`checkout`](#checkout)
-    - [`branch`](#branch)
-    - [`rm-branch`](#rm-branch)
-    - [`reset`](#reset)
-    - [`merge`](#merge)
-  - [骨架代码](#骨架代码)
-  - [设计文档](#设计文档)
-  - [评分器说明](#评分器说明)
-    - [阶段检查评分器](#阶段检查评分器)
-    - [完整评分器](#完整评分器)
-    - [Snaps 评分器](#snaps-评分器)
-    - [额外加分](#额外加分)
-  - [关于本项目的其他注意事项](#关于本项目的其他注意事项)
-  - [文件处理](#文件处理)
-  - [序列化细节](#序列化细节)
-  - [测试](#测试)
-  - [在课程组参考实现上测试](#在课程组参考实现上测试)
-  - [理解集成测试](#理解集成测试)
-    - [示例测试](#示例测试)
-    - [为测试准备环境](#为测试准备环境)
-    - [使用模式匹配输出](#使用模式匹配输出)
-    - [测试小结](#测试小结)
-  - [调试集成测试](#调试集成测试)
-    - [找到真正需要调试的那一次程序执行](#找到真正需要调试的那一次程序执行)
-  - [远程功能（额外加分）](#远程功能额外加分)
-  - [远程命令](#远程命令)
-    - [`add-remote`](#add-remote)
-    - [`rm-remote`](#rm-remote)
-    - [`push`](#push)
-    - [`fetch`](#fetch)
-    - [`pull`](#pull)
-  - [I. 应避免的做法](#i-应避免的做法)
-  - [J. 致谢](#j-致谢)
+    - [目录](#目录)
+    - [关于本说明文档的一点说明](#关于本说明文档的一点说明)
+    - [Gitlet 概览](#gitlet-概览)
+    - [内部结构](#内部结构)
+    - [行为的详细规范](#行为的详细规范)
+        - [总体规范](#总体规范)
+    - [命令](#命令)
+        - [`init`](#init)
+        - [`add`](#add)
+        - [`commit`](#commit)
+        - [`rm`](#rm)
+        - [`log`](#log)
+        - [`global-log`](#global-log)
+        - [`find`](#find)
+        - [`status`](#status)
+        - [`checkout`](#checkout)
+        - [`branch`](#branch)
+        - [`rm-branch`](#rm-branch)
+        - [`reset`](#reset)
+        - [`merge`](#merge)
+    - [骨架代码](#骨架代码)
+    - [设计文档](#设计文档)
+    - [评分器说明](#评分器说明)
+        - [阶段检查评分器](#阶段检查评分器)
+        - [完整评分器](#完整评分器)
+        - [Snaps 评分器](#snaps-评分器)
+        - [额外加分](#额外加分)
+    - [关于本项目的其他注意事项](#关于本项目的其他注意事项)
+    - [文件处理](#文件处理)
+    - [序列化细节](#序列化细节)
+    - [测试](#测试)
+    - [在课程组参考实现上测试](#在课程组参考实现上测试)
+    - [理解集成测试](#理解集成测试)
+        - [示例测试](#示例测试)
+        - [为测试准备环境](#为测试准备环境)
+        - [使用模式匹配输出](#使用模式匹配输出)
+        - [测试小结](#测试小结)
+    - [调试集成测试](#调试集成测试)
+        - [找到真正需要调试的那一次程序执行](#找到真正需要调试的那一次程序执行)
+    - [远程功能（额外加分）](#远程功能额外加分)
+    - [远程命令](#远程命令)
+        - [`add-remote`](#add-remote)
+        - [`rm-remote`](#rm-remote)
+        - [`push`](#push)
+        - [`fetch`](#fetch)
+        - [`pull`](#pull)
+    - [I. 应避免的做法](#i-应避免的做法)
+    - [J. 致谢](#j-致谢)
 
-## 关于本说明文档的一点说明
+## 关于本说明文档的一点说明 {#关于本说明文档的一点说明}
 
 这份说明文档相当长。前半部分会用较为冗长、细致的方式描述你需要支持的每一条命令；后半部分主要介绍测试细节，并给出一些建议。为了帮助你消化这些内容，我们准备了许多高质量视频，用来讲解说明文档中的不同部分，并建议你应该如何、从哪里开始。所有视频都会在文档中与其内容相关的位置给出链接；为了方便，我们也在这里统一列出。
 
@@ -64,26 +69,26 @@
 - [Git 介绍——第 2 部分](https://www.youtube.com/watch?v=CnMpARAOhFg)
 - [第 12 讲现场课程](https://youtu.be/fvhqn5PeU_Q)
 - Gitlet 介绍播放列表
-  - [第 1 部分](https://www.youtube.com/watch?v=-1gE2cNFhPA)
-  - [第 2 部分](https://www.youtube.com/watch?v=GfmH9_8tM5w)
-  - [第 3 部分](https://www.youtube.com/watch?v=dv5VdbIZKF8)
-  - [第 4 部分](https://www.youtube.com/watch?v=k8jwbG8bE7Y)
-  - [Itai 使用的幻灯片](https://cdn-uploads.piazza.com/attach/k5eevxebzpj25b/jqr7jm9igtc7l5/k97ipfmgmb3n/Gitlet_Slides.pdf)
+    - [第 1 部分](https://www.youtube.com/watch?v=-1gE2cNFhPA)
+    - [第 2 部分](https://www.youtube.com/watch?v=GfmH9_8tM5w)
+    - [第 3 部分](https://www.youtube.com/watch?v=dv5VdbIZKF8)
+    - [第 4 部分](https://www.youtube.com/watch?v=k8jwbG8bE7Y)
+    - [Itai 使用的幻灯片](https://cdn-uploads.piazza.com/attach/k5eevxebzpj25b/jqr7jm9igtc7l5/k97ipfmgmb3n/Gitlet_Slides.pdf)
 - [Merge 概览与示例](https://www.youtube.com/watch?v=JR3OYCMv9b4&t=929s)
 - [分支概览与示例](https://youtu.be/desB3AS6aZg)
 - [测试](https://www.youtube.com/watch?v=uMYpuQuHGu0&t=752s)
 - [设计持久化机制（文字笔记）](https://paper.dropbox.com/doc/Gitlet-Persistence--AyM0lOEaezWrTi7gG_Pt~bXcAg-zEnTGJhtUMtGr8ILYhoab)
 - 2021 年春季答疑时间演示：
-  - Gitlet 入门
-    - [第 1 部分](https://youtu.be/6JVdbNZm0cM)
-    - [第 2 部分](https://youtu.be/1d1yOSoTVAM)
-  - [设计 Gitlet](https://youtu.be/G3YU9oY8PcU)
-    - [笔记](https://sp21.datastructur.es/materials/proj/proj2/gitlet-design-notes.pdf)
-  - [Merge](https://youtu.be/l0X5NgzAWYQ)
+    - Gitlet 入门
+        - [第 1 部分](https://youtu.be/6JVdbNZm0cM)
+        - [第 2 部分](https://youtu.be/1d1yOSoTVAM)
+    - [设计 Gitlet](https://youtu.be/G3YU9oY8PcU)
+        - [笔记](https://sp21.datastructur.es/materials/proj/proj2/gitlet-design-notes.pdf)
+    - [Merge](https://youtu.be/l0X5NgzAWYQ)
 
 随着更多资源被制作出来，我们会继续在这里添加，因此请经常刷新页面！
 
-## Gitlet 概览
+## Gitlet 概览 {#gitlet-概览}
 
 **警告：** 在开始这个项目之前，请确保你已经完成 [Lab 6：Canine Capers](https://sp21.datastructur.es/materials/lab/lab6/lab6)。Lab 6 的目的就是作为本项目的入门练习，它会非常有助于你开始项目，并确保你的环境已经准备妥当。你还应该观看 [Lecture 12：Gitlet](https://youtu.be/fvhqn5PeU_Q)，其中介绍了许多对本项目很有用的思想。
 
@@ -91,14 +96,14 @@
 
 版本控制系统本质上是一个针对一组相关文件的备份系统。Gitlet 支持的主要功能包括：
 
-1. **保存整个文件目录中的内容。**  
-   在 Gitlet 中，这一操作称为 *committing（提交）*，保存下来的内容本身称为 *commits（提交）*。
+1. **保存整个文件目录中的内容。**<br>
+    在 Gitlet 中，这一操作称为 *committing（提交）*，保存下来的内容本身称为 *commits（提交）*。
 
-2. **恢复一个或多个文件的某个版本，或者恢复整个提交。**  
-   在 Gitlet 中，这称为 *checking out（检出）* 这些文件或该提交。
+2. **恢复一个或多个文件的某个版本，或者恢复整个提交。**<br>
+    在 Gitlet 中，这称为 *checking out（检出）* 这些文件或该提交。
 
-3. **查看备份历史。**  
-   在 Gitlet 中，你通过一种叫做 *log（日志）* 的内容查看历史。
+3. **查看备份历史。**<br>
+    在 Gitlet 中，你通过一种叫做 *log（日志）* 的内容查看历史。
 
 4. **维护彼此相关的提交序列，这些序列称为 *branches（分支）*。**
 
@@ -110,7 +115,7 @@
 
 在这个项目中，把随时间产生的提交可视化会很有帮助。假设我们有一个项目，其中只有文件 `wug.txt`。我们先往里面添加一些文本并提交，然后修改文件并提交这些修改，再修改一次并再次提交。现在，我们总共保存了这个文件的三个版本，每个版本都比前一个更晚。可以把这些提交画成下面这样：
 
-![三个提交](https://sp21.datastructur.es/materials/proj/proj2/image/three_commits.png)
+![三个提交](../assets/coursework/426fa433f3f6-three_commits.png)
 
 这里，我们画出的箭头表示：每个提交都包含某种指向前一个提交的引用。我们把前一个提交称为当前提交的 *parent commit（父提交）*，这个概念之后会非常重要。但现在，这张图看起来熟悉吗？没错，它就是一个链表！
 
@@ -118,11 +123,11 @@ Gitlet 背后的核心思想是：我们可以把文件不同版本的历史画�
 
 如果我们让 Gitlet 恢复到一个旧提交，那么链表最前端将不再反映文件的当前状态，这可能有些误导。为了解决这个问题，我们引入一种叫做 *head pointer（头指针，也写作 HEAD 指针）* 的东西。HEAD 指针记录我们当前位于链表中的哪个位置。通常，当我们不断创建提交时，HEAD 指针会一直停留在链表最前端，表示最新提交反映了文件的当前状态：
 
-![简单的 HEAD 指针](https://sp21.datastructur.es/materials/proj/proj2/image/simple_head.png)
+![简单的 HEAD 指针](../assets/coursework/8b22af5878e1-simple_head.png)
 
 不过，假设我们恢复到提交 2 时的文件状态——严格来说，这对应你之后会在规范中看到的 `reset` 命令。我们会把 HEAD 指针向后移动来表示这一点：
 
-![回退后的 HEAD 指针](https://sp21.datastructur.es/materials/proj/proj2/image/reverted_head.png)
+![回退后的 HEAD 指针](../assets/coursework/45de95c2bb1b-reverted_head.png)
 
 这时，我们会说自己处于 *detached head state（分离 HEAD 状态）*。你以前可能遇到过这个说法，现在你知道它是什么意思了！
 
@@ -130,11 +135,11 @@ Gitlet 背后的核心思想是：我们可以把文件不同版本的历史画�
 
 好了，如果 Gitlet 只能做到这些，它会是一个相当简单的系统。但 Gitlet 还有一项本领：它不仅能够维护文件较旧和较新的版本，还可以维护彼此**不同的发展版本**。假设你正在编写一个项目，并且对于接下来如何开发有两种想法：一种叫方案 A，另一种叫方案 B。Gitlet 允许你保存两个版本，并随时在它们之间切换。用图表示，大致如下：
 
-![两个版本](https://sp21.datastructur.es/materials/proj/proj2/image/two_versions.png)
+![两个版本](../assets/coursework/008f3e528937-two_versions.png)
 
 这已经不再真正像链表，而更像一棵树。我们把它称为 *commit tree（提交树）*。继续沿用树的比喻，其中彼此分离的不同版本就称为树的 *branch（分支）*。你可以分别继续开发每一个版本：
 
-![分别开发的两个版本](https://sp21.datastructur.es/materials/proj/proj2/image/two_developed_versions.png)
+![分别开发的两个版本](../assets/coursework/69ebaae365b0-two_developed_versions.png)
 
 这棵树中有两个指针，它们分别表示两个分支各自延伸到的最远位置。在任何时刻，只有其中一个指针处于当前激活状态，而它就是所谓的 HEAD 指针。HEAD 指针是位于当前分支最前端的指针。
 
@@ -142,7 +147,7 @@ Gitlet 背后的核心思想是：我们可以把文件不同版本的历史画�
 
 不过，最后还要说明一点：提交树是**不可变的（immutable）**。一旦一个提交结点被创建，就永远不能销毁，也完全不能修改。我们只能向提交树中添加新内容，不能修改已有内容。这是 Gitlet 的一项重要特性！Gitlet 的目标之一，就是帮助我们保存内容，避免不小心把它们删除。
 
-## 内部结构
+## 内部结构 {#内部结构}
 
 真实的 Git 会区分多种不同的**对象（objects）**。对我们而言，重要的对象包括：
 
@@ -179,11 +184,11 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 你的 commit 类必须以某种方式存储图中展示的全部信息。认真选择内部数据结构，会让实现变得更容易或更困难，因此你非常值得花时间进行规划，思考保存一切内容的最佳方式。
 
-![两个提交及其 blob](https://sp21.datastructur.es/materials/proj/proj2/image/commits-and-blobs.png)
+![两个提交及其 blob](../assets/coursework/339213fb9911-commits-and-blobs.png)
 
-## 行为的详细规范
+## 行为的详细规范 {#行为的详细规范}
 
-### 总体规范
+### 总体规范 {#总体规范}
 
 我们对程序结构给出的唯一硬性要求是：必须存在一个名为 `gitlet.Main` 的类，并且它必须拥有 `main` 方法。
 
@@ -197,47 +202,47 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - 为了让 Gitlet 工作，它需要一个位置存储文件的旧副本以及其他元数据。所有这些内容都**必须**保存在名为 `.gitlet` 的目录中，正如真实 Git 系统把此类信息保存在 `.git` 目录中一样。名称前带 `.` 的文件属于隐藏文件，在多数操作系统中默认不会显示。在 Unix 中，命令 `ls -a` 会显示这些文件。
 
-  如果某个位置中存在 `.gitlet` 目录，就认为该位置已经初始化了 Gitlet 系统。大部分 Gitlet 命令——除 `init` 之外——只需要在已经初始化 Gitlet 的目录中工作，也就是存在 `.gitlet` 子目录的位置。不在 `.gitlet` 目录中的文件，包括你当前从仓库中取出并编辑的文件，以及打算加入仓库的文件，统称为**工作目录（working directory）**中的文件。
+    如果某个位置中存在 `.gitlet` 目录，就认为该位置已经初始化了 Gitlet 系统。大部分 Gitlet 命令——除 `init` 之外——只需要在已经初始化 Gitlet 的目录中工作，也就是存在 `.gitlet` 子目录的位置。不在 `.gitlet` 目录中的文件，包括你当前从仓库中取出并编辑的文件，以及打算加入仓库的文件，统称为**工作目录（working directory）**中的文件。
 
 - 大多数命令都有运行时间或内存使用要求，你必须遵守这些要求。一些运行时间被描述为“相对于任何重要度量都是常数时间”。这里的重要度量包括：文件数量或文件大小的任意度量，以及提交数量的任意度量。
 
-  你可以忽略序列化和反序列化所花费的时间，但有一个限制：序列化时间不能以任何方式依赖于曾经被添加、提交等操作处理过的全部文件的总大小。如果你不知道什么是序列化，请回顾 Lab 6。你也可以假设，从哈希表中取值是常数时间。
+    你可以忽略序列化和反序列化所花费的时间，但有一个限制：序列化时间不能以任何方式依赖于曾经被添加、提交等操作处理过的全部文件的总大小。如果你不知道什么是序列化，请回顾 Lab 6。你也可以假设，从哈希表中取值是常数时间。
 
 - 某些命令有规定的失败情况，并且要求输出指定错误消息。后面会给出这些消息的精确格式。所有错误消息都以句号结尾；由于自动评分会进行字面匹配，请务必包括句号。
 
-  如果程序遇到其中任意失败情况，就必须打印对应错误消息，并且不能修改其他任何内容。**除列出的失败情况之外，你不需要处理其他错误情况。**
+    如果程序遇到其中任意失败情况，就必须打印对应错误消息，并且不能修改其他任何内容。**除列出的失败情况之外，你不需要处理其他错误情况。**
 
 - 还有一些需要处理的失败情况并不属于某一条特定命令：
 
-  - 如果用户没有输入任何参数，打印：
+    - 如果用户没有输入任何参数，打印：
 
-    ```text
-    Please enter a command.
-    ```
+        ```text
+        Please enter a command.
+        ```
 
-    然后退出。
+        然后退出。
 
-  - 如果用户输入了不存在的命令，打印：
+    - 如果用户输入了不存在的命令，打印：
 
-    ```text
-    No command with that name exists.
-    ```
+        ```text
+        No command with that name exists.
+        ```
 
-    然后退出。
+        然后退出。
 
-  - 如果用户输入命令时，操作数的数量或格式错误，打印：
+    - 如果用户输入命令时，操作数的数量或格式错误，打印：
 
-    ```text
-    Incorrect operands.
-    ```
+        ```text
+        Incorrect operands.
+        ```
 
-    然后退出。
+        然后退出。
 
-  - 如果用户输入了一条要求位于已初始化 Gitlet 工作目录中的命令——也就是当前目录应包含 `.gitlet` 子目录——但当前并不在这样的目录中，打印：
+    - 如果用户输入了一条要求位于已初始化 Gitlet 工作目录中的命令——也就是当前目录应包含 `.gitlet` 子目录——但当前并不在这样的目录中，打印：
 
-    ```text
-    Not in an initialized Gitlet directory.
-    ```
+        ```text
+        Not in an initialized Gitlet directory.
+        ```
 
 - 某些命令会列出它们与真实 Git 的区别。说明文档不会穷尽 Gitlet 与 Git 的**全部**区别，但会指出一些较大、可能令人困惑或产生误导的区别。
 
@@ -247,7 +252,7 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - 规范把某些命令归类为“危险命令”。危险命令可能覆盖普通文件，而不仅是元数据。例如，当用户要求 Gitlet 恢复文件的旧版本时，Gitlet 可能覆盖这些文件当前的版本。这只是提醒你一下，所以在测试这些命令前请戴好头盔 :)
 
-## 命令
+## 命令 {#命令}
 
 下面将详细介绍你必须支持的每一条命令。请记住，优秀的程序员始终关心自己使用的数据结构。在阅读这些命令时，你首先应该思考：怎样存储数据，才能方便地支持这些命令；其次应该思考：是否有机会复用已经实现的命令或辅助逻辑。提示：在 Project 2 后面的部分中，你有大量机会复用前面已经写过的代码。
 
@@ -257,29 +262,29 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main init
-  ```
+    ```bash
+    java gitlet.Main init
+    ```
 
 - **描述：** 在当前目录中创建一个新的 Gitlet 版本控制系统。系统会自动从一个提交开始：这个提交不包含任何文件，其提交消息为：
 
-  ```text
-  initial commit
-  ```
+    ```text
+    initial commit
+    ```
 
-  必须完全如上书写，不添加标点。
+    必须完全如上书写，不添加标点。
 
-  系统最初只有一个分支：`master`。`master` 一开始指向初始提交，并且 `master` 是当前分支。初始提交的时间戳应为 UTC 时间 1970 年 1 月 1 日星期四 00:00:00，日期格式可以自行选择。这个时间称为 “Unix Epoch（Unix 纪元）”，在内部用时间值 `0` 表示。
+    系统最初只有一个分支：`master`。`master` 一开始指向初始提交，并且 `master` 是当前分支。初始提交的时间戳应为 UTC 时间 1970 年 1 月 1 日星期四 00:00:00，日期格式可以自行选择。这个时间称为 “Unix Epoch（Unix 纪元）”，在内部用时间值 `0` 表示。
 
-  由于 Gitlet 创建的所有仓库中的初始提交内容都完全相同，因此所有仓库会自动共享这个提交——它们的初始提交拥有相同 UID——并且所有仓库中的所有提交最终都会沿父提交追溯到它。
+    由于 Gitlet 创建的所有仓库中的初始提交内容都完全相同，因此所有仓库会自动共享这个提交——它们的初始提交拥有相同 UID——并且所有仓库中的所有提交最终都会沿父提交追溯到它。
 
 - **运行时间：** 相对于任何重要度量，都应为常数时间。
 
 - **失败情况：** 如果当前目录中已经存在 Gitlet 版本控制系统，则中止操作。不得用新系统覆盖已有系统。输出：
 
-  ```text
-  A Gitlet version-control system already exists in the current directory.
-  ```
+    ```text
+    A Gitlet version-control system already exists in the current directory.
+    ```
 
 - **危险吗？** 否。
 
@@ -289,27 +294,27 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main add [file name]
-  ```
+    ```bash
+    java gitlet.Main add [file name]
+    ```
 
 - **描述：** 把文件当前存在的内容副本加入**暂存区（staging area）**。暂存区会在 `commit` 命令的说明中进一步介绍。正因为如此，添加文件也叫做把文件 *stage for addition（暂存以待添加）*。
 
-  如果一个已经暂存的文件再次被暂存，应该用新内容覆盖暂存区中原来的条目。暂存区必须位于 `.gitlet` 内部的某个位置。
+    如果一个已经暂存的文件再次被暂存，应该用新内容覆盖暂存区中原来的条目。暂存区必须位于 `.gitlet` 内部的某个位置。
 
-  如果文件当前的工作目录版本，与当前提交中保存的版本完全相同，则不要把它暂存为待添加；如果它已经在暂存区中，则把它从暂存区移除。比如，某个文件先被修改并执行 `add`，然后又被改回原来的版本，就会出现这种情况。
+    如果文件当前的工作目录版本，与当前提交中保存的版本完全相同，则不要把它暂存为待添加；如果它已经在暂存区中，则把它从暂存区移除。比如，某个文件先被修改并执行 `add`，然后又被改回原来的版本，就会出现这种情况。
 
-  如果该文件在命令执行时被暂存为待删除——参见 `gitlet rm`——则执行 `add` 后，它不再处于待删除状态。
+    如果该文件在命令执行时被暂存为待删除——参见 `gitlet rm`——则执行 `add` 后，它不再处于待删除状态。
 
 - **运行时间：** 最坏情况下，相对于所添加文件的大小应为线性时间，同时还可以有 $\lg N$ 的开销，其中 $N$ 是当前提交中的文件数量。
 
 - **失败情况：** 如果文件不存在，输出：
 
-  ```text
-  File does not exist.
-  ```
+    ```text
+    File does not exist.
+    ```
 
-  然后退出，不能修改任何内容。
+    然后退出，不能修改任何内容。
 
 - **危险吗？** 否。
 
@@ -323,55 +328,55 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main commit [message]
-  ```
+    ```bash
+    java gitlet.Main commit [message]
+    ```
 
 - **描述：** 保存当前提交以及暂存区中的被跟踪文件快照，以便将来恢复，同时创建一个新提交。我们说这个提交正在**跟踪（tracking）**这些已保存文件。
 
-  默认情况下，每个提交中的文件快照与它的父提交完全相同：它会保持文件版本不变，不会自动更新它们。只有某个被跟踪文件在提交时已经暂存为待添加，新提交才会更新该文件的内容；此时，新提交会保存暂存的文件版本，而不是从父提交继承的版本。
+    默认情况下，每个提交中的文件快照与它的父提交完全相同：它会保持文件版本不变，不会自动更新它们。只有某个被跟踪文件在提交时已经暂存为待添加，新提交才会更新该文件的内容；此时，新提交会保存暂存的文件版本，而不是从父提交继承的版本。
 
-  如果某个暂存为待添加的文件此前没有被父提交跟踪，新提交会保存它并开始跟踪它。最后，如果当前提交所跟踪的某个文件，通过下方的 `rm` 命令被**暂存为待删除（staged for removal）**，那么新提交可以不再跟踪它。
+    如果某个暂存为待添加的文件此前没有被父提交跟踪，新提交会保存它并开始跟踪它。最后，如果当前提交所跟踪的某个文件，通过下方的 `rm` 命令被**暂存为待删除（staged for removal）**，那么新提交可以不再跟踪它。
 
-  最核心的结论是：默认情况下，一个提交与它的父提交拥有相同的文件内容。暂存的添加和删除，就是对新提交所做的更新。当然，提交日期以及通常情况下的提交消息也会与父提交不同。
+    最核心的结论是：默认情况下，一个提交与它的父提交拥有相同的文件内容。暂存的添加和删除，就是对新提交所做的更新。当然，提交日期以及通常情况下的提交消息也会与父提交不同。
 
-  关于 `commit`，还有以下几点需要注意：
+    关于 `commit`，还有以下几点需要注意：
 
-  - 创建提交后，清空暂存区。
+    - 创建提交后，清空暂存区。
 
-  - `commit` 命令永远不会添加、修改或删除工作目录中的普通文件，`.gitlet` 目录中的内容除外。`rm` 命令则会删除普通文件，并把它们暂存为待删除，使它们在下一次 `commit` 后不再被跟踪。
+    - `commit` 命令永远不会添加、修改或删除工作目录中的普通文件，`.gitlet` 目录中的内容除外。`rm` 命令则会删除普通文件，并把它们暂存为待删除，使它们在下一次 `commit` 后不再被跟踪。
 
-  - 文件被暂存为待添加或待删除之后，工作目录中对这些文件所做的任何进一步修改都会被 `commit` 忽略。`commit` 只修改 `.gitlet` 目录中的内容。例如，如果你使用 Unix 的 `rm` 命令——而不是 Gitlet 自己的同名命令——删除了一个被跟踪文件，这不会影响下一次提交；下一次提交仍然会包含该文件此前被跟踪的版本。
+    - 文件被暂存为待添加或待删除之后，工作目录中对这些文件所做的任何进一步修改都会被 `commit` 忽略。`commit` 只修改 `.gitlet` 目录中的内容。例如，如果你使用 Unix 的 `rm` 命令——而不是 Gitlet 自己的同名命令——删除了一个被跟踪文件，这不会影响下一次提交；下一次提交仍然会包含该文件此前被跟踪的版本。
 
-  - 执行 `commit` 后，新提交作为新结点加入提交树。
+    - 执行 `commit` 后，新提交作为新结点加入提交树。
 
-  - 刚刚创建的提交成为“当前提交”，HEAD 指针现在指向它。之前的 HEAD 提交成为新提交的父提交。
+    - 刚刚创建的提交成为“当前提交”，HEAD 指针现在指向它。之前的 HEAD 提交成为新提交的父提交。
 
-  - 每个提交都应包含创建它时的日期和时间。
+    - 每个提交都应包含创建它时的日期和时间。
 
-  - 每个提交都有一条与之关联的日志消息，用来描述提交中文件的修改。这条消息由用户指定。整条消息在传给 `main` 的 `args` 数组中必须只占一个元素。若消息中含有多个单词，用户必须用引号把它包起来。
+    - 每个提交都有一条与之关联的日志消息，用来描述提交中文件的修改。这条消息由用户指定。整条消息在传给 `main` 的 `args` 数组中必须只占一个元素。若消息中含有多个单词，用户必须用引号把它包起来。
 
-  - 每个提交都由自己的 SHA-1 ID 标识。该 ID 的计算必须包括：提交中的文件 blob 引用、父提交引用、日志消息以及提交时间。
+    - 每个提交都由自己的 SHA-1 ID 标识。该 ID 的计算必须包括：提交中的文件 blob 引用、父提交引用、日志消息以及提交时间。
 
 - **运行时间：** 相对于提交数量的任何度量，运行时间都应为常数。相对于提交正在跟踪的所有文件的总大小，运行时间不得差于线性时间。
 
-  此命令还有一项内存要求：执行提交后，`.gitlet` 目录增加的大小不得超过提交时被暂存为待添加的文件总大小，额外元数据不计在内。这意味着，不要重复存储从父提交继承而来的文件版本。提示：blob 是内容可寻址的，请充分利用 SHA-1。
+    此命令还有一项内存要求：执行提交后，`.gitlet` 目录增加的大小不得超过提交时被暂存为待添加的文件总大小，额外元数据不计在内。这意味着，不要重复存储从父提交继承而来的文件版本。提示：blob 是内容可寻址的，请充分利用 SHA-1。
 
-  你可以保存文件的完整副本；不需要担心只保存 diff（差异）之类的优化。
+    你可以保存文件的完整副本；不需要担心只保存 diff（差异）之类的优化。
 
 - **失败情况：** 如果没有任何文件被暂存，则中止并输出：
 
-  ```text
-  No changes added to the commit.
-  ```
+    ```text
+    No changes added to the commit.
+    ```
 
-  每个提交都必须拥有非空白消息。如果消息为空，输出：
+    每个提交都必须拥有非空白消息。如果消息为空，输出：
 
-  ```text
-  Please enter a commit message.
-  ```
+    ```text
+    Please enter a commit message.
+    ```
 
-  被跟踪文件在工作目录中缺失或被修改，并不属于失败情况。请完全忽略 `.gitlet` 目录之外的当前状态。
+    被跟踪文件在工作目录中缺失或被修改，并不属于失败情况。请完全忽略 `.gitlet` 目录之外的当前状态。
 
 - **危险吗？** 否。
 
@@ -383,15 +388,15 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 下面是一次提交执行前后的示意图：
 
-![提交前后](https://sp21.datastructur.es/materials/proj/proj2/image/before_and_after_commit.png)
+![提交前后](../assets/coursework/33919f7aa6eb-before_and_after_commit.png)
 
 ### `rm`
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main rm [file name]
-  ```
+    ```bash
+    java gitlet.Main rm [file name]
+    ```
 
 - **描述：** 如果文件当前被暂存为待添加，则取消它的暂存。如果当前提交正在跟踪该文件，则把它暂存为待删除；如果用户尚未手动删除工作目录中的该文件，还要从工作目录中删除它。**除非当前提交正在跟踪它，否则不要删除该文件。**
 
@@ -399,9 +404,9 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **失败情况：** 如果文件既没有被暂存，也没有被 HEAD 提交跟踪，输出：
 
-  ```text
-  No reason to remove the file.
-  ```
+    ```text
+    No reason to remove the file.
+    ```
 
 - **危险吗？** 是。不过，如果你使用课程组提供的工具方法，最多只会伤害仓库文件，不会删除目录中的所有其他文件。
 
@@ -411,56 +416,56 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main log
-  ```
+    ```bash
+    java gitlet.Main log
+    ```
 
 - **描述：** 从当前 HEAD 提交开始，沿着提交树向后显示每个提交的信息，直到初始提交。只跟随第一父提交链接，忽略合并提交中的第二父提交。在普通 Git 中，这相当于：
 
-  ```bash
-  git log --first-parent
-  ```
+    ```bash
+    git log --first-parent
+    ```
 
-  这组提交结点称为该提交的**历史（history）**。对于历史中的每个结点，应显示提交 ID、提交创建时间以及提交消息。必须严格遵循下面的格式：
+    这组提交结点称为该提交的**历史（history）**。对于历史中的每个结点，应显示提交 ID、提交创建时间以及提交消息。必须严格遵循下面的格式：
 
-  ```text
-  ===
-  commit a0da1ea5a15ab613bf9961fd86f010cf74c7ee48
-  Date: Thu Nov 9 20:00:05 2017 -0800
-  A commit message.
+    ```text
+    ===
+    commit a0da1ea5a15ab613bf9961fd86f010cf74c7ee48
+    Date: Thu Nov 9 20:00:05 2017 -0800
+    A commit message.
 
-  ===
-  commit 3e8bf1d794ca2e9ef8a4007275acf3751c7170ff
-  Date: Thu Nov 9 17:01:33 2017 -0800
-  Another commit message.
+    ===
+    commit 3e8bf1d794ca2e9ef8a4007275acf3751c7170ff
+    Date: Thu Nov 9 17:01:33 2017 -0800
+    Another commit message.
 
-  ===
-  commit e881c9575d180a215d1a636545b8fd9abfb1d2bb
-  Date: Wed Dec 31 16:00:00 1969 -0800
-  initial commit
+    ===
+    commit e881c9575d180a215d1a636545b8fd9abfb1d2bb
+    Date: Wed Dec 31 16:00:00 1969 -0800
+    initial commit
 
-  ```
+    ```
 
-  每个提交前都有 `===`，每个提交后都有一个空行。与真实 Git 一样，每个条目显示提交对象唯一的 SHA-1 ID。
+    每个提交前都有 `===`，每个提交后都有一个空行。与真实 Git 一样，每个条目显示提交对象唯一的 SHA-1 ID。
 
-  提交中显示的时间戳应反映当前时区，而不是 UTC。因此，初始提交的时间戳不一定显示为 1970 年 1 月 1 日星期四 00:00:00，而可能显示成对应的太平洋标准时间。根据你居住的位置，你的时区可能不同，这没有问题。
+    提交中显示的时间戳应反映当前时区，而不是 UTC。因此，初始提交的时间戳不一定显示为 1970 年 1 月 1 日星期四 00:00:00，而可能显示成对应的太平洋标准时间。根据你居住的位置，你的时区可能不同，这没有问题。
 
-  按照从新到旧的顺序显示提交，最新提交位于最上方。顺便说一下，Java 类 `java.util.Date` 和 `java.util.Formatter` 对获取与格式化时间很有帮助。请研究这些类，而不要尝试手动拼接日期。
+    按照从新到旧的顺序显示提交，最新提交位于最上方。顺便说一下，Java 类 `java.util.Date` 和 `java.util.Formatter` 对获取与格式化时间很有帮助。请研究这些类，而不要尝试手动拼接日期。
 
-  当然，你生成的 SHA-1 标识符会与示例不同，不必担心。测试会确认你输出的内容“看起来像”SHA-1 标识符，测试章节会进一步介绍。
+    当然，你生成的 SHA-1 标识符会与示例不同，不必担心。测试会确认你输出的内容“看起来像”SHA-1 标识符，测试章节会进一步介绍。
 
-  对于拥有两个父提交的合并提交，在第一行下方额外加入一行，例如：
+    对于拥有两个父提交的合并提交，在第一行下方额外加入一行，例如：
 
-  ```text
-  ===
-  commit 3e8bf1d794ca2e9ef8a4007275acf3751c7170ff
-  Merge: 4975af1 2c1ead1
-  Date: Sat Nov 11 12:30:00 2017 -0800
-  Merged development into master.
+    ```text
+    ===
+    commit 3e8bf1d794ca2e9ef8a4007275acf3751c7170ff
+    Merge: 4975af1 2c1ead1
+    Date: Sat Nov 11 12:30:00 2017 -0800
+    Merged development into master.
 
-  ```
+    ```
 
-  `Merge:` 后面的两个十六进制数字，分别是第一父提交和第二父提交 ID 的前七位，并且顺序必须如此。第一父提交是执行 merge 时你所在分支的提交；第二父提交来自被合并进来的分支。这与普通 Git 相同。
+    `Merge:` 后面的两个十六进制数字，分别是第一父提交和第二父提交 ID 的前七位，并且顺序必须如此。第一父提交是执行 merge 时你所在分支的提交；第二父提交来自被合并进来的分支。这与普通 Git 相同。
 
 - **运行时间：** 相对于 HEAD 历史中的结点数量，应为线性时间。
 
@@ -472,7 +477,7 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 下图展示了某个特定提交的历史。如果当前分支的 HEAD 指针恰好指向该提交，`log` 会输出图中圈出的提交信息：
 
-![提交历史](https://sp21.datastructur.es/materials/proj/proj2/image/history.png)
+![提交历史](../assets/coursework/4023de93bf32-history.png)
 
 历史会忽略其他分支以及当前提交之后的未来结点。现在有了“历史”的概念，我们可以更精确地描述前面所说的提交树不可变：**拥有某个特定 ID 的提交，其历史永远都不能发生任何改变。** 如果你把提交树理解成许多历史的集合，那么真正的意思就是：每一段历史都是不可变的。
 
@@ -480,9 +485,9 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main global-log
-  ```
+    ```bash
+    java gitlet.Main global-log
+    ```
 
 - **描述：** 与 `log` 类似，但显示曾经创建过的所有提交的信息。提交输出顺序无所谓。提示：`gitlet.Utils` 中有一个很有用的方法，可以帮助你遍历目录中的文件。
 
@@ -498,21 +503,21 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main find [commit message]
-  ```
+    ```bash
+    java gitlet.Main find [commit message]
+    ```
 
 - **描述：** 输出所有提交消息与给定消息相同的提交 ID，每行一个。如果存在多个这样的提交，则分别占一行输出。提交消息是单个操作数；如果消息中包含多个单词，应像 `commit` 命令一样用引号包起来。
 
-  提示：本命令的提示与 `global-log` 相同。
+    提示：本命令的提示与 `global-log` 相同。
 
 - **运行时间：** 相对于提交数量，应为线性时间。
 
 - **失败情况：** 如果不存在这样的提交，输出：
 
-  ```text
-  Found no commit with that message.
-  ```
+    ```text
+    Found no commit with that message.
+    ```
 
 - **危险吗？** 否。
 
@@ -524,47 +529,47 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main status
-  ```
+    ```bash
+    java gitlet.Main status
+    ```
 
 - **描述：** 显示当前存在的所有分支，并使用 `*` 标记当前分支。同时显示哪些文件已经暂存为待添加或待删除。输出必须严格遵循以下格式：
 
-  ```text
-  === Branches ===
-  *master
-  other-branch
+    ```text
+    === Branches ===
+    *master
+    other-branch
 
-  === Staged Files ===
-  wug.txt
-  wug2.txt
+    === Staged Files ===
+    wug.txt
+    wug2.txt
 
-  === Removed Files ===
-  goodbye.txt
+    === Removed Files ===
+    goodbye.txt
 
-  === Modifications Not Staged For Commit ===
-  junk.txt (deleted)
-  wug3.txt (modified)
+    === Modifications Not Staged For Commit ===
+    junk.txt (deleted)
+    wug3.txt (modified)
 
-  === Untracked Files ===
-  random.stuff
+    === Untracked Files ===
+    random.stuff
 
-  ```
+    ```
 
-  最后两个部分——未暂存的修改与未跟踪文件——在 2021 年春季课程中属于额外加分内容，共值 32 分。你可以把它们留空，只保留标题。
+    最后两个部分——未暂存的修改与未跟踪文件——在 2021 年春季课程中属于额外加分内容，共值 32 分。你可以把它们留空，只保留标题。
 
-  各部分之间有一个空行，并且整个 `status` 输出最后也必须有一个空行。各条目应按照 Java 字符串比较规则的字典序排列；分支名前面的星号不参与排序。
+    各部分之间有一个空行，并且整个 `status` 输出最后也必须有一个空行。各条目应按照 Java 字符串比较规则的字典序排列；分支名前面的星号不参与排序。
 
-  如果工作目录中的某个文件符合以下任意情况，则它属于“已修改但未暂存（modified but not staged）”：
+    如果工作目录中的某个文件符合以下任意情况，则它属于“已修改但未暂存（modified but not staged）”：
 
-  - 当前提交正在跟踪该文件；工作目录中的文件内容发生了变化，但没有被暂存。
-  - 文件已经暂存为待添加，但工作目录中的当前内容与暂存内容不同。
-  - 文件已经暂存为待添加，但在工作目录中被删除。
-  - 文件没有被暂存为待删除；当前提交正在跟踪它，但它已从工作目录中删除。
+    - 当前提交正在跟踪该文件；工作目录中的文件内容发生了变化，但没有被暂存。
+    - 文件已经暂存为待添加，但工作目录中的当前内容与暂存内容不同。
+    - 文件已经暂存为待添加，但在工作目录中被删除。
+    - 文件没有被暂存为待删除；当前提交正在跟踪它，但它已从工作目录中删除。
 
-  最后一类“Untracked Files（未跟踪文件）”指的是：文件存在于工作目录中，但既没有暂存为待添加，也没有被当前提交跟踪。这也包括已经被暂存为待删除、但后来又在 Gitlet 不知情的情况下重新创建的文件。
+    最后一类“Untracked Files（未跟踪文件）”指的是：文件存在于工作目录中，但既没有暂存为待添加，也没有被当前提交跟踪。这也包括已经被暂存为待删除、但后来又在 Gitlet 不知情的情况下重新创建的文件。
 
-  忽略可能被放入工作目录的所有子目录，因为 Gitlet 不处理子目录。
+    忽略可能被放入工作目录的所有子目录，因为 Gitlet 不处理子目录。
 
 - **运行时间：** 运行时间应只依赖于工作目录中的数据量、暂存为待添加或待删除的文件数量，以及分支数量。
 
@@ -583,69 +588,63 @@ Git 与 Gitlet 使用相同的方法实现这一点：它们使用一种叫做 *
 
 - **用法：**
 
-  1. ```bash
-     java gitlet.Main checkout -- [file name]
-     ```
+    1. `java gitlet.Main checkout -- [file name]`
 
-  2. ```bash
-     java gitlet.Main checkout [commit id] -- [file name]
-     ```
+    2. `java gitlet.Main checkout [commit id] -- [file name]`
 
-  3. ```bash
-     java gitlet.Main checkout [branch name]
-     ```
+    3. `java gitlet.Main checkout [branch name]`
 
 - **描述：**
 
-  1. 取出 HEAD 提交中该文件的版本，并把它写入工作目录。如果工作目录中已经存在同名文件，就覆盖它。新写入的文件版本不进入暂存区。
+    1. 取出 HEAD 提交中该文件的版本，并把它写入工作目录。如果工作目录中已经存在同名文件，就覆盖它。新写入的文件版本不进入暂存区。
 
-  2. 取出给定 ID 对应提交中的该文件版本，并把它写入工作目录。如果工作目录中已经存在同名文件，就覆盖它。新写入的文件版本不进入暂存区。
+    2. 取出给定 ID 对应提交中的该文件版本，并把它写入工作目录。如果工作目录中已经存在同名文件，就覆盖它。新写入的文件版本不进入暂存区。
 
-  3. 取出给定分支 HEAD 提交中的所有文件，并把它们写入工作目录。如果工作目录中已经有这些文件，就覆盖原有版本。命令完成后，给定分支成为当前分支（HEAD）。当前分支正在跟踪、但被检出分支中不存在的所有文件都应被删除。清空暂存区；但如果用户试图检出当前分支，则按照下方失败情况处理，不能清空暂存区。
+    3. 取出给定分支 HEAD 提交中的所有文件，并把它们写入工作目录。如果工作目录中已经有这些文件，就覆盖原有版本。命令完成后，给定分支成为当前分支（HEAD）。当前分支正在跟踪、但被检出分支中不存在的所有文件都应被删除。清空暂存区；但如果用户试图检出当前分支，则按照下方失败情况处理，不能清空暂存区。
 
 - **运行时间：**
 
-  1. 相对于被检出文件的大小，应为线性时间。
+    1. 相对于被检出文件的大小，应为线性时间。
 
-  2. 对于涉及整个提交快照的操作，相对于提交快照中所有文件的总大小，应为线性时间；相对于提交数量的任何度量，应为常数；相对于分支数量，也应为常数。
+    2. 对于涉及整个提交快照的操作，相对于提交快照中所有文件的总大小，应为线性时间；相对于提交数量的任何度量，应为常数；相对于分支数量，也应为常数。
 
 - **失败情况：**
 
-  1. 如果文件不存在于 HEAD 提交中，中止并输出：
+    1. 如果文件不存在于 HEAD 提交中，中止并输出：
 
-     ```text
-     File does not exist in that commit.
-     ```
+        ```text
+        File does not exist in that commit.
+        ```
 
-     不得改变当前工作目录（CWD）。
+        不得改变当前工作目录（CWD）。
 
-  2. 如果不存在给定 ID 的提交，输出：
+    2. 如果不存在给定 ID 的提交，输出：
 
-     ```text
-     No commit with that id exists.
-     ```
+        ```text
+        No commit with that id exists.
+        ```
 
-     否则，如果该文件不存在于给定提交中，输出与失败情况 1 相同的消息。不得改变当前工作目录。
+        否则，如果该文件不存在于给定提交中，输出与失败情况 1 相同的消息。不得改变当前工作目录。
 
-  3. 如果不存在该名称的分支，输出：
+    3. 如果不存在该名称的分支，输出：
 
-     ```text
-     No such branch exists.
-     ```
+        ```text
+        No such branch exists.
+        ```
 
-     如果给定分支就是当前分支，输出：
+        如果给定分支就是当前分支，输出：
 
-     ```text
-     No need to checkout the current branch.
-     ```
+        ```text
+        No need to checkout the current branch.
+        ```
 
-     如果工作目录中存在一个在当前分支中未被跟踪的文件，并且此次 checkout 会覆盖它，输出：
+        如果工作目录中存在一个在当前分支中未被跟踪的文件，并且此次 checkout 会覆盖它，输出：
 
-     ```text
-     There is an untracked file in the way; delete it, or add and commit it first.
-     ```
+        ```text
+        There is an untracked file in the way; delete it, or add and commit it first.
+        ```
 
-     然后退出。必须在做任何其他事情之前完成此检查。不得改变当前工作目录。
+        然后退出。必须在做任何其他事情之前完成此检查。不得改变当前工作目录。
 
 - **与真实 Git 的区别：** 真实 Git 不会清空暂存区，并且会把检出的文件加入暂存区。此外，如果 checkout 会覆盖或撤销已经暂存的添加或删除，真实 Git 不会执行该操作。
 
@@ -670,9 +669,9 @@ a0da1e
 - **危险吗？** 是！
 
 - **课程组实现的代码行数：**
-  - 第 1 种：约 15 行。
-  - 第 2 种：约 5 行。
-  - 第 3 种：约 15 行。
+    - 第 1 种：约 15 行。
+    - 第 2 种：约 5 行。
+    - 第 3 种：约 15 行。
 
 - [概念测验（不涉及分支）](https://forms.gle/mfHLnrU9VX349jnr7)
 - [概念测验（涉及分支）](https://forms.gle/tbZuqDz7x3u41JhM6)
@@ -681,21 +680,21 @@ a0da1e
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main branch [branch name]
-  ```
+    ```bash
+    java gitlet.Main branch [branch name]
+    ```
 
 - **描述：** 创建一个拥有给定名称的新分支，并让它指向当前 HEAD 提交。分支本质上只是一个名称，它对应一个指向提交结点的引用——也就是一个 SHA-1 标识符。
 
-  与真实 Git 一样，这条命令**不会**立即切换到刚创建的新分支。在你第一次调用 `branch` 之前，程序应当已经运行在默认分支 `master` 上。
+    与真实 Git 一样，这条命令**不会**立即切换到刚创建的新分支。在你第一次调用 `branch` 之前，程序应当已经运行在默认分支 `master` 上。
 
 - **运行时间：** 相对于任何重要度量，都应为常数时间。
 
 - **失败情况：** 如果给定名称的分支已经存在，输出：
 
-  ```text
-  A branch with that name already exists.
-  ```
+    ```text
+    A branch with that name already exists.
+    ```
 
 - **危险吗？** 否。
 
@@ -703,7 +702,7 @@ a0da1e
 
 下面详细看看 `branch` 做了什么。假设当前状态如下：
 
-![简单历史](https://sp21.datastructur.es/materials/proj/proj2/image/simple_history.png)
+![简单历史](../assets/coursework/b4066dd1a0fa-simple_history.png)
 
 现在执行：
 
@@ -713,7 +712,7 @@ java gitlet.Main branch cool-beans
 
 得到：
 
-![刚刚创建分支](https://sp21.datastructur.es/materials/proj/proj2/image/just_called_branch.png)
+![刚刚创建分支](../assets/coursework/1d29ffcc1fec-just_called_branch.png)
 
 嗯……好像没发生多少事情。接着使用下面的命令切换到新分支：
 
@@ -721,11 +720,11 @@ java gitlet.Main branch cool-beans
 java gitlet.Main checkout cool-beans
 ```
 
-![刚刚切换分支](https://sp21.datastructur.es/materials/proj/proj2/image/just_switched_branch.png)
+![刚刚切换分支](../assets/coursework/eb1805cded5b-just_switched_branch.png)
 
 怎么还是好像没发生什么？！好吧，现在我们创建一次提交：修改一些文件，然后运行 `java gitlet.Main add ...`，再运行 `java gitlet.Main commit ...`。
 
-![在分支上提交](https://sp21.datastructur.es/materials/proj/proj2/image/commit_on_branch.png)
+![在分支上提交](../assets/coursework/403e3f0bf2f6-commit_on_branch.png)
 
 我明明听说这里会出现分叉，可我看到的仍然是一条直线。怎么回事？或许应该使用下面的命令回到另一个分支：
 
@@ -733,11 +732,11 @@ java gitlet.Main checkout cool-beans
 java gitlet.Main checkout master
 ```
 
-![检出 master](https://sp21.datastructur.es/materials/proj/proj2/image/checkout_master.png)
+![检出 master](../assets/coursework/5e45b6aaf4d6-checkout_master.png)
 
 现在，再创建一次提交……
 
-![形成分叉](https://sp21.datastructur.es/materials/proj/proj2/image/branched.png)
+![形成分叉](../assets/coursework/8ba3056c9265-branched.png)
 
 呼！这就是分支的完整思想。你理解发生什么了吗？创建分支所做的全部事情，就是给我们添加一个新指针。在任何时刻，这些指针中的一个被视为当前激活指针，也叫做 HEAD 指针，图中使用 `*` 表示。
 
@@ -751,9 +750,9 @@ java gitlet.Main checkout master
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main rm-branch [branch name]
-  ```
+    ```bash
+    java gitlet.Main rm-branch [branch name]
+    ```
 
 - **描述：** 删除给定名称的分支。这里只是删除与该分支关联的指针，并不意味着删除在该分支下创建的所有提交，也不删除其他相关内容。
 
@@ -761,15 +760,15 @@ java gitlet.Main checkout master
 
 - **失败情况：** 如果给定名称的分支不存在，中止并输出：
 
-  ```text
-  A branch with that name does not exist.
-  ```
+    ```text
+    A branch with that name does not exist.
+    ```
 
-  如果试图删除当前所在分支，中止并输出：
+    如果试图删除当前所在分支，中止并输出：
 
-  ```text
-  Cannot remove the current branch.
-  ```
+    ```text
+    Cannot remove the current branch.
+    ```
 
 - **危险吗？** 否。
 
@@ -779,39 +778,39 @@ java gitlet.Main checkout master
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main reset [commit id]
-  ```
+    ```bash
+    java gitlet.Main reset [commit id]
+    ```
 
 - **描述：** 检出给定提交所跟踪的全部文件。删除当前提交正在跟踪、但目标提交中不存在的文件。同时，把当前分支的 HEAD 移动到该提交结点。
 
-  关于使用 `reset` 后 HEAD 指针发生什么变化，可以回看开头的示例。`[commit id]` 可以像 `checkout` 一样使用缩写。执行后清空暂存区。
+    关于使用 `reset` 后 HEAD 指针发生什么变化，可以回看开头的示例。`[commit id]` 可以像 `checkout` 一样使用缩写。执行后清空暂存区。
 
-  从本质上讲，这条命令就是：检出任意指定提交，同时修改当前分支的 HEAD。
+    从本质上讲，这条命令就是：检出任意指定提交，同时修改当前分支的 HEAD。
 
 - **运行时间：** 相对于给定提交快照中全部被跟踪文件的总大小，应为线性时间；相对于提交数量的任何度量，应为常数时间。
 
 - **失败情况：** 如果不存在给定 ID 的提交，输出：
 
-  ```text
-  No commit with that id exists.
-  ```
+    ```text
+    No commit with that id exists.
+    ```
 
-  如果工作目录中的某个文件在当前分支中未被跟踪，并且此次 `reset` 会覆盖它，输出：
+    如果工作目录中的某个文件在当前分支中未被跟踪，并且此次 `reset` 会覆盖它，输出：
 
-  ```text
-  There is an untracked file in the way; delete it, or add and commit it first.
-  ```
+    ```text
+    There is an untracked file in the way; delete it, or add and commit it first.
+    ```
 
-  然后退出。必须在进行任何其他操作之前完成这项检查。
+    然后退出。必须在进行任何其他操作之前完成这项检查。
 
 - **危险吗？** 是！
 
 - **与真实 Git 的区别：** 这条命令最接近真实 Git 的 `--hard` 选项：
 
-  ```bash
-  git reset --hard [commit hash]
-  ```
+    ```bash
+    git reset --hard [commit hash]
+    ```
 
 - **课程组实现的代码行数：** 约 10 行。为什么能这么短？请记住，你应该复用代码 :)
 
@@ -819,15 +818,15 @@ java gitlet.Main checkout master
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main merge [branch name]
-  ```
+    ```bash
+    java gitlet.Main merge [branch name]
+    ```
 
 - **描述：** 把给定分支中的文件合并到当前分支中。这个方法有些复杂，下面给出更详细的说明。
 
 首先，考虑当前分支与给定分支的 **split point（分叉点）**。例如，假设 `master` 是当前分支，而 `branch` 是给定分支：
 
-![分叉点](https://sp21.datastructur.es/materials/proj/proj2/image/split_point.png)
+![分叉点](../assets/coursework/2134fe4fb149-split_point.png)
 
 分叉点是当前分支 HEAD 与给定分支 HEAD 的一个**最新公共祖先（latest common ancestor）**：
 
@@ -850,59 +849,59 @@ Current branch fast-forwarded.
 
 否则，继续执行下方步骤。
 
-1. **只在给定分支中被修改的文件**  
-   如果某个文件从分叉点之后在给定分支中被修改，但在当前分支中没有被修改，则应把它改成给定分支中的版本——也就是从给定分支最前端的提交中检出该文件——并自动暂存。
+1. **只在给定分支中被修改的文件**<br>
+    如果某个文件从分叉点之后在给定分支中被修改，但在当前分支中没有被修改，则应把它改成给定分支中的版本——也就是从给定分支最前端的提交中检出该文件——并自动暂存。
 
-   为了说得更清楚，“文件从分叉点之后在给定分支中被修改”意味着：该文件在给定分支 HEAD 提交中的内容，与它在分叉点提交中的内容不同。请记住，blob 是内容可寻址的。
+    为了说得更清楚，“文件从分叉点之后在给定分支中被修改”意味着：该文件在给定分支 HEAD 提交中的内容，与它在分叉点提交中的内容不同。请记住，blob 是内容可寻址的。
 
-2. **只在当前分支中被修改的文件**  
-   如果某个文件从分叉点之后在当前分支中被修改，但在给定分支中没有被修改，则保持当前状态不变。
+2. **只在当前分支中被修改的文件**<br>
+    如果某个文件从分叉点之后在当前分支中被修改，但在给定分支中没有被修改，则保持当前状态不变。
 
-3. **两个分支以相同方式修改的文件**  
-   如果某个文件在当前分支与给定分支中以完全相同的方式被修改——也就是两边现在内容相同，或者两边都删除了它——则合并不改变该文件。
+3. **两个分支以相同方式修改的文件**<br>
+    如果某个文件在当前分支与给定分支中以完全相同的方式被修改——也就是两边现在内容相同，或者两边都删除了它——则合并不改变该文件。
 
-   如果文件在当前分支和给定分支中都被删除，但工作目录中存在同名文件，则不要碰这个工作目录文件；在合并提交中，该文件仍保持不存在，不被跟踪，也不被暂存。
+    如果文件在当前分支和给定分支中都被删除，但工作目录中存在同名文件，则不要碰这个工作目录文件；在合并提交中，该文件仍保持不存在，不被跟踪，也不被暂存。
 
-4. **分叉点不存在、只在当前分支中存在的文件**  
-   保持当前状态不变。
+4. **分叉点不存在、只在当前分支中存在的文件**<br>
+    保持当前状态不变。
 
-5. **分叉点不存在、只在给定分支中存在的文件**  
-   检出该文件，并把它加入暂存区。
+5. **分叉点不存在、只在给定分支中存在的文件**<br>
+    检出该文件，并把它加入暂存区。
 
-6. **分叉点存在、当前分支未修改、给定分支已删除的文件**  
-   删除该文件，并停止跟踪，也就是把它暂存为待删除。
+6. **分叉点存在、当前分支未修改、给定分支已删除的文件**<br>
+    删除该文件，并停止跟踪，也就是把它暂存为待删除。
 
-7. **分叉点存在、给定分支未修改、当前分支已删除的文件**  
-   继续保持该文件不存在。
+7. **分叉点存在、给定分支未修改、当前分支已删除的文件**<br>
+    继续保持该文件不存在。
 
-8. **两个分支以不同方式修改的文件：发生冲突**  
-   “以不同方式修改”可以指以下情况：
+8. **两个分支以不同方式修改的文件：发生冲突**<br>
+    “以不同方式修改”可以指以下情况：
 
-   - 两边都修改了文件内容，但新内容彼此不同；
-   - 一边修改了文件，另一边删除了文件；
-   - 分叉点中不存在该文件，但当前分支和给定分支都新增了同名文件，并且内容不同。
+    - 两边都修改了文件内容，但新内容彼此不同；
+    - 一边修改了文件，另一边删除了文件；
+    - 分叉点中不存在该文件，但当前分支和给定分支都新增了同名文件，并且内容不同。
 
-   遇到这种情况时，用以下内容替换冲突文件：
+    遇到这种情况时，用以下内容替换冲突文件：
 
-   ```text
-   <<<<<<< HEAD
-   contents of file in current branch
-   =======
-   contents of file in given branch
-   >>>>>>>
-   ```
+    ```text
+    <<<<<<< HEAD
+    contents of file in current branch
+    =======
+    contents of file in given branch
+    >>>>>>>
+    ```
 
-   其中 `contents of...` 应替换为相应文件的实际内容，然后把结果暂存。把某个分支中已经删除的文件视为空文件。
+    其中 `contents of...` 应替换为相应文件的实际内容，然后把结果暂存。把某个分支中已经删除的文件视为空文件。
 
-   这里直接进行字符串拼接。如果文件末尾没有换行符，最终结果可能会像这样：
+    这里直接进行字符串拼接。如果文件末尾没有换行符，最终结果可能会像这样：
 
-   ```text
-   <<<<<<< HEAD
-   contents of file in current branch=======
-   contents of file in given branch>>>>>>>
-   ```
+    ```text
+    <<<<<<< HEAD
+    contents of file in current branch=======
+    contents of file in given branch>>>>>>>
+    ```
 
-   这完全没问题。那些创建不符合标准的病态文件、并且分不清行终止符与行分隔符的人，只能承担相应结果。
+    这完全没问题。那些创建不符合标准的病态文件、并且分不清行终止符与行分隔符的人，只能承担相应结果。
 
 文件按照上述规则更新完成后，只要分叉点既不是当前分支 HEAD，也不是给定分支 HEAD，`merge` 就会自动创建提交，其日志消息为：
 
@@ -926,47 +925,47 @@ Encountered a merge conflict.
 
 - **失败情况：**
 
-  - 如果暂存区中存在待添加或待删除内容，输出：
+    - 如果暂存区中存在待添加或待删除内容，输出：
 
-    ```text
-    You have uncommitted changes.
-    ```
+        ```text
+        You have uncommitted changes.
+        ```
 
-    然后退出。
+        然后退出。
 
-  - 如果给定名称的分支不存在，输出：
+    - 如果给定名称的分支不存在，输出：
 
-    ```text
-    A branch with that name does not exist.
-    ```
+        ```text
+        A branch with that name does not exist.
+        ```
 
-  - 如果试图把一个分支与它自己合并，输出：
+    - 如果试图把一个分支与它自己合并，输出：
 
-    ```text
-    Cannot merge a branch with itself.
-    ```
+        ```text
+        Cannot merge a branch with itself.
+        ```
 
-  - 如果 `merge` 创建的提交没有任何变化，导致普通 `commit` 失败，则直接让正常的提交错误消息输出即可。
+    - 如果 `merge` 创建的提交没有任何变化，导致普通 `commit` 失败，则直接让正常的提交错误消息输出即可。
 
-  - 如果当前工作目录中有未跟踪文件会被此次 merge 覆盖或删除，输出：
+    - 如果当前工作目录中有未跟踪文件会被此次 merge 覆盖或删除，输出：
 
-    ```text
-    There is an untracked file in the way; delete it, or add and commit it first.
-    ```
+        ```text
+        There is an untracked file in the way; delete it, or add and commit it first.
+        ```
 
-    然后退出。必须在进行任何其他操作之前完成此检查。
+        然后退出。必须在进行任何其他操作之前完成此检查。
 
 - **危险吗？** 是！
 
 - **与真实 Git 的区别：**
 
-  - 真实 Git 在合并文件时处理得更加精细，只会在两个文件从分叉点之后都修改过的具体位置显示冲突。
+    - 真实 Git 在合并文件时处理得更加精细，只会在两个文件从分叉点之后都修改过的具体位置显示冲突。
 
-  - 如果存在多个可能的分叉点，真实 Git 使用不同的规则决定选择哪一个。
+    - 如果存在多个可能的分叉点，真实 Git 使用不同的规则决定选择哪一个。
 
-  - 真实 Git 会强制用户先解决合并冲突，然后才能提交并完成合并。Gitlet 会直接把包含冲突标记的结果提交，因此你必须再创建一个单独提交来解决问题。
+    - 真实 Git 会强制用户先解决合并冲突，然后才能提交并完成合并。Gitlet 会直接把包含冲突标记的结果提交，因此你必须再创建一个单独提交来解决问题。
 
-  - 如果工作目录中某个文件存在未暂存修改，而 merge 会修改它，真实 Git 会拒绝合并。你也可以选择实现这一检查，但课程测试不会覆盖该情况。
+    - 如果工作目录中某个文件存在未暂存修改，而 merge 会修改它，真实 Git 会拒绝合并。你也可以选择实现这一检查，但课程测试不会覆盖该情况。
 
 - **课程组实现的代码行数：** 约 70 行。
 
@@ -974,7 +973,7 @@ Encountered a merge conflict.
 
 - **建议复习的课程：** Lecture 19（集合、映射与抽象数据类型），Lecture 22（图遍历）。
 
-## 骨架代码
+## 骨架代码 {#骨架代码}
 
 提供的骨架代码相当精简，大部分只是基本为空的类。我们在其中加入了有帮助的 Javadoc 注释，提示你可能希望在各文件中包含哪些内容。
 
@@ -982,7 +981,7 @@ Encountered a merge conflict.
 
 如果你不知道从哪里开始，建议重新查看 [Lab 6：Canine Capers](https://sp21.datastructur.es/materials/lab/lab6/lab6)。
 
-## 设计文档
+## 设计文档 {#设计文档}
 
 由于这一次你不是从一个内容丰富的骨架项目开始，**我们要求所有人提交一份设计文档，描述自己的实现策略**。设计文档本身不计分，但在答疑时间或 Gitbug 中获得帮助之前，你必须拥有一份最新并且完整的设计文档。
 
@@ -990,11 +989,11 @@ Encountered a merge conflict.
 
 如果你需要帮助创建设计文档，我们当然可以帮你 :) 这里提供了[一些指导原则](https://sp21.datastructur.es/materials/proj/proj2/design.html)，以及一个来自 Capers Lab 的[示例](https://sp21.datastructur.es/materials/proj/proj2/capers-example)。
 
-## 评分器说明
+## 评分器说明 {#评分器说明}
 
 Gitlet 一共有三个评分器：阶段检查评分器、完整评分器，以及 Snaps 评分器。
 
-### 阶段检查评分器
+### 阶段检查评分器 {#阶段检查评分器}
 
 截止时间：3 月 12 日晚上 11:59，可获得 16 分额外加分。
 
@@ -1004,12 +1003,12 @@ Gitlet 一共有三个评分器：阶段检查评分器、完整评分器，以�
 
 - 你的程序能够成功编译。
 - 你能够通过骨架代码中的示例测试：`testing/samples/*.in`。这些测试要求你实现：
-  - `init`
-  - `add`
-  - `commit`
-  - `checkout -- [file name]`
-  - `checkout [commit id] -- [file name]`
-  - `log`
+    - `init`
+    - `add`
+    - `commit`
+    - `checkout -- [file name]`
+    - `checkout [commit id] -- [file name]`
+    - `log`
 
 此外，它还会对以下内容发表评论，但暂时不计分：
 
@@ -1021,7 +1020,7 @@ Gitlet 一共有三个评分器：阶段检查评分器、完整评分器，以�
 
 你的 token 最大容量为 1，每 20 分钟恢复一个 token。测试失败时不会提供完整日志——也就是说，系统会告诉你失败了哪个测试，但不会给出额外消息。不过，由于这些测试文件本身已经提供，你可以直接在本地调试。
 
-### 完整评分器
+### 完整评分器 {#完整评分器}
 
 截止时间：4 月 2 日晚上 11:59，共 1600 分。
 
@@ -1035,7 +1034,7 @@ Gitlet 一共有三个评分器：阶段检查评分器、完整评分器，以�
 
 与阶段检查类似，完整评分器会用英文提示说明每个测试大致在做什么，但不会提供实际 `.in` 文件。
 
-### Snaps 评分器
+### Snaps 评分器 {#snaps-评分器}
 
 截止时间：4 月 9 日晚上 11:59。**在你推送 snaps 仓库并提交到 Snaps Gradescope 作业之前，Gradescope 分数不会转移到 Beacon。**
 
@@ -1050,7 +1049,7 @@ git push
 
 即使忘记了，你也可以在截止日期之后的一周内完成。如果一周后仍未推送，就必须使用 slip days（延期天数）。
 
-### 额外加分
+### 额外加分 {#额外加分}
 
 总共有 $16 + 32 + 64 = 112$ 分额外加分：
 
@@ -1060,7 +1059,7 @@ git push
 
 本说明文档剩余部分包含帮助你开始项目的各种资源，请认真阅读。**关于测试和调试的章节会对你极其有帮助**，因为本项目的测试与调试方式和以前的项目不同，但也没有那么复杂。
 
-## 关于本项目的其他注意事项
+## 关于本项目的其他注意事项 {#关于本项目的其他注意事项}
 
 呼！刚刚介绍了很多命令。不过不用担心，不是所有命令的难度都相同。每条命令旁边都标出了课程组完成该部分大约使用的代码行数——这里只计算该命令专属代码，不会重复计算多条命令共同复用的代码。
 
@@ -1075,7 +1074,7 @@ Gitlet 的 Ed 汇总讨论串通常会变得非常长，但里面包含很多关
 
 到这里，说明文档已经给了你足够的信息，可以开始项目。不过，为了进一步帮助你，还有几件事需要了解。
 
-## 文件处理
+## 文件处理 {#文件处理}
 
 本项目需要读取和写入文件。完成这些操作时，你可能会发现 `java.io.File` 和 `java.nio.file.Files` 很有帮助。事实上，`java.io` 与 `java.nio` 包中的许多内容都可能有用。
 
@@ -1083,7 +1082,7 @@ Gitlet 的 Ed 汇总讨论串通常会变得非常长，但里面包含很多关
 
 有一项警告：如果你发现自己在使用 reader、writer、scanner 或 stream，那么很可能已经把事情弄得比实际需要更复杂。
 
-## 序列化细节
+## 序列化细节 {#序列化细节}
 
 仔细想想 Gitlet，你会发现每次运行程序只能执行一条命令。为了成功完成版本控制系统，你需要在多次命令运行之间记住整棵提交树。
 
@@ -1111,7 +1110,7 @@ private transient MyCommitType parent1;
 
 因此，课程组提供了一个可能有帮助的简单调试工具：`gitlet.DumpObj`。具体信息请查看 `gitlet/DumpObj.java` 中的 Javadoc 注释。
 
-## 测试
+## 测试 {#测试}
 
 你应该完整阅读这一节；为了方便，也提供了一个[视频](https://www.youtube.com/watch?v=uMYpuQuHGu0&t=752s)。
 
@@ -1178,11 +1177,11 @@ make PYTHON=python check
 make TESTER_FLAGS="--keep --verbose"
 ```
 
-## 在课程组参考实现上测试
+## 在课程组参考实现上测试 {#在课程组参考实现上测试}
 
 从 2 月 28 日星期日开始，课程组提供了一种方法，让你可以使用课程组参考实现验证自己对命令的理解，也可以验证自己编写的测试！具体指南在[这里](https://sp21.datastructur.es/materials/guides/staff-gitlet)。
 
-## 理解集成测试
+## 理解集成测试 {#理解集成测试}
 
 当你提交 Gitbug 或在答疑时间寻求帮助时，课程组首先会要求你提供一个失败的测试，因此学会在这个项目中编写测试至关重要。课程组投入了很多工作，让这一过程尽可能不痛苦，所以请花时间阅读本节，理解提供的测试，并学会自己编写高质量测试。
 
@@ -1276,7 +1275,7 @@ D VAR "VALUE"
 
 下面通过一个测试，从头到尾看看会发生什么。我们分析 `test02-basic-checkout.in`。
 
-### 示例测试
+### 示例测试 {#示例测试}
 
 第一次运行这个测试时，系统会创建一个最初为空的临时目录。目录结构现在如下：
 
@@ -1427,7 +1426,7 @@ E NAME
 
 如果你怀疑 `.gitlet` 目录没有被正确设置，或者持久化机制存在问题，通常应保留这个目录进行检查。
 
-### 为测试准备环境
+### 为测试准备环境 {#为测试准备环境}
 
 你很快会发现，测试某条命令可能需要大量重复的准备工作。例如，测试 `checkout` 命令时，可能需要：
 
@@ -1469,7 +1468,7 @@ I commit_setup.inc
 
 课程组提供了一个名为 `definitions.inc` 的 `.inc` 文件，其中为你设置了若干方便使用的模式。下面理解什么是模式。
 
-### 使用模式匹配输出
+### 使用模式匹配输出 {#使用模式匹配输出}
 
 测试中最容易令人困惑的部分，是 `log` 一类命令的输出。原因有几个：
 
@@ -1587,19 +1586,19 @@ D UID1 "${2}"
 
 接着就可以添加断言，确认 checkout 是否成功。
 
-### 测试小结
+### 测试小结 {#测试小结}
 
 测试脚本还支持许多更复杂的操作，不过上面这些已经足够让你编写非常好的测试。可以参考提供的测试开始编写，也可以在 Ed 上讨论测试某项功能的高层思路。
 
 你还可以分享自己的 `.in` 文件，但在发布之前请确保它们正确，并添加注释，使其他学生和课程组人员能够看懂测试过程。
 
-## 调试集成测试
+## 调试集成测试 {#调试集成测试}
 
 回忆 [Lab 6](https://sp21.datastructur.es/materials/lab/lab6/lab6) 中的内容：在这种新测试环境下，调试集成测试与以往稍有不同。`runner.py` 脚本的工作方式与 Capers 中完全相同，因此应该阅读 Lab 6 说明文档中的相应部分，并观看那里链接的视频。
 
 下面介绍一些调试策略。
 
-### 找到真正需要调试的那一次程序执行
+### 找到真正需要调试的那一次程序执行 {#找到真正需要调试的那一次程序执行}
 
 每个测试会多次运行你的程序，而其中每一次运行都有可能引入 Bug。首要任务，是识别真正引入 Bug 的那一次程序执行。
 
@@ -1617,7 +1616,7 @@ D UID1 "${2}"
 
 不要忘记更新设计文档。课程组会拒绝处理没有最新、完整设计文档的 Gitbug。
 
-## 远程功能（额外加分）
+## 远程功能（额外加分） {#远程功能额外加分}
 
 本项目的主要目标是模仿 Git 的本地功能。这些功能很有用，因为它们让你能够备份自己的文件，并维护同一文件的多个版本。
 
@@ -1639,7 +1638,7 @@ D UID1 "${2}"
 
 课程组会优先帮助学生完成主项目。如果你在做额外加分，就需要比大多数学生更独立一些。
 
-## 远程命令
+## 远程命令 {#远程命令}
 
 关于远程命令，先说明几点：
 
@@ -1652,29 +1651,29 @@ D UID1 "${2}"
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main add-remote [remote name] [name of remote directory]/.gitlet
-  ```
+    ```bash
+    java gitlet.Main add-remote [remote name] [name of remote directory]/.gitlet
+    ```
 
 - **描述：** 使用给定的远程名称，保存给定的登录或位置信息。之后，如果使用该远程名称执行 push 或 pull，程序就会尝试使用对应的 `.gitlet` 目录。
 
-  例如：
+    例如：
 
-  ```bash
-  java gitlet.Main add-remote other ../testing/otherdir/.gitlet
-  ```
+    ```bash
+    java gitlet.Main add-remote other ../testing/otherdir/.gitlet
+    ```
 
-  这样可以编写在任何位置——无论是个人电脑还是评分程序环境——都能工作的远程仓库测试。
+    这样可以编写在任何位置——无论是个人电脑还是评分程序环境——都能工作的远程仓库测试。
 
-  在这些命令中始终使用正斜杠 `/`。程序应把所有正斜杠转换为当前系统的路径分隔符：Unix 中为正斜杠，Windows 中为反斜杠。Java 很贴心地通过类变量 `java.io.File.separator` 提供了这个字符。
+    在这些命令中始终使用正斜杠 `/`。程序应把所有正斜杠转换为当前系统的路径分隔符：Unix 中为正斜杠，Windows 中为反斜杠。Java 很贴心地通过类变量 `java.io.File.separator` 提供了这个字符。
 
 - **失败情况：** 如果给定名称的 remote 已存在，输出：
 
-  ```text
-  A remote with that name already exists.
-  ```
+    ```text
+    A remote with that name already exists.
+    ```
 
-  不需要检查用户名和服务器信息是否合法。
+    不需要检查用户名和服务器信息是否合法。
 
 - **危险吗？** 否。
 
@@ -1682,17 +1681,17 @@ D UID1 "${2}"
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main rm-remote [remote name]
-  ```
+    ```bash
+    java gitlet.Main rm-remote [remote name]
+    ```
 
 - **描述：** 删除与给定远程名称关联的信息。其思想是：如果以后希望修改一个已经添加的 remote，必须先删除它，再重新添加。
 
 - **失败情况：** 如果给定名称的 remote 不存在，输出：
 
-  ```text
-  A remote with that name does not exist.
-  ```
+    ```text
+    A remote with that name does not exist.
+    ```
 
 - **危险吗？** 否。
 
@@ -1700,29 +1699,29 @@ D UID1 "${2}"
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main push [remote name] [remote branch name]
-  ```
+    ```bash
+    java gitlet.Main push [remote name] [remote branch name]
+    ```
 
 - **描述：** 尝试把当前分支中的提交追加到给定远程仓库的给定分支末尾。具体如下。
 
-  只有当远程分支的 HEAD 位于当前本地 HEAD 的历史中时，这条命令才能工作。这意味着，本地分支中存在一些位于远程分支之后的未来提交。
+    只有当远程分支的 HEAD 位于当前本地 HEAD 的历史中时，这条命令才能工作。这意味着，本地分支中存在一些位于远程分支之后的未来提交。
 
-  此时，把这些未来提交追加到远程分支。然后，远程仓库应重置到被追加提交的最前端，使远程 HEAD 与本地 HEAD 相同。这个过程称为 **fast-forwarding（快进）**。
+    此时，把这些未来提交追加到远程分支。然后，远程仓库应重置到被追加提交的最前端，使远程 HEAD 与本地 HEAD 相同。这个过程称为 **fast-forwarding（快进）**。
 
-  如果远程机器上的 Gitlet 系统存在，但没有输入的分支，则直接在远程 Gitlet 中添加该分支。
+    如果远程机器上的 Gitlet 系统存在，但没有输入的分支，则直接在远程 Gitlet 中添加该分支。
 
 - **失败情况：** 如果远程分支的 HEAD 不在当前本地 HEAD 的历史中，输出：
 
-  ```text
-  Please pull down remote changes before pushing.
-  ```
+    ```text
+    Please pull down remote changes before pushing.
+    ```
 
-  如果远程 `.gitlet` 目录不存在，输出：
+    如果远程 `.gitlet` 目录不存在，输出：
 
-  ```text
-  Remote directory not found.
-  ```
+    ```text
+    Remote directory not found.
+    ```
 
 - **危险吗？** 否。
 
@@ -1730,35 +1729,35 @@ D UID1 "${2}"
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main fetch [remote name] [remote branch name]
-  ```
+    ```bash
+    java gitlet.Main fetch [remote name] [remote branch name]
+    ```
 
 - **描述：** 从远程 Gitlet 仓库把提交下载到本地 Gitlet 仓库。
 
-  从根本上说，它会复制远程仓库给定分支中的所有 commit 与 blob，只复制当前仓库中尚不存在的对象，并在本地 `.gitlet` 中把它们放进一个名为：
+    从根本上说，它会复制远程仓库给定分支中的所有 commit 与 blob，只复制当前仓库中尚不存在的对象，并在本地 `.gitlet` 中把它们放进一个名为：
 
-  ```text
-  [remote name]/[remote branch name]
-  ```
+    ```text
+    [remote name]/[remote branch name]
+    ```
 
-  的分支中，这与真实 Git 相同。
+    的分支中，这与真实 Git 相同。
 
-  然后，让 `[remote name]/[remote branch name]` 指向远程分支的 HEAD 提交，从而把远程分支的内容复制到当前仓库。如果本地此前不存在这个分支，就创建它。
+    然后，让 `[remote name]/[remote branch name]` 指向远程分支的 HEAD 提交，从而把远程分支的内容复制到当前仓库。如果本地此前不存在这个分支，就创建它。
 
 - **失败情况：** 如果远程 Gitlet 仓库中不存在给定分支，输出：
 
-  ```text
-  That remote does not have that branch.
-  ```
+    ```text
+    That remote does not have that branch.
+    ```
 
-  如果远程 `.gitlet` 目录不存在，输出：
+    如果远程 `.gitlet` 目录不存在，输出：
 
-  ```text
-  Remote directory not found.
-  ```
+    ```text
+    Remote directory not found.
+    ```
 
-  > 原说明文档中的 HTML 注释指出：这里可能还需要为“remote 名称没有定义”补充失败情况，但规范正文没有正式给出对应消息。
+    > 原说明文档中的 HTML 注释指出：这里可能还需要为“remote 名称没有定义”补充失败情况，但规范正文没有正式给出对应消息。
 
 - **危险吗？** 否。
 
@@ -1766,9 +1765,9 @@ D UID1 "${2}"
 
 - **用法：**
 
-  ```bash
-  java gitlet.Main pull [remote name] [remote branch name]
-  ```
+    ```bash
+    java gitlet.Main pull [remote name] [remote branch name]
+    ```
 
 - **描述：** 按照 `fetch` 命令的行为获取分支 `[remote name]/[remote branch name]`，然后把获取到的分支合并进当前分支。
 
@@ -1776,29 +1775,29 @@ D UID1 "${2}"
 
 - **危险吗？** 是！
 
-## I. 应避免的做法
+## I. 应避免的做法 {#i-应避免的做法}
 
 经验表明，下面这些做法会让你遭受无穷无尽的痛苦：程序无法工作、Bug 很难找到，有时甚至无法稳定复现——也就是所谓的 “Heisenbugs（海森堡 Bug）”。
 
 1. 由于你可能会把各种信息——例如提交——保存在文件中，因此可能想使用看起来很方便的文件系统操作，例如列出目录内容，来依次遍历它们。
 
-   请小心。`File.list` 和 `File.listFiles` 等方法会以**未定义顺序**返回文件名。如果用这些方法实现 `log` 命令，尤其可能得到随机结果。
+    请小心。`File.list` 和 `File.listFiles` 等方法会以**未定义顺序**返回文件名。如果用这些方法实现 `log` 命令，尤其可能得到随机结果。
 
 2. Windows 用户尤其要注意：Unix 或 macOS 的文件分隔符是 `/`，Windows 中则是 `\`。
 
-   如果程序通过手动拼接目录名、文件名以及显式的 `/` 或 `\` 来构造路径，那么可以确定，它至少会在其中一种系统上无法工作。
+    如果程序通过手动拼接目录名、文件名以及显式的 `/` 或 `\` 来构造路径，那么可以确定，它至少会在其中一种系统上无法工作。
 
-   Java 提供了与系统相关的文件分隔符：
+    Java 提供了与系统相关的文件分隔符：
 
-   ```java
-   System.getProperty("file.separator")
-   ```
+    ```java
+    System.getProperty("file.separator")
+    ```
 
-   也可以使用 `File` 的多参数构造函数。
+    也可以使用 `File` 的多参数构造函数。
 
 3. 序列化时要小心使用 `HashMap`！`HashMap` 内部元素的顺序是不确定的。解决方法是使用 `TreeMap`，它始终保持相同顺序。更多信息见[这里](https://stackoverflow.com/questions/5993752/hashmap-serialization-and-deserialization-changes)。
 
-## J. 致谢
+## J. 致谢 {#j-致谢}
 
 感谢 Alicia Luengo、Josh Hug、Sarah Kim、Austin Chen、Andrew Huang、Yan Zhao、Matthew Chow，尤其是 Alan Yao、Daniel Nguyen 和 Armani Ferrante 为本项目提供反馈。也感谢 Git 如此优秀。
 
@@ -1808,4 +1807,8 @@ D UID1 "${2}"
 
 ---
 
-**翻译说明：** 本 Markdown 按原网页可见内容的顺序完整翻译；原网页中的命令、代码、测试 DSL、规定输出、文件名、类名与提交消息模板保留英文，以确保它们仍可直接用于实现和自动评分。全部 15 张原图均保留，并改为原网站的绝对 URL。
+**翻译说明：** 本 Markdown 按原网页可见内容的顺序完整翻译；原网页中的命令、代码、测试 DSL、规定输出、文件名、类名与提交消息模板保留英文，以确保它们仍可直接用于实现和自动评分。全部 15 张原图均保留，并已下载到本地。
+
+---
+
+原始页面：[https://sp21.datastructur.es/materials/proj/proj2/proj2](https://sp21.datastructur.es/materials/proj/proj2/proj2)
