@@ -993,6 +993,8 @@ Encountered a merge conflict.
 
 Gitlet 一共有三个评分器：阶段检查评分器、完整评分器，以及 Snaps 评分器。
 
+<a id="checkpoint-grader"></a>
+
 ### 阶段检查评分器 {#阶段检查评分器}
 
 截止时间：3 月 12 日晚上 11:59，可获得 16 分额外加分。
