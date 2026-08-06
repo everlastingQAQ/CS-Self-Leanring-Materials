@@ -1,6 +1,6 @@
 ---
-title: "项目 3：CS61BYoW"
-description: "CS 61B Spring 2021 Project 3 完整中文翻译"
+title: "Project 3：CS61BYoW"
+description: "CS61B Spring 2021 Project 3：CS61BYoW中文学习资料。"
 ---
 
 # 项目 3：CS61BYoW
@@ -9,33 +9,33 @@ description: "CS 61B Spring 2021 Project 3 完整中文翻译"
 
 - [引言](#introduction)
 - [概述](#overview)
-  - [骨架代码结构](#skeleton-code-structure)
-  - [阶段 1：世界生成](#phase-1-world-generation)
-    - [默认图块集与图块渲染引擎](#the-default-tileset-and-tile-rendering-engine)
-    - [启动你的程序](#starting-your-program)
-    - [阶段 1 总结](#phase-1-summary)
-  - [设计文档](#design-document)
-    - [设计文档指南](#design-document-guidelines)
-    - [设计文档各部分](#design-document-sections)
-      - [1. 类与数据结构](#1-classes-and-data-structures)
-      - [2. 算法](#2-algorithms)
-      - [3. 持久化](#3-persistence)
-    - [示例](#example)
-  - [阶段 2：交互性](#phase-2-interactivity)
-    - [UI（用户界面）外观](#ui-user-interface-appearance)
-    - [UI 行为](#ui-behavior)
-    - [保存与加载](#saving-and-loading)
-    - [通过输入字符串进行交互与阶段 2](#interacting-with-input-strings-and-phase-2)
-    - [创意分数](#ambition-score)
-      - [270 分主要功能](#270-point-primary-features)
-      - [90 分次要功能](#90-point-secondary-features)
-  - [要求汇总](#requirements-summary)
+    - [骨架代码结构](#skeleton-code-structure)
+    - [阶段 1：世界生成](#phase-1-world-generation)
+        - [默认图块集与图块渲染引擎](#the-default-tileset-and-tile-rendering-engine)
+        - [启动你的程序](#starting-your-program)
+        - [阶段 1 总结](#phase-1-summary)
+    - [设计文档](#design-document)
+        - [设计文档指南](#design-document-guidelines)
+        - [设计文档各部分](#design-document-sections)
+            - [1. 类与数据结构](#1-classes-and-data-structures)
+            - [2. 算法](#2-algorithms)
+            - [3. 持久化](#3-persistence)
+        - [示例](#example)
+    - [阶段 2：交互性](#phase-2-interactivity)
+        - [UI（用户界面）外观](#ui-user-interface-appearance)
+        - [UI 行为](#ui-behavior)
+        - [保存与加载](#saving-and-loading)
+        - [通过输入字符串进行交互与阶段 2](#interacting-with-input-strings-and-phase-2)
+        - [创意分数](#ambition-score)
+            - [270 分主要功能](#270-point-primary-features)
+            - [90 分次要功能](#90-point-secondary-features)
+    - [要求汇总](#requirements-summary)
 - [额外加分](#extra-credit)
 - [提交与评分](#submission-and-grading)
-  - [验收脚本与表单](#checkoff-script-and-form)
+    - [验收脚本与表单](#checkoff-script-and-form)
 - [自动评分器详情](#autograder-details)
-  - [阶段 1 评分器](#phase-1-grader)
-  - [阶段 2 评分器](#phase-2-grader)
+    - [阶段 1 评分器](#phase-1-grader)
+    - [阶段 2 评分器](#phase-2-grader)
 - [Office Hours](#office-hours)
 - [常见问题](#faq)
 
@@ -57,7 +57,7 @@ description: "CS 61B Spring 2021 Project 3 完整中文翻译"
 本作业有几个关键截止时间：
 
 - **阶段 0——组队：**必须在太平洋时间 3 月 31 日星期三晚上 11:59 之前提交 [Project 3 Partnership form](https://forms.gle/hmobYwgEv3vCFYXs8)。之后你将**不能**更换搭档。
-- 开始作业前，请先阅读并理解[合作指南](https://sp21.datastructur.es/materials/guides/partnerships3)。   
+- 开始作业前，请先阅读并理解[合作指南](https://sp21.datastructur.es/materials/guides/partnerships3)。<br>
 - **阶段 1——世界生成：**4 月 16 日晚上 11:59 前提交到 Gradescope。
 - **阶段 2——交互性：**4 月 27 日晚上 11:59 前提交到 Gradescope。
 - **额外加分：**为你的世界加入有创意的机制，并在 4 月 30 日前制作一个公开的 YouTube 视频展示你的作品。
@@ -75,11 +75,11 @@ description: "CS 61B Spring 2021 Project 3 完整中文翻译"
 
 作为一个远比本项目复杂的例子，NES 游戏《Zelda II》在某些场景下就是一个基于图块的世界探索引擎，而它碰巧也是一款电子游戏：
 
-![《Zelda II》俯视场景](http://www.mobygames.com/images/shots/l/31358-zelda-ii-the-adventure-of-link-nes-screenshot-an-overhead-view.jpg)
+![《Zelda II》俯视场景](../assets/coursework/43bd74b00a6a-31358-zelda-ii-the-adventure-of-link-nes-screenshot-an-overhead-view.jpg)
 
 你构建的系统可以使用图形图块，如上图所示；也可以使用文字图块，就像[下面这个游戏](https://sites.google.com/site/broguegame/)一样：
 
-![Brogue 的文字图块界面](https://sp21.datastructur.es/materials/proj/proj3/img/brogue_textbased_example.png)
+![Brogue 的文字图块界面](../assets/coursework/d51504d10285-brogue_textbased_example.png)
 
 我们会提供：
 
@@ -148,6 +148,8 @@ public void interactWithKeyboard()
 
 
 <a id="phase-1-world-generation"></a>
+<a id="phase-1"></a>
+
 ### 阶段 1：世界生成
 
 如上所述，本项目的第一个目标是编写一个世界生成器。你的世界必须满足以下要求：
@@ -173,7 +175,7 @@ public void interactWithKeyboard()
 - 一段金色墙壁表示一扇上锁的门；
 - 所有未使用空间均为空白。
 
-[![满足规范的世界示例](https://sp21.datastructur.es/materials/proj/proj3/img/compliant_world_example.png)](https://sp21.datastructur.es/materials/proj/proj3/img/compliant_world_example.png)
+[![满足规范的世界示例](../assets/coursework/cc595ade5dfd-compliant_world_example.png)](https://sp21.datastructur.es/materials/proj/proj3/img/compliant_world_example.png)
 
 完成 Lab 12 后，你就可以开始编写世界生成算法。
 
@@ -292,11 +294,11 @@ N#######S
 - 如果你已经运行过这个 `main` 方法，请进入 **Run → Edit Configurations**；
 - 然后在 **Program Arguments** 输入框中填写你的字符串，如下图所示。
 
-![在 IntelliJ 中设置程序参数](https://sp21.datastructur.es/materials/proj/proj3/img/program_args.png)
+![在 IntelliJ 中设置程序参数](../assets/coursework/753c247a68dc-program_args.png)
 
 如果你还没有运行过 `main` 方法，可以右键点击 `main` 方法旁边的绿色箭头，然后选择 **Modify Run Configurations**，进入同一个设置窗口：
 
-![打开运行配置](https://sp21.datastructur.es/materials/proj/proj3/img/access_config.png)
+![打开运行配置](../assets/coursework/e019f853d72a-access_config.png)
 
 最后，我们建议你尽量少修改 `Core.Main` 类。把程序中的实际工作委托给你自己创建的其他类，是更好的设计。
 
@@ -314,7 +316,7 @@ N#######S
 
 你可以自行添加更多选项或其他导航方式。
 
-![主菜单示例](https://sp21.datastructur.es/materials/proj/proj3/img/mainmenu_example.png)
+![主菜单示例](../assets/coursework/a7824ffc91cf-mainmenu_example.png)
 
 用户在键盘上按 `N` 创建新世界后，程序应提示用户输入一个“随机种子”。该种子是用户选择的 `long` 值，之后会用于随机生成世界，具体方式将在后文以及 Lab 12 中介绍。
 
@@ -472,6 +474,8 @@ S：选择生物并创建新世界
 
 
 <a id="phase-2-interactivity"></a>
+<a id="phase-2"></a>
+
 ### 阶段 2：交互性
 
 在项目的第二阶段，你将加入让用户真正与世界互动的能力，同时还要为世界添加用户界面（UI）元素，让整个体验更具沉浸感，也能向用户提供更多信息。
@@ -480,22 +484,22 @@ S：选择生物并创建新世界
 
 - 用户必须能够控制某种“角色”（avatar），并使用 `W`、`A`、`S`、`D` 键让它移动。Lab 13 会介绍如何加入交互功能。
 
-  这里所说的“角色”，只是指屏幕上由用户控制的某种表示。例如，在作者的项目中，角色使用一个可以四处移动的 `@` 符号表示。
+    这里所说的“角色”，只是指屏幕上由用户控制的某种表示。例如，在作者的项目中，角色使用一个可以四处移动的 `@` 符号表示。
 
 - 角色必须能够以某种方式与世界互动。
 - 系统必须是确定性的：对于同一个种子，只要按键序列相同，每一次运行都必须产生完全相同的行为。
 
-  请注意，`Random` 对象可以保证在相同种子下，每次生成相同的随机数序列。
+    请注意，`Random` 对象可以保证在相同种子下，每次生成相同的随机数序列。
 
 - 为了支持保存和加载，程序需要在 `proj3` 目录中创建一些文件。具体细节会在本说明后文和骨架代码中介绍。
 
-  你创建的文件只能使用 `.txt` 后缀，例如：
+    你创建的文件只能使用 `.txt` 后缀，例如：
 
-  ```text
-  savefile.txt
-  ```
+    ```text
+    savefile.txt
+    ```
 
-  如果不遵守这一要求，自动评分器可能会出现问题。
+    如果不遵守这一要求，自动评分器可能会出现问题。
 
 你也可以选择加入允许用户获胜或失败的游戏机制，具体请参见后文的额外加分部分。
 
@@ -515,7 +519,7 @@ HUD 最低限度必须包含一段文字，用来描述鼠标指针当前指向�
 
 作为最低实现标准，下面这个简单界面显示了一个图块网格，并在 HUD 中显示鼠标指针下方图块的描述。点击图片可查看高分辨率版本：
 
-[![基础 HUD 示例](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example0.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example0.png)
+[![基础 HUD 示例](../assets/coursework/29b28a03dee4-UI_example0.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example0.png)
 
 你也可以自行加入其他功能。
 
@@ -523,7 +527,7 @@ HUD 最低限度必须包含一段文字，用来描述鼠标指针当前指向�
 
 请注意，这个示例世界并不符合前面规范中的世界要求，因为它是一个巨大、无规则的洞穴空间，而不是由走廊连接的房间。
 
-[![带生命值的 HUD 示例](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example1.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example1.png)
+[![带生命值的 HUD 示例](../assets/coursework/a8b0e6cd4507-UI_example1.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example1.png)
 
 下面这个游戏示例会在 GUI 中列出其他有效按键，并在鼠标悬停于图块上时提供更加详细的信息，例如：
 
@@ -535,7 +539,7 @@ You see grass-like fungus.
 
 下图展示的是一款专业游戏，因此我们并不要求你的项目达到这种细节水平，不过我们鼓励你尝试实现一些有趣的视觉效果。
 
-[![更复杂的 HUD 示例](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example2.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example2.png)
+[![更复杂的 HUD 示例](../assets/coursework/d0397c466724-UI_example2.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example2.png)
 
 关于如何指定 HUD 的位置，请参考 `TERenderer` 中的：
 
@@ -595,15 +599,15 @@ initialize(int width, int height, int xOffset, int yOffset)
 
 - `StdDraw` 不支持组合键。
 
-  当我们说 `:Q` 时，意思是先按 `:`，再按 `Q`，而不是同时按下两个键。
+    当我们说 `:Q` 时，意思是先按 `:`，再按 `Q`，而不是同时按下两个键。
 
 - 它只能识别会产生字符的按键。
 
-  因此，任何 Unicode 字符都可以，但方向键、Escape 等不会产生字符的按键无法使用。
+    因此，任何 Unicode 字符都可以，但方向键、Escape 等不会产生字符的按键无法使用。
 
 - 在某些电脑上，如果不进行较大修改，它可能不支持长按按键。例如，你不能一直按住 `E` 来持续向东移动。
 
-  如果你能找到一种同时兼容 `interactWithInputString` 的长按实现方式，也可以自行支持。
+    如果你能找到一种同时兼容 `interactWithInputString` 的长按实现方式，也可以自行支持。
 
 因为系统必须能够通过 `interactWithInputString` 接收字符串输入，所以引擎不能使用真实时间。
 
@@ -810,29 +814,29 @@ L
 
 - 创建一个系统，使图块渲染器只显示位于角色视线范围内的图块。视线功能必须能够通过按键打开和关闭。
 
-  下面的视线 GIF 是一种更复杂的实现，视线能够绕过拐角。我们也见过只在角色周围显示一个正方形亮区的版本。
+    下面的视线 GIF 是一种更复杂的实现，视线能够绕过拐角。我们也见过只在角色周围显示一个正方形亮区的版本。
 
-[![视线系统示例](https://sp21.datastructur.es/materials/proj/proj3/img/line-of-sight.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/line-of-sight.gif)
+[![视线系统示例](../assets/coursework/5bcb81b08cb7-line-of-sight.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/line-of-sight.gif)
 
 - 加入光源影响世界渲染效果的能力，并至少实现一个可以通过按键开关的光源。
 
-[![开关灯光示例](https://sp21.datastructur.es/materials/proj/proj3/img/toggle-lights.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/toggle-lights.gif)
+[![开关灯光示例](../assets/coursework/80b341d8f449-toggle-lights.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/toggle-lights.gif)
 
 - 加入使用课堂中某种搜索算法追逐角色或其他实体的实体，并提供一个开关，用于显示它们预计采用的路径。
 
-[![敌人追踪示例](https://sp21.datastructur.es/materials/proj/proj3/img/enemy.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/enemy.gif)
+[![敌人追踪示例](../assets/coursework/86f29a9e3c62-enemy.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/enemy.gif)
 
 - 创建“遭遇”系统：当角色与世界中的实体互动时，显示一个新的界面；遭遇结束后，将角色带回原来的界面。例如《Pokémon》中的遭遇。
 
-[![遭遇系统示例](https://sp21.datastructur.es/materials/proj/proj3/img/encounter.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/encounter.gif)
+[![遭遇系统示例](../assets/coursework/45417e6ad9f2-encounter.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/encounter.gif)
 
 - 让用户能够“重放”最近一次存档，从创建最近一个新世界开始，以可视化方式展示之后执行的所有操作。重放最终得到的状态必须和用户加载最近存档后得到的最终状态相同。
 
-[![重放系统示例](https://sp21.datastructur.es/materials/proj/proj3/img/replay.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/replay.gif)
+[![重放系统示例](../assets/coursework/b1116d0afde9-replay.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/replay.gif)
 
 - 让用户能够改变视角，例如第一人称、2.5D 等。
 
-  我们以前从未见过有人实现这个主要功能。Nintendo 64 游戏 [《Kirby 64 - The Crystal Shards》](https://www.youtube.com/watch?v=5uu2TWli-_M)可以作为 2.5D 世界的示例。
+    我们以前从未见过有人实现这个主要功能。Nintendo 64 游戏 [《Kirby 64 - The Crystal Shards》](https://www.youtube.com/watch?v=5uu2TWli-_M)可以作为 2.5D 世界的示例。
 
 <a id="90-point-secondary-features"></a>
 ##### 90 分次要功能
@@ -857,7 +861,7 @@ L
 
 - 在界面某处加入小地图，显示整个地图以及角色当前位置。
 
-  如果你还实现了一个大于屏幕、正常情况下无法一次看到全部内容的地图，这个功能会更有趣。
+    如果你还实现了一个大于屏幕、正常情况下无法一次看到全部内容的地图，这个功能会更有趣。
 
 - 加入旋转世界的能力，例如把棋盘旋转 90 度，并相应调整移动按键。
 
@@ -869,7 +873,7 @@ L
 
 - 支持撤销一次移动，包括撤销发生在当前存档加载之前的移动。
 
-  撤销移动应把世界恢复到最近一次按键之前的状态，但在重放字符串中应增加一个撤销命令，而不是从字符串中删除字符。
+    撤销移动应把世界恢复到最近一次按键之前的状态，但在重放字符串中应增加一个撤销命令，而不是从字符串中删除字符。
 
 <a id="requirements-summary"></a>
 ### 要求汇总
@@ -879,11 +883,11 @@ L
 请注意，本节不能代替阅读完整说明，因为许多细节没有包含在这里。
 
 - 使用 `interactWithKeyboard` 时，程序必须显示一个菜单，其中包含：
-  - New World（`N`）；
-  - Load（`L`）；
-  - Quit（`Q`）。
+    - New World（`N`）；
+    - Load（`L`）；
+    - Quit（`Q`）。
 
-  菜单必须可以通过键盘操作，并且按键不区分大小写。
+    菜单必须可以通过键盘操作，并且按键不区分大小写。
 
 - 选择 New World 后，用户应输入一个整数种子，然后按 `S`。按下 `S` 后，应生成并显示世界。
 
@@ -956,9 +960,9 @@ L
 
 - 为每种图块加入风味文本。当鼠标悬停在图块上时，在图块名称旁边显示。
 
-  风味文本是一段简短描述，可以：
-  - 对图块作进一步说明；
-  - 加入有趣的笑话或引用。
+    风味文本是一段简短描述，可以：
+    - 对图块作进一步说明；
+    - 加入有趣的笑话或引用。
 
 - 在游戏中加入有趣的彩蛋或作弊码，让它们触发一些有趣效果。例如加入[科乐美秘技](https://en.wikipedia.org/wiki/Konami_Code)。
 
@@ -966,23 +970,23 @@ L
 
 - 修改游戏，使世界地图由多个屏幕组成。
 
-  常见做法包括：
-  - 使用楼梯前往具有不同布局的其他楼层；
-  - 使用可滚动地图，当角色走到屏幕边缘时，地图随之移动。
+    常见做法包括：
+    - 使用楼梯前往具有不同布局的其他楼层；
+    - 使用可滚动地图，当角色走到屏幕边缘时，地图随之移动。
 
 - 加入能够与角色互动的 NPC（Non-Player Characters，非玩家角色）。
 
-  例如，可以加入 4 个追逐角色的幽灵；一旦角色被抓住，游戏结束。
+    例如，可以加入 4 个追逐角色的幽灵；一旦角色被抓住，游戏结束。
 
 - 在世界中加入能够传送角色的传送门。
 
 - 加入排行榜或高分列表。
 
-  这要求游戏具有：
-  - 明确目标；
-  - 某种分数概念。
+    这要求游戏具有：
+    - 明确目标；
+    - 某种分数概念。
 
-  用户应能够输入名字，排行榜至少显示前 10 名及对应名字。
+    用户应能够输入名字，排行榜至少显示前 10 名及对应名字。
 
 - 加入动画。
 
@@ -993,6 +997,8 @@ L
 - 加入生命值机制，使游戏更具交互性。
 
 <a id="submission-and-grading"></a>
+<a id="submission"></a>
+
 ## 提交与评分
 
 和往常一样，本项目会在 Gradescope 上提供评分器。
@@ -1034,31 +1040,31 @@ L
 
 1. 找出你希望用于演示评分的 Commit SHA。
 
-   **这个 SHA 必须来自你提交到 Gradescope 的同一个版本。**
+    **这个 SHA 必须来自你提交到 Gradescope 的同一个版本。**
 
-   2021 年 4 月 23 日的补充说明指出：两者不必绝对相同，但建议使用相同 Commit，以确保它能够按照预期编译和运行。
+    2021 年 4 月 23 日的补充说明指出：两者不必绝对相同，但建议使用相同 Commit，以确保它能够按照预期编译和运行。
 
-   如果你为了通过自动评分器需要注释掉某些代码，而为了验收又需要取消注释，也可以使用不同 Commit。
+    如果你为了通过自动评分器需要注释掉某些代码，而为了验收又需要取消注释，也可以使用不同 Commit。
 
-   可以使用：
+    可以使用：
 
-   ```bash
-   git log
-   ```
+    ```bash
+    git log
+    ```
 
-   找到 SHA。把它复制下来，保存在可靠的位置。
+    找到 SHA。把它复制下来，保存在可靠的位置。
 
 2. 确保该 Commit 位于截止时间之前，并从这个 Commit 运行代码，再次确认它确实是你希望评分的版本。
 
-   如果 Commit 晚于截止时间，你将受到 50% 的扣分。
+    如果 Commit 晚于截止时间，你将受到 50% 的扣分。
 
 3. 仔细把 SHA 粘贴进提交表单。
 
 4. **不要忽略第 3 步。**
 
-   如果粘贴了错误的 SHA，我们会评分错误版本的代码。
+    如果粘贴了错误的 SHA，我们会评分错误版本的代码。
 
-   如果粘贴了无效 SHA，默认会评分 `origin/HEAD` Commit，而这很可能导致迟交扣分。
+    如果粘贴了无效 SHA，默认会评分 `origin/HEAD` Commit，而这很可能导致迟交扣分。
 
 <a id="checkoff-script-and-form"></a>
 ### 验收脚本与表单
@@ -1168,17 +1174,17 @@ BYOW 有两个评分器：
 
 - 代码必须有良好文档，包括你编写的所有方法，并遵循[代码风格指南](https://sp21.datastructur.es/materials/guides/style-guide.html#comments)。
 
-  这样可以减少口头解释每个方法用途所花的时间。
+    这样可以减少口头解释每个方法用途所花的时间。
 
 - 如果你的问题是调试问题，必须准备好：
-  - 解释正在发生什么错误；
-  - 提供一个可以方便复现该 Bug 的测试或输入。
+    - 解释正在发生什么错误；
+    - 提供一个可以方便复现该 Bug 的测试或输入。
 
-  如果你只是说某个功能不能工作，却没有编写任何测试，也没有尝试使用调试器，我们不会帮助你。
+    如果你只是说某个功能不能工作，却没有编写任何测试，也没有尝试使用调试器，我们不会帮助你。
 
 - 即使课程工作人员提供调试帮助，也可能只会提供高层建议，例如建议如何重新组织代码，让它更清晰、更容易调试。
 
-  尝试在混乱、脆弱的代码中直接寻找 Bug，对你和助教来说都不是对时间的良好利用。
+    尝试在混乱、脆弱的代码中直接寻找 Bug，对你和助教来说都不是对时间的良好利用。
 
 <a id="faq"></a>
 ## 常见问题
@@ -1282,3 +1288,7 @@ hashCode()
 但如果用户只移动鼠标，你就无法检查鼠标悬停在哪个图块上，因为代码仍被困在等待键盘输入的循环里。
 
 所以，如果选择这种实现方式，应修改这个循环，使它在等待按键的同时，也检查鼠标当前悬停的图块。
+
+---
+
+原始页面：[https://sp21.datastructur.es/materials/proj/proj3/proj3](https://sp21.datastructur.es/materials/proj/proj3/proj3)

@@ -1,29 +1,29 @@
 ---
-title: "项目 3：游戏共享"
-description: "CS 61B Spring 2021 Project 3 Game Sharing 完整中文翻译"
+title: "Project 3：游戏共享"
+description: "CS61B Spring 2021 Project 3：游戏共享中文学习资料。"
 ---
 
-# 项目 3：游戏共享
+# 项目 3：游戏共享 {#项目-3游戏共享}
 
-## 目录
+## 目录 {#目录}
 
 - [项目 3：游戏共享](#项目-3游戏共享)
-  - [目录](#目录)
-      - [作者：Boren Tsai](#作者boren-tsai)
-  - [介绍](#介绍)
-  - [网络功能](#网络功能)
-    - [`Main`](#main)
-    - [`BYOWServer`](#byowserver)
-      - [1. `sendCanvasConfig`](#1-sendcanvasconfig)
-      - [2. `sendCanvas`](#2-sendcanvas)
-      - [3. `clientHasKeyTyped`](#3-clienthaskeytyped)
-      - [4. `clientNextKeyTyped`](#4-clientnextkeytyped)
-      - [5. `stopConnection`](#5-stopconnection)
-    - [`BYOWClient`](#byowclient)
-    - [测试你的代码](#测试你的代码)
-    - [支持远程游戏](#支持远程游戏)
-    - [一分悬赏](#一分悬赏)
-  - [免责声明](#免责声明)
+    - [目录](#目录)
+            - [作者：Boren Tsai](#author-boren-tsai)
+    - [介绍](#introduction)
+    - [网络功能](#networking)
+        - [`Main`](#main)
+        - [`BYOWServer`](#byowserver)
+            - [1. `sendCanvasConfig`](#1-sendcanvasconfig)
+            - [2. `sendCanvas`](#2-sendcanvas)
+            - [3. `clientHasKeyTyped`](#3-clienthaskeytyped)
+            - [4. `clientNextKeyTyped`](#4-clientnextkeytyped)
+            - [5. `stopConnection`](#5-stopconnection)
+        - [`BYOWClient`](#byowclient)
+        - [测试你的代码](#testing-your-code)
+        - [支持远程游戏](#supporting-remote-gameplay)
+        - [一分悬赏](#the-one-point-bounty)
+    - [免责声明](#disclaimer)
 
 <a id="author-boren-tsai"></a>
 #### 作者：Boren Tsai
@@ -416,7 +416,7 @@ localhost:4005
 
 运行后，终端应类似下图：
 
-![ngrok TCP 隧道示例](https://sp21.datastructur.es/materials/proj/proj3/img/ngrok.png)
+![ngrok TCP 隧道示例](../assets/coursework/875d5efe0663-ngrok.png)
 
 在显示 `Forwarding` 的一行中，可以看到类似内容：
 
@@ -505,3 +505,7 @@ ngrok tcp 4005
 这是完全正常且符合预期的行为。
 
 希望你能享受游玩彼此制作的游戏。
+
+---
+
+原始页面：[https://sp21.datastructur.es/materials/proj/proj3/proj3GameSharing](https://sp21.datastructur.es/materials/proj/proj3/proj3GameSharing)
