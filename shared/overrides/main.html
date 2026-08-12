@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+{% block htmltitle %}
+  {% set page_title = (page.meta.title or page.title) if page else config.site_name %}
+  {% if page_title == config.site_name %}
+    <title>{{ config.site_name }}</title>
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
+
 {% block extrahead %}
   {{ super() }}
   {% include "partials/cache-refresh.html" %}
