@@ -13,6 +13,7 @@ import concurrent.futures
 import hashlib
 import html
 import json
+import math
 import re
 import shutil
 import time
@@ -351,16 +352,62 @@ def vendor_images(
     return replacements, {"count": len(urls), "items": manifest}
 
 
-def add_anchor(body: str, heading_pattern: str, anchor: str) -> str:
+def set_heading_anchor(body: str, heading_pattern: str, anchor: str) -> str:
     updated, replacements = re.subn(
-        rf"(?m)^({heading_pattern})$",
-        rf'<a id="{anchor}"></a>\n\n\1',
+        rf"(?m)^({heading_pattern})(?:\s+\{{\s*#[^}}]+\s*\}})?$",
+        rf"\1 {{ #{anchor} }}",
         body,
         count=1,
     )
     if replacements != 1:
         raise SystemExit(f"expected one heading for anchor {anchor}, got {replacements}")
     return updated
+
+
+def normalize_manual_toc(body: str, remove_targets: set[str]) -> str:
+    """Use the same compact two-space TOC nesting as the rest of the site."""
+    lines = body.splitlines()
+    start = next(
+        (
+            index
+            for index, line in enumerate(lines)
+            if re.match(r"^## 目录(?:\s+\{[^}]+\})?$", line)
+        ),
+        None,
+    )
+    if start is None:
+        return body
+
+    end = next(
+        (index for index in range(start + 1, len(lines)) if HEADING_RE.match(lines[index])),
+        len(lines),
+    )
+    lines[start] = "## 目录"
+    item_re = re.compile(r"^(\s*)-\s+(.+\]\((#[^)]+)\))\s*$")
+    items: list[tuple[int, int]] = []
+    filtered: list[str] = []
+    for line in lines[start + 1 : end]:
+        match = item_re.match(line)
+        if match and match.group(3) in remove_targets:
+            continue
+        if match:
+            items.append((len(filtered), len(match.group(1))))
+        filtered.append(line)
+
+    if items:
+        minimum = min(indent for _, indent in items)
+        positive = [indent - minimum for _, indent in items if indent > minimum]
+        unit = math.gcd(*positive) if positive else 2
+        unit = unit or 2
+        for index, indent in items:
+            filtered[index] = re.sub(
+                r"^\s*",
+                " " * (((indent - minimum) // unit) * 2),
+                filtered[index],
+                count=1,
+            )
+
+    return "\n".join(lines[: start + 1] + filtered + lines[end:])
 
 
 def heading_key(text: str) -> str:
@@ -419,11 +466,53 @@ def import_markdown(
             ),
             body,
         )
+        for remote_url, local_path in image_replacements.items():
+            body = body.replace(f"]({remote_url})", f"]({local_path})")
+
+        if slug == "project-2-gitlet":
+            body = body.replace("](#阶段检查评分器)", "](#checkpoint-grader)")
+            body = normalize_manual_toc(body, {"#project-2gitlet", "#目录"})
+            body = re.sub(
+                r"\n+---\n+\*\*翻译说明：\*\*[^\n]*\s*$",
+                "",
+                body,
+            )
+        elif slug == "project-3-byow":
+            body = body.replace("](#phase-1-world-generation)", "](#phase-1)")
+            body = body.replace("](#phase-2-interactivity)", "](#phase-2)")
+            body = body.replace("](#submission-and-grading)", "](#submission)")
+            body = normalize_manual_toc(body, set())
+        elif slug == "project-3-game-sharing":
+            body = normalize_manual_toc(
+                body,
+                {"#项目-3游戏共享", "#目录", "#author-boren-tsai"},
+            )
+            body = re.sub(
+                r"(?m)^#{2,6} 作者：Boren Tsai(?:\s+\{[^}]+\})?$",
+                "**作者：Boren Tsai**",
+                body,
+                count=1,
+            )
+
         body = preserve_internal_anchors(body)
         if slug == "project-3-byow":
-            body = add_anchor(body, r"#{2,3} (?:四、)?Phase 1：世界生成", "phase-1")
-            body = add_anchor(body, r"#{2,3} (?:九、)?Phase 2：交互性", "phase-2")
-            body = add_anchor(body, r"## (?:十七、)?提交与评分", "submission")
+            body = set_heading_anchor(
+                body,
+                r"#{2,3} (?:四、)?(?:Phase|阶段) 1：世界生成",
+                "phase-1",
+            )
+            body = set_heading_anchor(
+                body,
+                r"#{2,3} (?:九、)?(?:Phase|阶段) 2：交互性",
+                "phase-2",
+            )
+            body = set_heading_anchor(body, r"## (?:十七、)?提交与评分", "submission")
+        elif slug == "project-2-gitlet":
+            body = set_heading_anchor(
+                body,
+                r"### (?:阶段检查评分器|Checkpoint Grader)",
+                "checkpoint-grader",
+            )
         description = f"CS61B Spring 2021 {title}中文学习资料。"
         output = (
             "---\n"

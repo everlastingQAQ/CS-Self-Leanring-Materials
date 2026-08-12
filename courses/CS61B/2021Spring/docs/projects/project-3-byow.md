@@ -9,38 +9,37 @@ description: "CS61B Spring 2021 Project 3：CS61BYoW中文学习资料。"
 
 - [引言](#introduction)
 - [概述](#overview)
-    - [骨架代码结构](#skeleton-code-structure)
-    - [阶段 1：世界生成](#phase-1-world-generation)
-        - [默认图块集与图块渲染引擎](#the-default-tileset-and-tile-rendering-engine)
-        - [启动你的程序](#starting-your-program)
-        - [阶段 1 总结](#phase-1-summary)
-    - [设计文档](#design-document)
-        - [设计文档指南](#design-document-guidelines)
-        - [设计文档各部分](#design-document-sections)
-            - [1. 类与数据结构](#1-classes-and-data-structures)
-            - [2. 算法](#2-algorithms)
-            - [3. 持久化](#3-persistence)
-        - [示例](#example)
-    - [阶段 2：交互性](#phase-2-interactivity)
-        - [UI（用户界面）外观](#ui-user-interface-appearance)
-        - [UI 行为](#ui-behavior)
-        - [保存与加载](#saving-and-loading)
-        - [通过输入字符串进行交互与阶段 2](#interacting-with-input-strings-and-phase-2)
-        - [创意分数](#ambition-score)
-            - [270 分主要功能](#270-point-primary-features)
-            - [90 分次要功能](#90-point-secondary-features)
-    - [要求汇总](#requirements-summary)
+  - [骨架代码结构](#skeleton-code-structure)
+  - [阶段 1：世界生成](#phase-1)
+    - [默认图块集与图块渲染引擎](#the-default-tileset-and-tile-rendering-engine)
+    - [启动你的程序](#starting-your-program)
+    - [阶段 1 总结](#phase-1-summary)
+  - [设计文档](#design-document)
+    - [设计文档指南](#design-document-guidelines)
+    - [设计文档各部分](#design-document-sections)
+      - [1. 类与数据结构](#1-classes-and-data-structures)
+      - [2. 算法](#2-algorithms)
+      - [3. 持久化](#3-persistence)
+    - [示例](#example)
+  - [阶段 2：交互性](#phase-2)
+    - [UI（用户界面）外观](#ui-user-interface-appearance)
+    - [UI 行为](#ui-behavior)
+    - [保存与加载](#saving-and-loading)
+    - [通过输入字符串进行交互与阶段 2](#interacting-with-input-strings-and-phase-2)
+    - [创意分数](#ambition-score)
+      - [270 分主要功能](#270-point-primary-features)
+      - [90 分次要功能](#90-point-secondary-features)
+  - [要求汇总](#requirements-summary)
 - [额外加分](#extra-credit)
-- [提交与评分](#submission-and-grading)
-    - [验收脚本与表单](#checkoff-script-and-form)
+- [提交与评分](#submission)
+  - [验收脚本与表单](#checkoff-script-and-form)
 - [自动评分器详情](#autograder-details)
-    - [阶段 1 评分器](#phase-1-grader)
-    - [阶段 2 评分器](#phase-2-grader)
+  - [阶段 1 评分器](#phase-1-grader)
+  - [阶段 2 评分器](#phase-2-grader)
 - [Office Hours](#office-hours)
 - [常见问题](#faq)
 
-<a id="introduction"></a>
-## 引言
+## 引言 { #introduction }
 
 在项目 3 中，你将创建一个能够生成可探索世界的引擎。这是一个大型设计项目，需要你和一位搭档完成从构思到展示的整个开发流程。这个项目的目标，是让你学会在几乎没有起始代码的情况下管理一个规模更大的代码库，希望借此模拟类似产品开发周期的过程。
 
@@ -66,8 +65,7 @@ description: "CS61B Spring 2021 Project 3：CS61BYoW中文学习资料。"
 
 下面正式进入作业说明。
 
-<a id="overview"></a>
-## 概述
+## 概述 { #overview }
 
 接下来的四周中，你的任务是设计并实现一个基于二维图块的世界探索引擎。
 
@@ -93,8 +91,7 @@ description: "CS61B Spring 2021 Project 3：CS61BYoW中文学习资料。"
 
 本项目最重要的目标，是让你有机会尝试管理构建大型系统时随之而来的巨大复杂度。先提醒一句：你构建的系统对普通用户来说大概不会特别好玩。对于初学者而言，三周时间远远不足以完成一款真正成熟的游戏。不过，我们仍希望你能从这个项目中获得成就感，而你生成的世界甚至可能会很漂亮。
 
-<a id="skeleton-code-structure"></a>
-### 骨架代码结构
+### 骨架代码结构 { #skeleton-code-structure }
 
 骨架代码中有两个你会使用的关键包：
 
@@ -147,10 +144,7 @@ public void interactWithKeyboard()
 > **另外，不要调用 `System.exit()`，否则自动评分器本身也会退出并判定失败。**
 
 
-<a id="phase-1-world-generation"></a>
-<a id="phase-1"></a>
-
-### 阶段 1：世界生成
+### 阶段 1：世界生成 { #phase-1 }
 
 如上所述，本项目的第一个目标是编写一个世界生成器。你的世界必须满足以下要求：
 
@@ -175,7 +169,7 @@ public void interactWithKeyboard()
 - 一段金色墙壁表示一扇上锁的门；
 - 所有未使用空间均为空白。
 
-[![满足规范的世界示例](../assets/coursework/cc595ade5dfd-compliant_world_example.png)](https://sp21.datastructur.es/materials/proj/proj3/img/compliant_world_example.png)
+[![满足规范的世界示例](../assets/coursework/cc595ade5dfd-compliant_world_example.png)](../assets/coursework/cc595ade5dfd-compliant_world_example.png)
 
 完成 Lab 12 后，你就可以开始编写世界生成算法。
 
@@ -190,8 +184,7 @@ public void interactWithKeyboard()
 - [Brogue](https://sites.google.com/site/broguegame/) 是一个尤其优雅、漂亮的游戏。
 - [Dwarf Fortress](http://www.bay12games.com/dwarves/) 则是一个极其复杂、甚至复杂到近乎荒诞的世界生成引擎。
 
-<a id="the-default-tileset-and-tile-rendering-engine"></a>
-#### 默认图块集与图块渲染引擎
+#### 默认图块集与图块渲染引擎 { #the-default-tileset-and-tile-rendering-engine }
 
 课程提供的图块渲染引擎接收一个二维 `TETile` 对象数组，并将其绘制到屏幕上。暂时把这个数组称为：
 
@@ -233,8 +226,7 @@ world[0][5]
 
 图块渲染引擎依赖 `StdDraw`。除非你非常清楚自己在做什么，否则不建议使用 `setXScale`、`setYScale` 一类的 `StdDraw` 命令，因为这可能会大幅改变，甚至破坏系统的美——学——气——质。
 
-<a id="starting-your-program"></a>
-#### 启动你的程序
+#### 启动你的程序 { #starting-your-program }
 
 程序将通过运行 `Main` 类的 `main` 方法启动。你会看到，这个方法会根据用户希望如何与程序交互，调用两个方法中的一个。
 
@@ -366,8 +358,7 @@ S：选择生物并创建新世界
 
 这些额外选项可以具有你自行设计的行为。但是，`N`、`L` 和 `Q` 的行为必须严格符合本说明。
 
-<a id="phase-1-summary"></a>
-#### 阶段 1 总结
+#### 阶段 1 总结 { #phase-1-summary }
 
 在阶段 1 中，你应当能够向 `Main.main` 提供输入字符串，让程序创建一个符合前文要求的世界。
 
@@ -380,8 +371,7 @@ S：选择生物并创建新世界
 
 若要在 Office Hours 或 Gitbug 中获得帮助，你还需要维护一份反映当前项目状态的设计文档。下一节将介绍设计文档。
 
-<a id="design-document"></a>
-### 设计文档
+### 设计文档 { #design-document }
 
 由于我们没有为项目 3 提供大量骨架代码，而且项目本身非常开放，不同学生的 BYOW 实现预计会有很大差异。
 
@@ -416,8 +406,7 @@ S：选择生物并创建新世界
 >
 > 不过，如果你没有方便可用且保持更新的设计文档，我们很可能无法在 Gitbug 和 Office Hours 中帮助你。
 
-<a id="design-document-guidelines"></a>
-#### 设计文档指南
+#### 设计文档指南 { #design-document-guidelines }
 
 请使用下面的格式编写 BYOW 设计文档。
 
@@ -425,18 +414,15 @@ S：选择生物并创建新世界
 
 你应当在 `proj3` 文件夹中的 `README.md` 文件内完成设计文档。在 IntelliJ 中打开该文件时，右侧会自动显示排版后的预览。
 
-<a id="design-document-sections"></a>
-#### 设计文档各部分
+#### 设计文档各部分 { #design-document-sections }
 
-<a id="1-classes-and-data-structures"></a>
-##### 1. 类与数据结构
+##### 1. 类与数据结构 { #1-classes-and-data-structures }
 
 在这一部分列出所有类定义。对于每个类，列出它的实例变量（如果有），并简要描述每个变量及其在类中的用途。
 
 本节说明应尽可能简洁。完整解释留到后续章节。如果你发现文档太啰嗦，也可以适当缩短这一部分。
 
-<a id="2-algorithms"></a>
-##### 2. 算法
+##### 2. 算法 { #2-algorithms }
 
 这一部分用于说明你的代码如何工作。
 
@@ -451,8 +437,7 @@ S：选择生物并创建新世界
 - 对于复杂任务，例如“在随机位置添加随机尺寸的房间”，建议把任务拆分为多个部分，每个部分单独描述算法。从最简单的组件开始，逐步搭建设计。不同子任务可能属于不同类。如果某个算法调用了另一类的方法来完成子任务，请明确指出。
 - 尽量使用空白、标题或其他符号，清晰区分类名和各部分内容。
 
-<a id="3-persistence"></a>
-##### 3. 持久化
+##### 3. 持久化 { #3-persistence }
 
 你应当只在完成阶段 1 后再处理这一部分。
 
@@ -467,16 +452,12 @@ S：选择生物并创建新世界
 - 具体方法；
 - 可能创建的文件。
 
-<a id="example"></a>
-#### 示例
+#### 示例 { #example }
 
 为了说明上述要求，我们为 Capers Lab 创建了一份[设计文档示例](https://sp21.datastructur.es/materials/proj/proj3/capers-example)。
 
 
-<a id="phase-2-interactivity"></a>
-<a id="phase-2"></a>
-
-### 阶段 2：交互性
+### 阶段 2：交互性 { #phase-2 }
 
 在项目的第二阶段，你将加入让用户真正与世界互动的能力，同时还要为世界添加用户界面（UI）元素，让整个体验更具沉浸感，也能向用户提供更多信息。
 
@@ -505,8 +486,7 @@ S：选择生物并创建新世界
 
 除了以上功能要求之外，系统还需要满足若干技术要求，下面会更详细地说明。
 
-<a id="ui-user-interface-appearance"></a>
-#### UI（用户界面）外观
+#### UI（用户界面）外观 { #ui-user-interface-appearance }
 
 用户输入种子并按下 `S` 后，程序应显示世界以及用户界面。
 
@@ -519,7 +499,7 @@ HUD 最低限度必须包含一段文字，用来描述鼠标指针当前指向�
 
 作为最低实现标准，下面这个简单界面显示了一个图块网格，并在 HUD 中显示鼠标指针下方图块的描述。点击图片可查看高分辨率版本：
 
-[![基础 HUD 示例](../assets/coursework/29b28a03dee4-UI_example0.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example0.png)
+[![基础 HUD 示例](../assets/coursework/29b28a03dee4-UI_example0.png)](../assets/coursework/29b28a03dee4-UI_example0.png)
 
 你也可以自行加入其他功能。
 
@@ -527,7 +507,7 @@ HUD 最低限度必须包含一段文字，用来描述鼠标指针当前指向�
 
 请注意，这个示例世界并不符合前面规范中的世界要求，因为它是一个巨大、无规则的洞穴空间，而不是由走廊连接的房间。
 
-[![带生命值的 HUD 示例](../assets/coursework/a8b0e6cd4507-UI_example1.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example1.png)
+[![带生命值的 HUD 示例](../assets/coursework/a8b0e6cd4507-UI_example1.png)](../assets/coursework/a8b0e6cd4507-UI_example1.png)
 
 下面这个游戏示例会在 GUI 中列出其他有效按键，并在鼠标悬停于图块上时提供更加详细的信息，例如：
 
@@ -539,7 +519,7 @@ You see grass-like fungus.
 
 下图展示的是一款专业游戏，因此我们并不要求你的项目达到这种细节水平，不过我们鼓励你尝试实现一些有趣的视觉效果。
 
-[![更复杂的 HUD 示例](../assets/coursework/d0397c466724-UI_example2.png)](https://sp21.datastructur.es/materials/proj/proj3/img/UI_example2.png)
+[![更复杂的 HUD 示例](../assets/coursework/d0397c466724-UI_example2.png)](../assets/coursework/d0397c466724-UI_example2.png)
 
 关于如何指定 HUD 的位置，请参考 `TERenderer` 中的：
 
@@ -549,8 +529,7 @@ initialize(int width, int height, int xOffset, int yOffset)
 
 也可以查看 Lab 13。
 
-<a id="ui-behavior"></a>
-#### UI 行为
+#### UI 行为 { #ui-behavior }
 
 世界生成后，用户必须能够控制显示在世界中的某种角色。
 
@@ -622,8 +601,7 @@ initialize(int width, int height, int xOffset, int yOffset)
 
 如果你不知道如何开始实现用户交互，可以查看 `InputDemo.java` 获取灵感。
 
-<a id="saving-and-loading"></a>
-#### 保存与加载
+#### 保存与加载 { #saving-and-loading }
 
 有时你正在探索世界，突然发现该去看 CS 61B 课程视频了。在这种情况下，保存当前进度，并在之后重新加载，就非常有用。
 
@@ -654,8 +632,7 @@ initialize(int width, int height, int xOffset, int yOffset)
 
 要加载一个世界，必须重新运行程序，并使用以 `L` 开头的输入字符串。
 
-<a id="interacting-with-input-strings-and-phase-2"></a>
-#### 通过输入字符串进行交互与阶段 2
+#### 通过输入字符串进行交互与阶段 2 { #interacting-with-input-strings-and-phase-2 }
 
 你的：
 
@@ -785,8 +762,7 @@ L
 - 以 `:Q` 结尾时，方法会额外产生“保存世界状态”这一副作用；
 - 不以 `:Q` 结尾时，不保存。
 
-<a id="ambition-score"></a>
-#### 创意分数
+#### 创意分数 { #ambition-score }
 
 项目总分中有 360 分取决于你自行选择实现的功能，我们把这部分称为 **ambition score（创意分数）**。
 
@@ -809,37 +785,35 @@ L
 
 在部分主要功能说明下，我们提供了能够获得相应创意项目满分的 GIF，帮助消除歧义。你的实现不需要和示例完全相同。
 
-<a id="270-point-primary-features"></a>
-##### 270 分主要功能
+##### 270 分主要功能 { #270-point-primary-features }
 
 - 创建一个系统，使图块渲染器只显示位于角色视线范围内的图块。视线功能必须能够通过按键打开和关闭。
 
     下面的视线 GIF 是一种更复杂的实现，视线能够绕过拐角。我们也见过只在角色周围显示一个正方形亮区的版本。
 
-[![视线系统示例](../assets/coursework/5bcb81b08cb7-line-of-sight.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/line-of-sight.gif)
+[![视线系统示例](../assets/coursework/5bcb81b08cb7-line-of-sight.gif)](../assets/coursework/5bcb81b08cb7-line-of-sight.gif)
 
 - 加入光源影响世界渲染效果的能力，并至少实现一个可以通过按键开关的光源。
 
-[![开关灯光示例](../assets/coursework/80b341d8f449-toggle-lights.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/toggle-lights.gif)
+[![开关灯光示例](../assets/coursework/80b341d8f449-toggle-lights.gif)](../assets/coursework/80b341d8f449-toggle-lights.gif)
 
 - 加入使用课堂中某种搜索算法追逐角色或其他实体的实体，并提供一个开关，用于显示它们预计采用的路径。
 
-[![敌人追踪示例](../assets/coursework/86f29a9e3c62-enemy.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/enemy.gif)
+[![敌人追踪示例](../assets/coursework/86f29a9e3c62-enemy.gif)](../assets/coursework/86f29a9e3c62-enemy.gif)
 
 - 创建“遭遇”系统：当角色与世界中的实体互动时，显示一个新的界面；遭遇结束后，将角色带回原来的界面。例如《Pokémon》中的遭遇。
 
-[![遭遇系统示例](../assets/coursework/45417e6ad9f2-encounter.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/encounter.gif)
+[![遭遇系统示例](../assets/coursework/45417e6ad9f2-encounter.gif)](../assets/coursework/45417e6ad9f2-encounter.gif)
 
 - 让用户能够“重放”最近一次存档，从创建最近一个新世界开始，以可视化方式展示之后执行的所有操作。重放最终得到的状态必须和用户加载最近存档后得到的最终状态相同。
 
-[![重放系统示例](../assets/coursework/b1116d0afde9-replay.gif)](https://sp21.datastructur.es/materials/proj/proj3/img/replay.gif)
+[![重放系统示例](../assets/coursework/b1116d0afde9-replay.gif)](../assets/coursework/b1116d0afde9-replay.gif)
 
 - 让用户能够改变视角，例如第一人称、2.5D 等。
 
     我们以前从未见过有人实现这个主要功能。Nintendo 64 游戏 [《Kirby 64 - The Crystal Shards》](https://www.youtube.com/watch?v=5uu2TWli-_M)可以作为 2.5D 世界的示例。
 
-<a id="90-point-secondary-features"></a>
-##### 90 分次要功能
+##### 90 分次要功能 { #90-point-secondary-features }
 
 - 加入多个存档槽位。用户可以通过新的菜单选项访问它们，并使用新的键盘快捷键保存到 1 号槽位以外的位置。你仍应谨慎保留默认保存和加载行为，以满足重放字符串要求。
 
@@ -875,8 +849,7 @@ L
 
     撤销移动应把世界恢复到最近一次按键之前的状态，但在重放字符串中应增加一个撤销命令，而不是从字符串中删除字符。
 
-<a id="requirements-summary"></a>
-### 要求汇总
+### 要求汇总 { #requirements-summary }
 
 以下是项目要求和限制的汇总。
 
@@ -920,8 +893,7 @@ L
 - 程序必须实现创意功能分类中合计 360 分的功能，且**至少包括一个主要功能**。
 
 
-<a id="extra-credit"></a>
-## 额外加分
+## 额外加分 { #extra-credit }
 
 为了获得额外加分，你应当让用户能够在世界中获胜或失败，也就是把它真正变成一个游戏。
 
@@ -996,10 +968,7 @@ L
 
 - 加入生命值机制，使游戏更具交互性。
 
-<a id="submission-and-grading"></a>
-<a id="submission"></a>
-
-## 提交与评分
+## 提交与评分 { #submission }
 
 和往常一样，本项目会在 Gradescope 上提供评分器。
 
@@ -1066,8 +1035,7 @@ L
 
     如果粘贴了无效 SHA，默认会评分 `origin/HEAD` Commit，而这很可能导致迟交扣分。
 
-<a id="checkoff-script-and-form"></a>
-### 验收脚本与表单
+### 验收脚本与表单 { #checkoff-script-and-form }
 
 为了尽量让验收过程保持透明，可以点击[这里](https://sp21.datastructur.es/materials/proj/proj3/proj3checkoff)查看教师验收项目时使用的准确脚本。
 
@@ -1123,16 +1091,14 @@ static File join(String first, String... others) {
 }
 ```
 
-<a id="autograder-details"></a>
-## 自动评分器详情
+## 自动评分器详情 { #autograder-details }
 
 BYOW 有两个评分器：
 
 - 阶段 1 评分器；
 - 阶段 2 评分器。
 
-<a id="phase-1-grader"></a>
-### 阶段 1 评分器
+### 阶段 1 评分器 { #phase-1-grader }
 
 截止时间：4 月 16 日晚上 11:59。
 
@@ -1146,8 +1112,7 @@ BYOW 有两个评分器：
 
 这些测试中**不会包含移动操作**。
 
-<a id="phase-2-grader"></a>
-### 阶段 2 评分器
+### 阶段 2 评分器 { #phase-2-grader }
 
 截止时间：4 月 27 日晚上 11:59。
 
@@ -1161,8 +1126,7 @@ BYOW 有两个评分器：
 
 > **提交到自动评分器时，请记得把搭档添加为小组成员。**
 
-<a id="office-hours"></a>
-## Office Hours
+## Office Hours { #office-hours }
 
 由于本项目非常开放，课程工作人员很难像其他项目那样帮助你调试。
 
@@ -1186,8 +1150,7 @@ BYOW 有两个评分器：
 
     尝试在混乱、脆弱的代码中直接寻找 Bug，对你和助教来说都不是对时间的良好利用。
 
-<a id="faq"></a>
-## 常见问题
+## 常见问题 { #faq }
 
 ### 问：我想制作一个可以探索室外或洞穴的世界，而不是一堆房间，应该怎么办？
 

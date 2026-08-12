@@ -20,6 +20,10 @@ DOCS_ROOT = COURSE_ROOT / "docs"
 SITE_ROOT = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else PROJECT_ROOT / "dist"
 COURSE_SITE = SITE_ROOT / "CS61B" / "2021Spring"
 REMOTE_IMAGE_RE = re.compile(r"!\[[^\]]*\]\(https?://", re.IGNORECASE)
+REMOTE_LINKED_IMAGE_RE = re.compile(
+    r"\[!\[[^\]]*\]\([^)]+\)\]\(https?://[^)]+\.(?:gif|jpe?g|png|svg)(?:\?[^)]*)?\)",
+    re.IGNORECASE,
+)
 EXPECTED_CHAPTERS = 22
 EXPECTED_LEGACY_REDIRECTS = EXPECTED_CHAPTERS + 2
 EXPECTED_HTML_PAGES = 56 + EXPECTED_LEGACY_REDIRECTS
@@ -242,8 +246,22 @@ def main() -> None:
 
     for markdown in DOCS_ROOT.rglob("*.md"):
         text = markdown.read_text(encoding="utf-8")
-        if REMOTE_IMAGE_RE.search(text):
+        if REMOTE_IMAGE_RE.search(text) or REMOTE_LINKED_IMAGE_RE.search(text):
             errors.append(f"remote image remains in {markdown.relative_to(PROJECT_ROOT)}")
+
+    normalized_projects = (
+        DOCS_ROOT / "projects" / "project-2-gitlet.md",
+        DOCS_ROOT / "projects" / "project-3-byow.md",
+        DOCS_ROOT / "projects" / "project-3-game-sharing.md",
+    )
+    for project in normalized_projects:
+        if not project.is_file():
+            continue
+        source = project.read_text(encoding="utf-8")
+        if '<a id="' in source:
+            errors.append(f"legacy HTML anchor remains in {project.relative_to(PROJECT_ROOT)}")
+        if "**翻译说明：**" in source:
+            errors.append(f"translation note remains in {project.relative_to(PROJECT_ROOT)}")
 
     required = [
         SITE_ROOT / "index.html",

@@ -3,37 +3,32 @@ title: "Project 3：游戏共享"
 description: "CS61B Spring 2021 Project 3：游戏共享中文学习资料。"
 ---
 
-# 项目 3：游戏共享 {#项目-3游戏共享}
+# 项目 3：游戏共享
 
-## 目录 {#目录}
+## 目录
 
-- [项目 3：游戏共享](#项目-3游戏共享)
-    - [目录](#目录)
-            - [作者：Boren Tsai](#author-boren-tsai)
-    - [介绍](#introduction)
-    - [网络功能](#networking)
-        - [`Main`](#main)
-        - [`BYOWServer`](#byowserver)
-            - [1. `sendCanvasConfig`](#1-sendcanvasconfig)
-            - [2. `sendCanvas`](#2-sendcanvas)
-            - [3. `clientHasKeyTyped`](#3-clienthaskeytyped)
-            - [4. `clientNextKeyTyped`](#4-clientnextkeytyped)
-            - [5. `stopConnection`](#5-stopconnection)
-        - [`BYOWClient`](#byowclient)
-        - [测试你的代码](#testing-your-code)
-        - [支持远程游戏](#supporting-remote-gameplay)
-        - [一分悬赏](#the-one-point-bounty)
-    - [免责声明](#disclaimer)
+- [介绍](#introduction)
+- [网络功能](#networking)
+  - [`Main`](#main)
+  - [`BYOWServer`](#byowserver)
+    - [1. `sendCanvasConfig`](#1-sendcanvasconfig)
+    - [2. `sendCanvas`](#2-sendcanvas)
+    - [3. `clientHasKeyTyped`](#3-clienthaskeytyped)
+    - [4. `clientNextKeyTyped`](#4-clientnextkeytyped)
+    - [5. `stopConnection`](#5-stopconnection)
+  - [`BYOWClient`](#byowclient)
+  - [测试你的代码](#testing-your-code)
+  - [支持远程游戏](#supporting-remote-gameplay)
+  - [一分悬赏](#the-one-point-bounty)
+- [免责声明](#disclaimer)
 
-<a id="author-boren-tsai"></a>
-#### 作者：Boren Tsai
+**作者：Boren Tsai**
 
 我们为项目 3：BYOW 新增了一项功能，使任意两名学生都可以远程游玩对方制作的游戏。
 
 为疫情期间的安全欢呼吧。
 
-<a id="introduction"></a>
-## 介绍
+## 介绍 { #introduction }
 
 现在有两名 61B 学生，Alice 和 Bob。Alice 和 Bob 都制作了非常棒的游戏，也都想玩对方的作品；但由于居家避疫规定，他们无法见面。
 
@@ -62,8 +57,7 @@ Arjun 把这种方案类比为在线游玩 Minecraft。
 interactWithRemoteClient
 ```
 
-<a id="networking"></a>
-## 网络功能
+## 网络功能 { #networking }
 
 为了实现上述功能，我们在 `proj3` 中加入了一层网络功能。
 
@@ -98,8 +92,7 @@ interactWithRemoteClient
 -p [四位端口号]
 ```
 
-<a id="main"></a>
-### `Main`
+### `Main` { #main }
 
 BYOW 服务器的“入口”已经存在于你的代码中：
 
@@ -136,8 +129,7 @@ else if (args.length == 2 && args[0].equals("-p")) {
 
 为了把远程游戏共享加入项目，我们在下面提供了文档和进一步的实现指南。
 
-<a id="byowserver"></a>
-### `BYOWServer`
+### `BYOWServer` { #byowserver }
 
 我们提供了一个 `BYOWServer` 类，它会为你完成所有网络魔法。
 
@@ -187,7 +179,7 @@ Client connected!
 
 为了与远程玩家通信，我们提供了以下方法。
 
-#### 1. `sendCanvasConfig`
+#### 1. `sendCanvasConfig` { #1-sendcanvasconfig }
 
 第一个方法：
 
@@ -207,7 +199,7 @@ sendCanvasConfig
 512 × 512 pixels
 ```
 
-#### 2. `sendCanvas`
+#### 2. `sendCanvas` { #2-sendcanvas }
 
 第二个方法：
 
@@ -229,7 +221,7 @@ StdDraw.showCanvas()
 TERenderer.renderFrame(...)
 ```
 
-#### 3. `clientHasKeyTyped`
+#### 3. `clientHasKeyTyped` { #3-clienthaskeytyped }
 
 第三个方法：
 
@@ -257,7 +249,7 @@ clientHasKeyTyped()
 StdDraw.hasNextKeyTyped()
 ```
 
-#### 4. `clientNextKeyTyped`
+#### 4. `clientNextKeyTyped` { #4-clientnextkeytyped }
 
 第四个方法：
 
@@ -285,7 +277,7 @@ clientNextKeyTyped()
 StdDraw.nextKeyTyped()
 ```
 
-#### 5. `stopConnection`
+#### 5. `stopConnection` { #5-stopconnection }
 
 第五个方法：
 
@@ -303,8 +295,7 @@ stopConnection
 
 供参考，Josh Hug 在一年没有看过自己的 BYOW 客户端代码后，为其加入服务器功能大约花了 30 分钟。
 
-<a id="byowclient"></a>
-### `BYOWClient`
+### `BYOWClient` { #byowclient }
 
 我们还提供了一个 `BYOWClient` 类。
 
@@ -338,8 +329,7 @@ Port (this must be a number): 4005
 CONFIGURING CANVAS
 ```
 
-<a id="testing-your-code"></a>
-### 测试你的代码
+### 测试你的代码 { #testing-your-code }
 
 完成 `interactWithRemoteClient` 后，先使用以下命令行参数运行 `Main`：
 
@@ -364,8 +354,7 @@ localhost
 
 如果实现正确，这两个窗口应当显示完全相同的内容。
 
-<a id="supporting-remote-gameplay"></a>
-### 支持远程游戏
+### 支持远程游戏 { #supporting-remote-gameplay }
 
 当你成功让服务器端和客户端的两个 `StdDraw` 窗口彼此同步后，就可以开始支持真正的远程游戏了。
 
@@ -480,8 +469,7 @@ ngrok tcp 4005
 
 > 注意：这也带来了一些很有趣的可能性，例如允许服务器在玩家游玩过程中修改世界。尽情发挥吧。
 
-<a id="the-one-point-bounty"></a>
-### 一分悬赏
+### 一分悬赏 { #the-one-point-bounty }
 
 原则上，可以制作一个基于网页的客户端。
 
@@ -497,8 +485,7 @@ ngrok tcp 4005
 
 未来，我们还很可能会把它作为正式课程资源使用。
 
-<a id="disclaimer"></a>
-## 免责声明
+## 免责声明 { #disclaimer }
 
 由于保存 `StdDraw` 画布会产生额外开销，同时网络自身也存在限制，在使用远程功能时，你很可能会遇到延迟。
 
