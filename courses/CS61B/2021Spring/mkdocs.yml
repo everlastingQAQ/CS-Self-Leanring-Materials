@@ -98,6 +98,8 @@ nav:
       - Project 2：Gitlet: projects/project-2-gitlet.md
       - Project 3：CS61BYoW: projects/project-3-byow.md
       - Project 3：游戏共享: projects/project-3-game-sharing.md
+  - 参考资料:
+      - StdDraw 中文 API 文档: reference/stddraw-api.md
   - 考试:
       - 考试目录: exams/index.md
       - 期中考试 1 模拟评测: exams/midterm-1-practice.md

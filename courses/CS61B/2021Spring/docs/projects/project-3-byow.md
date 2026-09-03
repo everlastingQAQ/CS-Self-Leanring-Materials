@@ -130,7 +130,7 @@ public void interactWithKeyboard()
 
 这个方法从键盘获取输入，并在每次按键后将结果绘制到屏幕。Lab 12 会介绍如何渲染图块，Lab 13 会介绍如何获取用户输入。
 
-本项目会大量使用 `StdDraw`。这是一个具备基本图形渲染能力的库，同时也支持键盘和鼠标点击交互。项目进行过程中，你可能需要查阅 `StdDraw` 的 API 文档，地址在[这里](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html)。
+本项目会大量使用 `StdDraw`。这是一个具备基本图形渲染能力的库，同时也支持键盘和鼠标点击交互。项目进行过程中，你可能需要查阅 `StdDraw` 的 API 文档，地址在[这里](../reference/stddraw-api.md)。
 
 你的项目只能使用：
 

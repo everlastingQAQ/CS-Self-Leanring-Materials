@@ -26,7 +26,7 @@ REMOTE_LINKED_IMAGE_RE = re.compile(
 )
 EXPECTED_CHAPTERS = 22
 EXPECTED_LEGACY_REDIRECTS = EXPECTED_CHAPTERS + 2
-EXPECTED_HTML_PAGES = 56 + EXPECTED_LEGACY_REDIRECTS
+EXPECTED_HTML_PAGES = 57 + EXPECTED_LEGACY_REDIRECTS
 EXPECTED_COURSEWORK = {"labs": 11, "homeworks": 3, "projects": 6, "exams": 4}
 EXPECTED_COURSEWORK_IMAGES = 47
 SEARCH_TERMS = ("并查集", "最短路径", "泛型", "JUnit", "Gitlet", "BYOW", "期中考试")
@@ -263,6 +263,14 @@ def main() -> None:
         if "**翻译说明：**" in source:
             errors.append(f"translation note remains in {project.relative_to(PROJECT_ROOT)}")
 
+    old_stddraw_url = "https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html"
+    for coursework in (
+        DOCS_ROOT / "labs" / "lab-13-project-3-interactivity.md",
+        DOCS_ROOT / "projects" / "project-3-byow.md",
+    ):
+        if coursework.is_file() and old_stddraw_url in coursework.read_text(encoding="utf-8"):
+            errors.append(f"external StdDraw API link remains in {coursework.relative_to(PROJECT_ROOT)}")
+
     required = [
         SITE_ROOT / "index.html",
         SITE_ROOT / "404.html",
@@ -277,6 +285,7 @@ def main() -> None:
         COURSE_SITE / "labs" / "index.html",
         COURSE_SITE / "homeworks" / "index.html",
         COURSE_SITE / "projects" / "index.html",
+        COURSE_SITE / "reference" / "stddraw-api" / "index.html",
         COURSE_SITE / "exams" / "index.html",
         COURSE_SITE / "about" / "index.html",
         COURSE_SITE / "search" / "search_index.json",

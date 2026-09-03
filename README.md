@@ -7,6 +7,7 @@
 - CS61B Spring 2021 中文教程
 - 22 篇课程教材
 - 11 篇 Lab、3 篇 Homework（不发布 HW1）、6 篇 Project
+- Project 3 使用的 StdDraw 中文 API 参考
 - 4 篇考试资料
 - Spring 2021 原课程主页的中文归档版
 
@@ -59,6 +60,7 @@ cd /home/everlasting/docs.everlasting.xin
 │       │   ├── labs/                    # 导入生成的实验
 │       │   ├── homeworks/               # 导入生成的作业
 │       │   ├── projects/                # 导入生成的项目
+│       │   ├── reference/               # 手工维护的 API 参考资料
 │       │   ├── exams/                   # 考试资料
 │       │   ├── course/                  # 原课程主页中文版
 │       │   └── assets/                  # 本地图片、CSS、JS、MathJax
@@ -83,6 +85,7 @@ cd /home/everlasting/docs.everlasting.xin
 - `courses/CS61B/2021Spring/docs/index.md`：CS61B Material 首页。
 - `courses/CS61B/2021Spring/docs/about.md`：来源与许可页。
 - `courses/CS61B/2021Spring/docs/exams/`：当前考试资料。
+- `courses/CS61B/2021Spring/docs/reference/`：课程 API 参考资料。
 - `courses/CS61B/2021Spring/mkdocs.yml`：课程导航、主题和插件配置。
 - `courses/CS61B/2021Spring/search-dict.txt`：中文搜索分词。
 - `courses/CS61B/2021Spring/docs/assets/stylesheets/`：课程样式。
@@ -139,7 +142,7 @@ beautifulsoup4==4.13.4
 构建成功时会看到类似：
 
 ```text
-Validated 80 HTML pages, 22 chapters, 24 legacy redirects, ...
+Validated 81 HTML pages, 22 chapters, 24 legacy redirects, ...
 ```
 
 本地预览：

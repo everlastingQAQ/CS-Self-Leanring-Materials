@@ -478,6 +478,10 @@ def import_markdown(
                 body,
             )
         elif slug == "project-3-byow":
+            body = body.replace(
+                "https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html",
+                "../reference/stddraw-api.md",
+            )
             body = body.replace("](#phase-1-world-generation)", "](#phase-1)")
             body = body.replace("](#phase-2-interactivity)", "](#phase-2)")
             body = body.replace("](#submission-and-grading)", "](#submission)")
@@ -493,6 +497,22 @@ def import_markdown(
                 body,
                 count=1,
             )
+        elif slug == "lab-13-project-3-interactivity":
+            stddraw_url = "https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html"
+            stddraw_local = "../reference/stddraw-api.md"
+            method_anchors = {
+                "#setFont-java.awt.Font-": "#setfont",
+                "#clear--": "#clear",
+                "#text-double-double-java.lang.String-": "#text",
+                "#setPenColor-java.awt.Color-": "#setpencolor",
+                "#show--": "#show",
+            }
+            for remote_anchor, local_anchor in method_anchors.items():
+                body = body.replace(
+                    stddraw_url + remote_anchor,
+                    stddraw_local + local_anchor,
+                )
+            body = body.replace(stddraw_url, stddraw_local)
 
         body = preserve_internal_anchors(body)
         if slug == "project-3-byow":

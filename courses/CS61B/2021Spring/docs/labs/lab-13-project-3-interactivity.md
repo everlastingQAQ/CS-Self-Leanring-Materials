@@ -72,15 +72,15 @@ description: "CS61B Spring 2021 Lab 13：Project 3 交互中文学习资料。"
 
 我们使用 `StdDraw` 库，是因为它相当轻量，并且容易上手；但使用它时，你应当了解这个库的一些怪异之处。尤其是，每当我们想更改屏幕上显示的内容时，都必须清除整个屏幕，并重新绘制希望显示的全部内容。因此，拥有这样一个方法会极其有用：它先清除画布，绘制下一帧所需的一切，然后显示画布。
 
-最终，`drawFrame` 会成为我们的这个方法；但现在先保持简单。我们知道自己需要在屏幕上显示字符串，并且字符串应当足够醒目。补全 `drawFrame`：让它清除画布，把字体设置为大号粗体（大小 `30` 很合适），绘制输入字符串并使其位于画布中央，然后把画布显示在屏幕上。现在很适合查看 [`StdDraw`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html) API，并弄清楚它的确切工作方式。
+最终，`drawFrame` 会成为我们的这个方法；但现在先保持简单。我们知道自己需要在屏幕上显示字符串，并且字符串应当足够醒目。补全 `drawFrame`：让它清除画布，把字体设置为大号粗体（大小 `30` 很合适），绘制输入字符串并使其位于画布中央，然后把画布显示在屏幕上。现在很适合查看 [`StdDraw`](../reference/stddraw-api.md) API，并弄清楚它的确切工作方式。
 
 一些值得查看的有用方法包括：
 
-- [`StdDraw.setFont`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#setFont-java.awt.Font-)
-- [`StdDraw.clear`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#clear--)
-- [`StdDraw.text`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#text-double-double-java.lang.String-)
-- [`StdDraw.setPenColor`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#setPenColor-java.awt.Color-)
-- [`StdDraw.show`](https://introcs.cs.princeton.edu/java/stdlib/javadoc/StdDraw.html#show--)
+- [`StdDraw.setFont`](../reference/stddraw-api.md#setfont)
+- [`StdDraw.clear`](../reference/stddraw-api.md#clear)
+- [`StdDraw.text`](../reference/stddraw-api.md#text)
+- [`StdDraw.setPenColor`](../reference/stddraw-api.md#setpencolor)
+- [`StdDraw.show`](../reference/stddraw-api.md#show)
 
 ## `flashSequence` { #flashsequence }
 
